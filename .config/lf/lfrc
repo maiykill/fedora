@@ -1,0 +1,105 @@
+### While using in Fedora xfce worskstation-40 the binary for mimetype command is not found
+### hence it should be installed with 
+#   dnf install perl-File-MimeInfo
+### Previewer is supported in Wezterm to use but!  
+#   Install chafa to set the previewer true
+
+## Experimental stuffs
+set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
+set incsearch true
+set previewer ~/.config/lf/previewer
+set sixel true
+
+
+
+
+
+
+#set ratios 1:3:3
+set ratios 1:1:7:5
+
+
+# Basic vars
+set period 1
+set shellopts '-eu'
+set ifs "\n"
+set info size:time
+set icons true
+cmd mkdir $mkdir -p "$@"
+set scrolloff 10
+
+
+cmd open ${{
+    case $(file --mime-type "$(readlink -f $f)" -b) in
+      image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+      text/*|application/json|inode/x-empty|application/x-subrip) "$EDITOR" $fx;;
+      image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
+      image/svg+xml) display -- $f ;;
+      image/*) setsid -f nomacs $fx 2>/dev/null		;;
+      audio/*|video/x-ms-asf) mpv --audio-display=no $f ;;
+      video/*) setsid -f mpv $fx -quiet >/dev/null 2>&1 ;;
+      video/mp4) mpv $fx -quiet >/dev/null 2>&1 ;;
+      application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura "$fx" >/dev/null 2>&1 ;;
+      application/pgp-encrypted) "$EDITOR" $fx ;;
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template|application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template|application/vnd.oasis.opendocument.formula|application/vnd.oasis.opendocument.database) setsid -f libreoffice $fx >/dev/null 2>&1 ;;
+      application/octet-stream) case ${f##*.} in
+                                  doc|docx|xls|xlsx|odt|ppt|pptx) setsid -f libreoffice $fx >/dev/null 2>&1 ;;
+                                  ghw) setsid -f gtkwave $f >/dev/null 2>&1 ;;
+                                  ts) setsid -f mpv $fx -quiet >/dev/null 2>&1 ;;
+                                  *) setsid -f zathura $fx >/dev/null 2>&1 ;;
+      esac ;;
+      *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+    esac
+}}
+
+
+
+cmd extract ${{
+	set -f
+	case $f in
+			*.tar.bz2)   tar xjf $fx     ;;
+			*.tar.gz)    tar xzf $fx     ;;
+			*.bz2)       bunzip2 $fx     ;;
+			*.rar)       unrar e $fx     ;;
+			*.gz)        gunzip $fx      ;;
+			*.tar)       tar xf $fx      ;;
+			*.tbz2)      tar xjf $fx     ;;
+			*.tgz)       tar xzf $fx     ;;
+			*.zip)       unzip $fx       ;;
+			*.Z)         uncompress $fx  ;;
+			*.7z)        7z x $fx        ;;
+			*.tar.xz)    tar xf $fx      ;;
+		esac
+}}
+
+
+
+
+
+
+map E extract
+map o &mimeopen $f
+map O $mimeopen --ask $f
+map f $lf -remote "send $id select \"$(find . | fzf)\""
+map S shell
+map . calcdirsize
+map x push :mkdir<space>
+map <c-r> reload
+map <backspace2> set hidden!
+map D delete
+map <a-D> shred
+map A :rename; cmd-end # at the very end
+map r push A<c-u> # new rename
+map I :rename; cmd-home # at the very beginning
+map i :rename # before extension
+map a :rename; cmd-right # after extension
+map gd cd ~/Documents/
+map gw cd ~/Downloads/
+map gs cd ~/Study/
+map gp cd ~/Programs/
+map gi cd ~/Pictures/
+map gv cd ~/Videos/
+map gm cd ~/Music/songs/
+map gt cd ~/Tmpr/
+map g/ cd /
+map g. cd ~/.config/

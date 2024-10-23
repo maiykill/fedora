@@ -1,0 +1,16 @@
+#[[language]]
+#name = "python"
+#language-servers = [ "basedpyright", "ruff" ]
+## language-servers = [ "ruff" ]
+#
+#[language-server.basedpyright.config.python.analysis]
+#typeCheckingMode = "off"
+#
+#
+#[language-server.basedpyright]
+#command = "/home/mike/.local/share/nvim/mason/bin/basedpyright-langserver"
+#args = ["--stdio"]
+#
+#[language-server.ruff]
+#command = "/home/mike/.local/share/nvim/mason/bin/ruff"
+#args = ["server"]
