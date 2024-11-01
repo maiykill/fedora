@@ -1,0 +1,8 @@
+[init]
+	defaultBranch = main
+[gpg]
+	format = ssh
+[commit]
+	gpgSign = true
+[user]
+	name = maiykill
