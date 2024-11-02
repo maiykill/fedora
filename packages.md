@@ -64,6 +64,13 @@ sudo dnf groupinstall multimedia
 sudo dnf install intel-media-driver libva libva-utils gstreamer1-vaapi ffmpeg intel-gpu-tools mesa-dri-drivers mpv
 ```
 
+## Wezterm
+
+```bash
+sudo dnf copr enable wezfurlong/wezterm-nightly
+sudo dnf install wezterm
+```
+
 ## Others
 
 ```bash

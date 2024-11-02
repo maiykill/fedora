@@ -17,4 +17,5 @@
 - xfce-keyboard-shortcut
 - fonts
 - logos
-- user gitconfig
+- gitconfig
+- wezterm

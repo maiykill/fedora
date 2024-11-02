@@ -11,7 +11,8 @@ config.font_size = 16
 config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" })
 
 -- For example, changing the color scheme:
-config.color_scheme = "AdventureTime"
+-- config.color_scheme = "AdventureTime"
+config.color_scheme = "UnderTheSea"
 
 -- Maximised view since by default the window is small
 config.initial_rows = 34
