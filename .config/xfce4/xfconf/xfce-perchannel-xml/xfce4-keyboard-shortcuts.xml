@@ -79,6 +79,7 @@
       <property name="&lt;Primary&gt;&lt;Super&gt;b" type="string" value="mullvad-browser"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;b" type="string" value="chromium-browser"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;Return" type="string" value="wezterm"/>
+      <property name="&lt;Alt&gt;&lt;Super&gt;h" type="string" value="wezterm -e lf"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">

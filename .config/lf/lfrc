@@ -1,14 +1,15 @@
 ### While using in Fedora xfce worskstation-40 the binary for mimetype command is not found
 ### hence it should be installed with 
-#   dnf install perl-File-MimeInfo
+#$ sudo dnf install perl-File-MimeInfo
 ### Previewer is supported in Wezterm to use but!  
-#   Install chafa to set the previewer true
+#$ sudo dnf install chafa
 
 ## Experimental stuffs
 set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
 set incsearch true
 set previewer ~/.config/lf/previewer
 set sixel true
+set dupfilefmt "%f.newer%n" 
 
 
 
@@ -74,9 +75,32 @@ cmd extract ${{
 
 
 
+cmd pasteoverride &{{
+	set -f
+	mode=$(head -1 ~/.local/share/lf/files)
+	list=$(sed 1d ~/.local/share/lf/files)
+	set -- _ $list; shift
+	[ $# -gt 0 ] || exit
+	case $mode in
+		copy)
+			rsync -r "$@" ./
+			;;
+		move)
+			rsync -r --remove-source-files "$@" ./
+			;;
+	esac
+	lf -remote 'save\nmove\n'
+	lf -remote "send $id load"
+	lf -remote "send $id echo \"\033[0;32mpaste overridden $# file(s)\033[0m\""
+}}
 
 
 
+
+
+
+
+map P pasteoverride
 map E extract
 map o &mimeopen $f
 map O $mimeopen --ask $f
