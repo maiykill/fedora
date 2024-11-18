@@ -6,7 +6,7 @@ blinking = "On"
 shape = "Block"
 
 [font]
-size = 14.3
+size = 15.5
 
 [font.bold]
 family = "RobotoMono Nerd Font"
@@ -35,17 +35,12 @@ startup_mode = "Maximized"
 draw_bold_text_with_bright_colors = true
 
 
-
-
-
 ## Normal color code
 
 #[colors]
 #[colors.primary]
 #foreground = "#d8d8d8"
 #background = "#272626"
-
-
 
 
 # ## ashes.dark color code
@@ -73,8 +68,6 @@ draw_bold_text_with_bright_colors = true
 # white = "#f3f4f5"
 
 
-
-
 #  ## codeschool.dark
 #  
 #  [colors.primary]
@@ -98,7 +91,6 @@ draw_bold_text_with_bright_colors = true
 #  magenta = "#c59820"
 #  cyan = "#b02f30"
 #  white = "#b5d8f6"
-
 
 
 ### embers dark 
@@ -126,7 +118,6 @@ draw_bold_text_with_bright_colors = true
 #white = "#dbd6d1"
 
 
-
 ### isotope dark
 #
 #[colors.primary]
@@ -152,8 +143,6 @@ draw_bold_text_with_bright_colors = true
 #white = "#ffffff"
 
 
-
-
 ### Shape Shifter dark
 #
 #[colors.primary]
@@ -177,9 +166,6 @@ draw_bold_text_with_bright_colors = true
 #magenta = "#f996e2"
 #cyan = "#23edda"
 #white = "#f9f9f9" 
-
-
-
 
 
 ### Catppuccin Mocha
@@ -248,8 +234,6 @@ draw_bold_text_with_bright_colors = true
 #color = "#f5e0dc"
 
 
-
-
 # Rosepine Theme for alacritty
 
 [colors.primary]
@@ -311,7 +295,6 @@ blue = "#9ccfd8"
 magenta = "#c4a7e7"
 cyan = "#ebbcba"
 white = "#e0def4"
-
 
 
 ### Eldritch colorscheme

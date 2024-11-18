@@ -127,3 +127,4 @@ map gm cd ~/Music/songs/
 map gt cd ~/Tmpr/
 map g/ cd /
 map g. cd ~/.config/
+map gf cd ~/.local/share/fonts/

@@ -2,24 +2,15 @@
 
 <!--toc:start-->
 - [Additional Packages to be installed](#additional-packages-to-be-installed)
-  - [Better Fonts](#better-fonts)
   - [Lazygit](#lazygit)
   - [Lf](#lf)
   - [Mullvad browser](#mullvad-browser)
   - [Brave browser](#brave-browser)
   - [Rpm Fusion repos](#rpm-fusion-repos)
   - [Multimedia codecs](#multimedia-codecs)
+  - [Wezterm](#wezterm)
   - [Others](#others)
 <!--toc:end-->
-
-## Better Fonts
-
-> replace the proprietary fonts with free and good fonts
-
-``` bash
-sudo dnf copr enable dawid/better_fonts -y 
-sudo dnf install fontconfig-font-replacements -y
-```
 
 ## Lazygit
 
@@ -74,5 +65,5 @@ sudo dnf install wezterm
 ## Others
 
 ```bash
-sudo dnf install btop mpv ffmpeg ranger alacritty kitty chromium pcmanfm thunar nemo firefox nomacs libreoffice gimp inkscape fastfetch
+sudo dnf install btop mpv ffmpeg ranger alacritty kitty chromium pcmanfm thunar nemo firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch 
 ```
