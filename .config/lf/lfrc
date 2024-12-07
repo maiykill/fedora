@@ -128,3 +128,4 @@ map gt cd ~/Tmpr/
 map g/ cd /
 map g. cd ~/.config/
 map gf cd ~/.local/share/fonts/
+map gj cd ~/Documents/jobs/
