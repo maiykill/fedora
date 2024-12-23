@@ -42,6 +42,13 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install brave-browser
 ```
 
+## Zen Browser
+
+```bash
+sudo dnf copr enable firminunderscore/zen-browser
+sudo dnf install zen-twilight-avx2
+```
+
 ## Rpm Fusion repos
 
 ```bash
@@ -65,5 +72,5 @@ sudo dnf install wezterm
 ## Others
 
 ```bash
-sudo dnf install btop mpv ffmpeg ranger alacritty kitty chromium pcmanfm thunar nemo firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch 
+sudo dnf install btop mpv ffmpeg alacritty kitty chromium pcmanfm thunar nemo firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch yarnpkg 
 ```

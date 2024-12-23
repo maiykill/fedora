@@ -6,13 +6,15 @@ local config = wezterm.config_builder()
 
 -----------------------------------------------------------------
 -- I defined those below
+-----------------------------------------------------------------
 
-config.font_size = 16
-config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" })
+config.font_size = 17
+-- config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" })
+config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" })
 
 -- Theming
--- config.color_scheme = "AdventureTime"
-config.color_scheme = "UnderTheSea"
+config.color_scheme = "Royal"
+-- config.color_scheme = "WildCherry"
 
 -- Maximised view since by default the window is small
 config.initial_rows = 35
@@ -24,6 +26,9 @@ config.window_decorations = "RESIZE"
 -- remove the annoying tab bar at the top
 config.enable_tab_bar = false
 
+-- remove the confirmation wizard asking Yes or No while Closing
+config.window_close_confirmation = "NeverPrompt"
+-------------------------------------------------------------------
 -------------------------------------------------------------------
 
 return config
