@@ -46,7 +46,7 @@ sudo dnf install brave-browser
 
 ```bash
 sudo dnf copr enable firminunderscore/zen-browser
-sudo dnf install zen-twilight-avx2
+sudo dnf install zen-twilight
 ```
 
 ## Rpm Fusion repos
