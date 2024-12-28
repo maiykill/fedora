@@ -242,7 +242,7 @@ background = "#191724"
 dim_foreground = "#908caa"
 bright_foreground = "#e0def4"
 [colors.cursor]
-text = "#191724"
+text = "#ff0000"
 cursor = "#00ff00"
 [colors.vi_mode_cursor]
 text = "#191724"
