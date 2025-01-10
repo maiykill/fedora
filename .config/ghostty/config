@@ -1,0 +1,25 @@
+
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+
+font-family = "CodeNewRoman Nerd Font"
+font-size = 17
+
+
+window-decoration = false
+window-height=39
+window-width=200
+
+
+cursor-color = #00ff00
+cursor-text = #ff0000
+cursor-style = block
+
+
+# shell-integration-features = no-cursor
+
+
+# theme = "duckbones"
+theme = "Harper"
+
+

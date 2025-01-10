@@ -19,3 +19,5 @@
 - logos
 - gitconfig
 - wezterm
+- zathura
+- ghostty
