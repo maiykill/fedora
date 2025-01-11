@@ -1,6 +1,6 @@
 # Fedora dot-files
 
-> Thinkpad L490 on Fedora  workstation 40
+> Thinkpad L490 on Fedora  workstation 40, 41
 
 - zshenv
 - zshrc
