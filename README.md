@@ -21,3 +21,4 @@
 - wezterm
 - zathura
 - ghostty
+- cursor-theme
