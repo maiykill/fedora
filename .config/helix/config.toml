@@ -1,5 +1,9 @@
-theme = "doom_acario_dark"
+theme = "dracula"
+# theme = "doom_aca"
 
 [editor]
 line-number = "relative"
 bufferline = "multiple"
+
+[keys.normal]
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw", ":reload-all"]
