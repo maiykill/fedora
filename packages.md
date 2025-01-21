@@ -72,5 +72,5 @@ sudo dnf install wezterm
 ## Others
 
 ```bash
-sudo dnf install btop mpv ffmpeg alacritty kitty chromium pcmanfm thunar nemo firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch yarnpkg zathura zathura-pdf-mupdf zathura-zsh-completion zathura-bash-completion zathura-cb zathura-djvu zathura-ps virtualenv prename perl-core
+sudo dnf install fzf google-noto-fonts-common axel qbittorent neovim git fd-find ripgrep lua helix ruby yarn intel-media-driver libva libva-utils gstreamer1-vaapi ffmpeg intel-gpu-tools mesa-dri-drivers python3-secretstorage zig yt-dlp aria2 chafa btop mpv ffmpeg alacritty kitty chromium pcmanfm thunar nemo firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch yarnpkg zathura zathura-pdf-mupdf zathura-zsh-completion zathura-bash-completion zathura-cb zathura-djvu zathura-ps virtualenv prename perl-core
 ```
