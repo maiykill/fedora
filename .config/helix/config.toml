@@ -1,9 +1,18 @@
-theme = "dracula"
-# theme = "doom_aca"
+# theme = "dracula"
+theme = "rose_pine"
 
 [editor]
 line-number = "relative"
 bufferline = "multiple"
 
 [keys.normal]
-C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw", ":reload-all"]
+C-g = [
+  ":new",
+  ":insert-output lazygit",
+  ":buffer-close!",
+  ":redraw",
+  ":reload-all",
+]
+
+[editor.file-picker]
+hidden = false

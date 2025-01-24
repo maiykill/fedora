@@ -30,6 +30,17 @@ cmd mkdir $mkdir -p "$@"
 set scrolloff 10
 
 
+
+
+
+cmd on-select &{{
+    lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+
+
+
+
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
       image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
@@ -96,15 +107,68 @@ cmd pasteoverride &{{
 
 
 
+cmd fzf_jump ${{
+    res="$(fd -H . | fzf --reverse --header="Fzf to location")"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
 
 
 
 
+cmd skim_jump ${{
+    res="$(sk --reverse --header="Skim to location")"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+
+
+
+
+cmd ripgrep_jump ${{
+    cmd="rg --column --line-number --no-heading --color=always --smart-case --hidden"
+    fzf --ansi --disabled --layout=reverse --header="Ripgrepping in files" --delimiter=: \
+        --bind="start:reload([ -n {q} ] && $cmd -- {q} || true)" \
+        --bind="change:reload([ -n {q} ] && $cmd -- {q} || true)" \
+        --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\''s/\\/\\\\/g;s/"/\\"/g'\'')\"")' \
+        --preview-window='+{2}-/2' \
+        --preview='bat --color=always --highlight-line={2} -- {1}'
+}}
+
+
+
+
+
+
+
+
+map f
+map e
+map ff :fzf_jump
+map fs :skim_jump
+map fr :ripgrep_jump
+map egv $$EDITOR $(fzf --preview='bat --color=always --style=grid {1}')
+map egh $hx .
+map eh $hx "$f"
+map ev $nvim "$f"
 map P pasteoverride
-map E extract
+map <gt> extract
 map o &mimeopen $f
 map O $mimeopen --ask $f
-map f $lf -remote "send $id select \"$(find . | fzf)\""
 map S shell
 map . calcdirsize
 map x push :mkdir<space>

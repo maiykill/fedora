@@ -3,5 +3,5 @@
 -- Add any additional keymaps here
 
 vim.keymap.set("n", "<C-/>", function()
-  LazyVim.terminal()
+  Snacks.terminal()
 end, { desc = "Terminal (cwd)" })

@@ -57,7 +57,6 @@
       <property name="&lt;Super&gt;q" type="string" value="qbittorrent"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;p" type="string" value="nemo"/>
       <property name="&lt;Super&gt;h" type="string" value="alacritty -e lf"/>
-      <property name="&lt;Super&gt;m" type="string" value="kitty -e btop"/>
       <property name="&lt;Super&gt;Delete" type="string" value="xfce4-session-logout"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;Delete" type="string" value="poweroff"/>
       <property name="&lt;Super&gt;l" type="string" value="libreoffice"/>
@@ -72,7 +71,6 @@
       <property name="&lt;Super&gt;e" type="string" value="idle3"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;h" type="string" value="xfce4-terminal -x lf"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;h" type="string" value="kitty -e lf"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;e" type="string" value="codium"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;g" type="string" value="inkscape"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;b" type="string" value="chromium-browser"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;Return" type="string" value="wezterm"/>
@@ -80,6 +78,12 @@
       <property name="&lt;Super&gt;b" type="string" value="brave-browser  --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;b" type="string" value="firefox"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;b" type="string" value="zen-twilight"/>
+      <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Super&gt;Return" type="string" value="ghostty"/>
+      <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Super&gt;h" type="string" value="ghostty -e lf"/>
+      <property name="&lt;Primary&gt;&lt;Super&gt;m" type="string" value="kitty -e btop"/>
+      <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Super&gt;m" type="string" value="ghostty -e btop"/>
+      <property name="&lt;Alt&gt;&lt;Super&gt;m" type="string" value="wezterm -e btop"/>
+      <property name="&lt;Super&gt;m" type="string" value="alacritty -e btop"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
@@ -175,11 +179,8 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;numbersign" type="string" value="move_window_workspace_3_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;dollar" type="string" value="move_window_workspace_4_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;percent" type="string" value="move_window_workspace_5_key"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;asciicircum" type="string" value="move_window_workspace_6_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;ampersand" type="string" value="move_window_workspace_7_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;asterisk" type="string" value="move_window_workspace_8_key"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;parenleft" type="string" value="move_window_workspace_9_key"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;parenright" type="string" value="move_window_workspace_10_key"/>
       <property name="&lt;Super&gt;equal" type="string" value="tile_up_key"/>
       <property name="&lt;Super&gt;minus" type="string" value="tile_down_key"/>
       <property name="&lt;Super&gt;bracketleft" type="string" value="tile_left_key"/>
@@ -189,7 +190,6 @@
       <property name="&lt;Super&gt;3" type="string" value="workspace_3_key"/>
       <property name="&lt;Super&gt;4" type="string" value="workspace_4_key"/>
       <property name="&lt;Super&gt;5" type="string" value="workspace_5_key"/>
-      <property name="&lt;Super&gt;6" type="string" value="workspace_6_key"/>
       <property name="&lt;Super&gt;7" type="string" value="workspace_7_key"/>
       <property name="&lt;Super&gt;8" type="string" value="workspace_8_key"/>
       <property name="&lt;Super&gt;9" type="string" value="workspace_9_key"/>
@@ -210,6 +210,10 @@
       <property name="&lt;Super&gt;Down" type="string" value="down_workspace_key"/>
       <property name="&lt;Super&gt;Left" type="string" value="left_workspace_key"/>
       <property name="&lt;Super&gt;Right" type="string" value="right_workspace_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;asciitilde" type="string" value="move_window_workspace_6_key"/>
+      <property name="&lt;Super&gt;grave" type="string" value="workspace_6_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;parenleft" type="string" value="move_window_workspace_9_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;parenright" type="string" value="move_window_workspace_10_key"/>
     </property>
   </property>
   <property name="providers" type="array">
