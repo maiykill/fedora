@@ -36,6 +36,7 @@
 - apart - purithu podurathu
 - abrasive - karadu muradaana
 - distasteful - unarchi illamal,
+- clumsy - mandhama, bad, ungraceful
 
 ## channels
 
