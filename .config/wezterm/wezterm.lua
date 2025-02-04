@@ -17,7 +17,8 @@ config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" })
 config.colors = { cursor_fg = "#ff0000", cursor_bg = "#00ff00" }
 
 ---- Color Scheme ----
-config.color_scheme = "WildCherry"
+-- config.color_scheme = "WildCherry"
+config.color_scheme = "Vacuous 2 (terminal.sexy)"
 
 ---- Maximised view since by default the window is small ----
 config.initial_rows = 35

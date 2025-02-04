@@ -23,7 +23,7 @@
 - repercussion - pinvilaivu, vilaivu
 - consortion - alliance, kootam
 - circumvent - kadanthu porathu
-- unjustifiable - gyayapasutha mudiyatha
+- unjustifiable - gyayapadutha mudiyatha
 - look down the nose - the superior attitude
 - outearn - athigama sambathikurathu
 - volition - virupathuku utpatta mudivu, viruppam
@@ -37,6 +37,9 @@
 - abrasive - karadu muradaana
 - distasteful - unarchi illamal,
 - clumsy - mandhama, bad, ungraceful
+- credibility - reliability
+- unlikely - vaipillai
+- snickering - manthamana sirupu, or paathi adaki vaicha siripu
 
 ## channels
 

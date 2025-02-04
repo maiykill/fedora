@@ -22,4 +22,4 @@
 - wezterm
 - zathura
 - ghostty
-- cursor-theme
+- mouse-cursor-themes

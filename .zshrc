@@ -115,6 +115,7 @@ dotter ()
   ln -f ~/.config/helix/config.toml ~/Programs/fedora/.config/helix/config.toml
   ln -f ~/.config/helix/languages.toml ~/Programs/fedora/.config/helix/languages.toml
   ln -f ~/.config/kitty/kitty.conf ~/Programs/fedora/.config/kitty/kitty.conf
+  ln -f ~/.config/kitty/current-theme.conf ~/Programs/fedora/.config/kitty/current-theme.conf
   ln -f ~/.config/lf/colors ~/Programs/fedora/.config/lf/colors
   ln -f ~/.config/lf/icons ~/Programs/fedora/.config/lf/icons
   ln -f ~/.config/lf/lfrc ~/Programs/fedora/.config/lf/lfrc
