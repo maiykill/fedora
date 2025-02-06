@@ -39,7 +39,7 @@
 - clumsy - mandhama, bad, ungraceful
 - credibility - reliability
 - unlikely - vaipillai
-- snickering - manthamana sirupu, or paathi adaki vaicha siripu
+- snickering - manthamana sirupu, or paathi adaki vacha siripu
 
 ## channels
 
