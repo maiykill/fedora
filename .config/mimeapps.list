@@ -89,3 +89,6 @@ text/x-java=nvim.desktop``
 application/x-terminal=Alacritty.desktop
 x-scheme-handler/terminal=alacritty.desktop
 application/toml=nvim.desktop
+
+[Added Associations]
+image/jpeg=gimp.desktop;

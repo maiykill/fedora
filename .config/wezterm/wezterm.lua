@@ -18,7 +18,8 @@ config.colors = { cursor_fg = "#ff0000", cursor_bg = "#00ff00" }
 
 ---- Color Scheme ----
 -- config.color_scheme = "WildCherry"
-config.color_scheme = "Vacuous 2 (terminal.sexy)"
+-- config.color_scheme = 'Vesper'
+config.color_scheme = 'Vag (Gogh)'
 
 ---- Maximised view since by default the window is small ----
 config.initial_rows = 35

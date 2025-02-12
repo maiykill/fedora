@@ -1,3 +1,7 @@
+-- if true then
+--   return {}
+-- end
+
 return {
   "folke/snacks.nvim",
   keys = {
@@ -31,20 +35,38 @@ return {
           hidden = true,
         },
       },
-      layout = {
-        layout = {
-          box = "horizontal",
-          width = 0.95,
-          min_width = 120,
-          height = 0.9,
-          {
-            box = "vertical",
-            border = "rounded",
-            title = "{title} {live} {flags}",
-            { win = "input", height = 1, border = "bottom" },
-            { win = "list", border = "none" },
+      -- layout = {
+      --   layout = {
+      --     box = "horizontal",
+      --     width = 0.95,
+      --     min_width = 120,
+      --     height = 0.9,
+      --     {
+      --       box = "vertical",
+      --       border = "rounded",
+      --       title = "{title} {live} {flags}",
+      --       { win = "input", height = 1, border = "bottom" },
+      --       { win = "list", border = "none" },
+      --     },
+      --     { win = "preview", title = "{preview}", border = "rounded", width = 0.45 },
+      --   },
+      -- },
+      layouts = {
+        default = {
+          layout = {
+            -- box = "horizontal",
+            width = 0.95,
+            -- min_width = 120,
+            height = 0.9,
+            -- {
+            --   box = "vertical",
+            --   border = "rounded",
+            --   title = "{title} {live} {flags}",
+            --   { win = "input", height = 1, border = "bottom" },
+            --   { win = "list", border = "none" },
+            -- },
+            -- { win = "preview", title = "{preview}", border = "rounded", width = 0.5 },
           },
-          { win = "preview", title = "{preview}", border = "rounded", width = 0.45 },
         },
       },
     },
