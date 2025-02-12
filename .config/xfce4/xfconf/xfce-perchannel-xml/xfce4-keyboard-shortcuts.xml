@@ -72,7 +72,6 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;h" type="string" value="xfce4-terminal -x lf"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;h" type="string" value="kitty -e lf"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;g" type="string" value="inkscape"/>
-      <property name="&lt;Alt&gt;&lt;Super&gt;b" type="string" value="chromium-browser"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;Return" type="string" value="wezterm"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;h" type="string" value="wezterm -e lf"/>
       <property name="&lt;Super&gt;b" type="string" value="brave-browser  --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer"/>
@@ -84,6 +83,7 @@
       <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Super&gt;m" type="string" value="ghostty -e btop"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;m" type="string" value="wezterm -e btop"/>
       <property name="&lt;Super&gt;m" type="string" value="alacritty -e btop"/>
+      <property name="&lt;Alt&gt;&lt;Super&gt;b" type="string" value="chromium-browser --use-angle=vulkan --enable-zero-copy--enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
