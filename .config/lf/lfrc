@@ -5,11 +5,8 @@
 #$ sudo dnf install chafa
 
 ## Experimental stuffs
-set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
 set incsearch true
-set previewer ~/.config/lf/previewer
 set sixel true
-set dupfilefmt "%f.newer%n" 
 
 
 
@@ -28,11 +25,12 @@ set info size:time
 set icons true
 cmd mkdir $mkdir -p "$@"
 set scrolloff 10
+set previewer ~/.config/lf/previewer
+set dupfilefmt "%f.newer%n" 
+set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
 
 
-
-
-
+### Custom Commands
 cmd on-select &{{
     lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
 }}
@@ -154,8 +152,7 @@ cmd ripgrep_jump ${{
 
 
 
-
-
+## Custom Mappings
 map f
 map e
 map ff :fzf_jump
