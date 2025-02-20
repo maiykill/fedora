@@ -23,3 +23,6 @@ if [ -d ~/.bashrc.d ]; then
   done
 fi
 unset rc
+
+# Golang specifics
+export GOPATH=$HOME/.local/go

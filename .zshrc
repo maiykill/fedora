@@ -34,6 +34,9 @@ ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan,bold
 ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan,bold
 
 
+# Golang specifics
+export GOPATH=$HOME/.local/go
+
 ### XDG_RUNTIME_DIR for mpv hardware acceleration
 ## if [ -z "$XDG_RUNTIME_DIR" ]; then
 ##     export XDG_RUNTIME_DIR=/tmp
