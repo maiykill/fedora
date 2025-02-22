@@ -15,6 +15,7 @@
 #command = "/home/mike/.local/share/nvim/mason/bin/ruff"
 #args = ["server"]
 
+### Python ###
 
 ## Only Pylyzer configuration
 [[language]]
@@ -23,3 +24,5 @@ language-servers = ["pylyzer"]
 [language-server.pylyzer]
 command = "pylyzer"
 args = ["--server"]
+
+### Python ###

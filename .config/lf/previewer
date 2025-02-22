@@ -8,4 +8,7 @@ image/*)
 text/*)
   bat --color=always --style=plain "$1"
   ;;
+application/javascript)
+  bat --color=always --style=plain "$1"
+  ;;
 esac

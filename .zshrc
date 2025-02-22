@@ -37,14 +37,17 @@ ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan,bold
 # Golang specifics
 export GOPATH=$HOME/.local/go
 
-### XDG_RUNTIME_DIR for mpv hardware acceleration
-## if [ -z "$XDG_RUNTIME_DIR" ]; then
-##     export XDG_RUNTIME_DIR=/tmp
-##     if [ ! -d  "$XDG_RUNTIME_DIR" ]; then
-##         mkdir "$XDG_RUNTIME_DIR"
-##         chmod 0700 "$XDG_RUNTIME_DIR"
-##     fi
-## fi
+# Zoxide Command
+eval "$(zoxide init --cmd cd zsh)"
+
+# XDG_RUNTIME_DIR for mpv hardware acceleration
+ if [ -z "$XDG_RUNTIME_DIR" ]; then
+     export XDG_RUNTIME_DIR=/tmp
+     if [ ! -d  "$XDG_RUNTIME_DIR" ]; then
+         mkdir "$XDG_RUNTIME_DIR"
+         chmod 0700 "$XDG_RUNTIME_DIR"
+     fi
+ fi
 
 
 #NOTE: Experimental features on 2025-01-24 19:57
