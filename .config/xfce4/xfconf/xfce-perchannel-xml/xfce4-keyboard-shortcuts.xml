@@ -55,7 +55,6 @@
         <property name="startup-notify" type="bool" value="true"/>
       </property>
       <property name="&lt;Super&gt;q" type="string" value="qbittorrent"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;p" type="string" value="nemo"/>
       <property name="&lt;Super&gt;h" type="string" value="alacritty -e lf"/>
       <property name="&lt;Super&gt;Delete" type="string" value="xfce4-session-logout"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;Delete" type="string" value="poweroff"/>
@@ -67,7 +66,6 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;Print" type="string" value="xfce4-screenshooter --no-border"/>
       <property name="&lt;Super&gt;Print" type="string" value="xfce4-screenshooter -f"/>
       <property name="&lt;Super&gt;p" type="string" value="thunar"/>
-      <property name="&lt;Primary&gt;&lt;Super&gt;p" type="string" value="pcmanfm"/>
       <property name="&lt;Super&gt;e" type="string" value="idle3"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;h" type="string" value="xfce4-terminal -x lf"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;h" type="string" value="kitty -e lf"/>
@@ -83,7 +81,9 @@
       <property name="&lt;Alt&gt;&lt;Super&gt;m" type="string" value="wezterm -e btop"/>
       <property name="&lt;Super&gt;m" type="string" value="alacritty -e btop"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;b" type="string" value="chromium-browser --use-angle=vulkan --enable-zero-copy--enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;b" type="string" value="zen-browser"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;b" type="string" value="zen-twilight"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;p" type="string" value="pcmanfm"/>
+      <property name="&lt;Super&gt;w" type="string" value="zen-browser"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
