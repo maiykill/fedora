@@ -24,9 +24,58 @@ setopt share_history
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
-# prompt ZSH
-autoload -Uz promptinit && promptinit
-prompt adam2
+## prompt ZSH start
+# autoload -Uz promptinit && promptinit
+# prompt adam2
+## OR
+## Initialize Zsh modules FIRST for the prompt
+autoload -Uz vcs_info
+autoload -Uz colors && colors
+setopt PROMPT_SUBST
+# Git Configuration
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats ' %b'
+zstyle ':vcs_info:git:*' actionformats ' %b|%a'
+# Command Execution Time Tracking (No Italics)
+typeset -g CMD_START_TIME=0
+typeset -g CMD_TIME=""
+format_time() {
+  local total_seconds=$1
+  if ((total_seconds >= 60)); then
+    printf "%dm%ds" $((total_seconds / 60)) $((total_seconds % 60))
+  else
+    printf "%ds" $total_seconds
+  fi
+}
+preexec() { CMD_START_TIME=$SECONDS }
+precmd() {
+  vcs_info  # Git info
+  # Calculate command execution time
+  if (( CMD_START_TIME > 0 )); then
+    local elapsed=$((SECONDS - CMD_START_TIME))
+    if ((elapsed >= 1)); then
+      CMD_TIME="%B%F{cyan} $(format_time $elapsed)%f%b"  # Bold cyan, no italic
+    else
+      CMD_TIME=""
+    fi
+    CMD_START_TIME=0
+  else
+    CMD_TIME=""
+  fi
+  # Virtual Environment Prompt
+  VENV_PROMPT=""
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    VENV_PROMPT="%F{red}(%f%F{yellow}venv%F{red})%f "
+  fi
+}
+# PROMPT Definition (Simplified and Robust)
+PROMPT='%B%F{magenta}[%~]%f ${VENV_PROMPT}%F{green}${vcs_info_msg_0_}%f %(?.%F{green}🗸.%F{red}✘)%f${CMD_TIME} %F{yellow}%f%b '
+#The prompt is like below
+# (python) [~/Programs/python] (venv)  main 🗸 1s 
+## prompt ZSH end
+
+
+
 
 ## Changing the syntax colour to blue from the default green i guess!
 ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=cyan,bold
@@ -53,8 +102,6 @@ eval "$(zoxide init --cmd cd zsh)"
 #NOTE: Experimental features on 2025-01-24 19:57
 # stop the ctrl+s freeze.
 stty stop undef
-# colors
-autoload -Uz colors && colors
 
 
 
