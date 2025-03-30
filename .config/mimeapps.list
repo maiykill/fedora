@@ -92,3 +92,5 @@ application/toml=nvim.desktop
 
 [Added Associations]
 image/jpeg=gimp.desktop;
+video/webm=vlc.desktop;
+video/x-matroska=vlc.desktop;
