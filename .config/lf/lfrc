@@ -41,8 +41,8 @@ cmd on-select &{{
 
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
-      image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
       text/*|application/json|inode/x-empty|application/x-subrip) "$EDITOR" $fx;;
+      image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
       image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
       image/svg+xml) display -- $f ;;
       image/*) setsid -f nomacs $fx 2>/dev/null		;;
