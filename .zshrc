@@ -24,55 +24,236 @@ setopt share_history
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
-## prompt ZSH start
-# autoload -Uz promptinit && promptinit
-# prompt adam2
-## OR
-## Initialize Zsh modules FIRST for the prompt
-autoload -Uz vcs_info
+# old # ## prompt ZSH start
+# old # # autoload -Uz promptinit && promptinit
+# old # # prompt adam2
+# old # ## OR
+# old # ## Initialize Zsh modules FIRST for the prompt
+# old # autoload -Uz vcs_info
+# old # autoload -Uz colors && colors
+# old # setopt PROMPT_SUBST
+# old # # Git Configuration
+# old # zstyle ':vcs_info:*' enable git
+# old # zstyle ':vcs_info:git:*' formats ' %b'
+# old # zstyle ':vcs_info:git:*' actionformats ' %b|%a'
+# old # # Command Execution Time Tracking (No Italics)
+# old # typeset -g CMD_START_TIME=0
+# old # typeset -g CMD_TIME=""
+# old # # Old time with only minutes and seconds
+# old # # format_time() {
+# old # #   local total_seconds=$1
+# old # #   if ((total_seconds >= 60)); then
+# old # #     printf "%dm%ds" $((total_seconds / 60)) $((total_seconds % 60))
+# old # #   else
+# old # #     printf "%ds" $total_seconds
+# old # #   fi
+# old # # }
+# old # format_time() {
+# old #   local total_seconds=$1
+# old #   if ((total_seconds >= 3600)); then
+# old #     local hours=$((total_seconds / 3600))
+# old #     local remaining_seconds=$((total_seconds % 3600))
+# old #     local minutes=$((remaining_seconds / 60))
+# old #     local seconds=$((remaining_seconds % 60))
+# old #     printf "%dh%dm%ds" $hours $minutes $seconds
+# old #   elif ((total_seconds >= 60)); then
+# old #     printf "%dm%ds" $((total_seconds / 60)) $((total_seconds % 60))
+# old #   else
+# old #     printf "%ds" $total_seconds
+# old #   fi
+# old # }
+# old # preexec() { CMD_START_TIME=$SECONDS }
+# old # precmd() {
+# old #   vcs_info  # Git info
+# old #   # Calculate command execution time
+# old #   if (( CMD_START_TIME > 0 )); then
+# old #     local elapsed=$((SECONDS - CMD_START_TIME))
+# old #     if ((elapsed >= 1)); then
+# old #       CMD_TIME="%B%F{cyan} $(format_time $elapsed)%f%b"  # Bold cyan, no italic
+# old #     else
+# old #       CMD_TIME=""
+# old #     fi
+# old #     CMD_START_TIME=0
+# old #   else
+# old #     CMD_TIME=""
+# old #   fi
+# old #   # Virtual Environment Prompt
+# old #   VENV_PROMPT=""
+# old #   if [[ -n "$VIRTUAL_ENV" ]]; then
+# old #     VENV_PROMPT="%F{red}(%f%F{yellow}venv%F{red})%f "
+# old #   fi
+# old # }
+# old # # PROMPT Definition (Simplified and Robust)
+# old # PROMPT='%B%F{magenta}[%~]%f ${VENV_PROMPT}%F{green}${vcs_info_msg_0_}%f %(?.%F{green}🗸.%F{red}✘)%f${CMD_TIME} %F{yellow}%f%b '
+# old # #The prompt is like below
+# old # # (python) [~/Programs/python] (venv)  main 🗸 1s 
+# old # ## prompt ZSH end
+
+
+# Old2 ## -*- mode: zsh -*-
+# Old2 ## PROMPT Configuration (Optimized)
+# Old2 ## --------------------------------
+# Old2 #
+# Old2 ## Load colors once at startup
+# Old2 #autoload -Uz colors && colors
+# Old2 #
+# Old2 ## Faster Git prompt
+# Old2 #async_git_info() {
+# Old2 #    ref=$(git branch --show-current 2>/dev/null) || return
+# Old2 #    [ -n "$ref" ] && echo " $ref"
+# Old2 #}
+# Old2 #
+# Old2 ## Time formatting with hours support
+# Old2 #format_time() {
+# Old2 #    local t=$1
+# Old2 #    (( t >= 3600 )) && printf "%dh%dm%ds" $((t/3600)) $((t%3600/60)) $((t%60)) && return
+# Old2 #    (( t >= 60 )) && printf "%dm%ds" $((t/60)) $((t%60)) && return
+# Old2 #    printf "%ds" $t
+# Old2 #}
+# Old2 #
+# Old2 ## Timing variables
+# Old2 #typeset -g cmd_start=0
+# Old2 #
+# Old2 ## Track command start time
+# Old2 #preexec() { cmd_start=$SECONDS }
+# Old2 #
+# Old2 ## Build prompt
+# Old2 #precmd() {
+# Old2 #    local exit_status=$?
+# Old2 #    local git_prompt=$(async_git_info)
+# Old2 #    local cmd_time=""
+# Old2 #
+# Old2 #    if (( cmd_start > 0 )); then
+# Old2 #        local duration=$((SECONDS - cmd_start))
+# Old2 #        if (( duration >= 1 )); then
+# Old2 #            cmd_time="%B%F{cyan} $(format_time $duration)%f%b"
+# Old2 #        fi
+# Old2 #        cmd_start=0  # Reset after calculation
+# Old2 #    fi
+# Old2 #
+# Old2 #    local venv_prompt=""
+# Old2 #    [[ -n "$VIRTUAL_ENV" ]] && venv_prompt="%F{red}(%F{yellow}venv%F{red})%f "
+# Old2 #
+# Old2 #    PROMPT="%B%F{magenta}[%~]%f ${venv_prompt}%F{green}${git_prompt}%f "
+# Old2 #    PROMPT+="%(?.%F{green}🗸.%F{red}✘)%f${cmd_time} %F{yellow}%f%b "
+# Old2 #}
+# Old2 #
+# Old2 ## Initial prompt
+# Old2 #PROMPT='%B%F{magenta}[%~]%f %F{yellow}%f%b '
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# -*- mode: zsh -*-
+# Corrected Enhanced PROMPT Configuration
+# ---------------------------------------
+
+# Load colors once at startup
 autoload -Uz colors && colors
-setopt PROMPT_SUBST
-# Git Configuration
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats ' %b'
-zstyle ':vcs_info:git:*' actionformats ' %b|%a'
-# Command Execution Time Tracking (No Italics)
-typeset -g CMD_START_TIME=0
-typeset -g CMD_TIME=""
-format_time() {
-  local total_seconds=$1
-  if ((total_seconds >= 60)); then
-    printf "%dm%ds" $((total_seconds / 60)) $((total_seconds % 60))
-  else
-    printf "%ds" $total_seconds
-  fi
-}
-preexec() { CMD_START_TIME=$SECONDS }
-precmd() {
-  vcs_info  # Git info
-  # Calculate command execution time
-  if (( CMD_START_TIME > 0 )); then
-    local elapsed=$((SECONDS - CMD_START_TIME))
-    if ((elapsed >= 1)); then
-      CMD_TIME="%B%F{cyan} $(format_time $elapsed)%f%b"  # Bold cyan, no italic
-    else
-      CMD_TIME=""
+
+# Git prompt with caching and remote tracking
+typeset -g last_git_check=0 git_cache=""
+async_git_info() {
+    # Check cache (5 second TTL)
+    if (( $(date +%s) < last_git_check + 5 )) && [[ -n "$git_cache" ]]; then
+        echo "$git_cache"
+        return
     fi
-    CMD_START_TIME=0
-  else
-    CMD_TIME=""
-  fi
-  # Virtual Environment Prompt
-  VENV_PROMPT=""
-  if [[ -n "$VIRTUAL_ENV" ]]; then
-    VENV_PROMPT="%F{red}(%f%F{yellow}venv%F{red})%f "
-  fi
+
+    # Get Git info
+    ref=$(git branch --show-current 2>/dev/null) || return
+    [ -z "$ref" ] && return
+
+    # Dirty state
+    dirty=""
+    [ -n "$(git status -s 2>/dev/null)" ] && dirty=" ±"
+
+    # Remote tracking
+    local ahead=0 behind=0
+    git rev-list --count --left-right @{upstream}...HEAD 2>/dev/null | IFS=$'\t' read behind ahead
+    remote_status=""
+    (( behind > 0 )) && remote_status+=" ↓$behind"
+    (( ahead > 0 )) && remote_status+=" ↑$ahead"
+
+    # Build cache
+    git_cache=" ${ref}${dirty}${remote_status}"
+    last_git_check=$(date +%s)
+    echo "$git_cache"
 }
-# PROMPT Definition (Simplified and Robust)
-PROMPT='%B%F{magenta}[%~]%f ${VENV_PROMPT}%F{green}${vcs_info_msg_0_}%f %(?.%F{green}🗸.%F{red}✘)%f${CMD_TIME} %F{yellow}%f%b '
-#The prompt is like below
-# (python) [~/Programs/python] (venv)  main 🗸 1s 
-## prompt ZSH end
+
+# Time formatting with hours support
+format_time() {
+    local t=$1
+    (( t >= 3600 )) && printf "%dh%dm%ds" $((t/3600)) $((t%3600/60)) $((t%60)) && return
+    (( t >= 60 )) && printf "%dm%ds" $((t/60)) $((t%60)) && return
+    printf "%ds" $t
+}
+
+# Timing variables
+typeset -g cmd_start=0
+
+# Track command start time
+preexec() { cmd_start=$SECONDS }
+
+# Random color header
+colors=(red green yellow blue magenta cyan)
+random_color() {
+    echo "${colors[$RANDOM % 6 + 1]}"
+}
+
+# Build prompt
+precmd() {
+    local exit_status=$?
+    local git_prompt=$(async_git_info)
+    local cmd_time=""
+
+    # Command timing
+    if (( cmd_start > 0 )); then
+        local duration=$((SECONDS - cmd_start))
+        if (( duration >= 1 )); then
+            cmd_time="%B%F{cyan} $(format_time $duration)%f%b"
+        fi
+        cmd_start=0
+    fi
+
+    # Virtual environment
+    local venv_prompt=""
+    [[ -n "$VIRTUAL_ENV" ]] && venv_prompt="%F{red}(%F{yellow}venv%F{red})%f "
+
+    # Random color header
+    local header_color="%F{$(random_color)}"
+
+    # Construct prompt
+    PROMPT="${header_color}╭─%f %B%F{magenta}[%~]%f "
+    PROMPT+="${venv_prompt}"
+    PROMPT+="%F{green}${git_prompt}%f "
+    PROMPT+="%(?.%F{green}🗸.%F{red}✘ %F{white}%? )%f${cmd_time}"
+    PROMPT+=$'\n'"${header_color}╰─%f %F{yellow}%f%b "
+}
+
+# Initial prompt
+PROMPT='%F{cyan}╭─%f%B%F{magenta}[%~]%f %F{yellow}%f%b\n%F{cyan}╰─%f '
+
+
+
+
+
+
+
+
+
+
+
 
 
 
