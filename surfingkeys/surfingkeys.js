@@ -9,7 +9,29 @@
  *
  * */
 
-
+// Search engines
+api.addSearchAlias(
+    'a',  // Shortcut key
+    'yandex',  // Display name
+    'https://yandex.com/search/?text=%s'  // Search URL
+);
+api.addSearchAlias(
+    'b', // Shortcut key (use sb/ob to search)
+    'brave', // Display name
+    'https://search.brave.com/search?q=%s', // Search URL
+    's', // Suggestion type
+    'https://search.brave.com/api/suggest?q=%s', // Suggestions endpoint
+    function(response) {
+        try {
+            const suggestions = JSON.parse(response.text)[1];
+            return suggestions || [];
+        } catch(e) {
+            return [];
+        }
+    }
+);
+api.removeSearchAlias('h');
+api.removeSearchAlias('s');
 
 
 const hintsCss =
@@ -17,6 +39,7 @@ const hintsCss =
 
 api.Hints.style(hintsCss);
 api.Hints.style(hintsCss, "text");
+
 
 settings.theme = `
   .sk_theme {
