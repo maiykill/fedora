@@ -1,19 +1,26 @@
 /*
- *
- *
- *
-    This is a config file for surfing keys with 
-    minor tweaks along with Rose-Pine theme.
- *
- *
- *
- * */
+*  Theme:                   Rosé Pine
+*  Font:                    Fira Sans SemiBold
+*  Keybindings Removed:     f,>>,<<
+*  Search Engines Added:    Brave, Yandex
+*  Search Engines Removes:  Baidu, Stack exchange, Github
+*/
 
 // Search engines
 api.addSearchAlias(
-    'a',  // Shortcut key
-    'yandex',  // Display name
-    'https://yandex.com/search/?text=%s'  // Search URL
+    'a',
+    'yandex',
+    'https://yandex.com/search/?text=%s',
+    's',
+    'https://suggest.yandex.com/suggest-ff.cgi?part=%s',
+    function(response) {
+        try {
+            const suggestions = JSON.parse(response.text)[1];
+            return suggestions || [];
+        } catch(e) {
+            return [];
+        }
+    }
 );
 api.addSearchAlias(
     'b', // Shortcut key (use sb/ob to search)
@@ -33,7 +40,12 @@ api.addSearchAlias(
 api.removeSearchAlias('h');
 api.removeSearchAlias('s');
 
+// Remove "f", ">>", "<<" keymaps
+api.unmap(">>", /youtube/)
+api.unmap("<<", /youtube/)
+api.unmap("f")
 
+// Theme settings
 const hintsCss =
   "font-size: 12pt; font-family: 'Fira Sans SemiBold', 'JetBrains Mono NL', 'Cascadia Code', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 1px; color: #f6c177 !important; background: #31748f; background-color: #191724";
 
@@ -472,4 +484,3 @@ settings.theme = `
     }
   }
 `;
-
