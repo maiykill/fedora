@@ -1,20 +1,11 @@
-/*
- *
- *
- *
-    This is a config file for surfing keys with 
-    major tweak for surfing keys
-    with Redpine theme.
- *
- *
- *
- * */
-
-
-
+// name: Rosé Pine
+// author: thuanowa
+// license: unlicense
+// upstream: https://github.com/rose-pine/surfingkeys/blob/main/dist/rose-pine.conf
+// blurb: All natural pine, faux fur and a bit of soho vibes for the classy minimalist
 
 const hintsCss =
-  "font-size: 12pt; font-family: 'JetBrains Mono NL', 'Cascadia Code', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 1px; color: #f6c177 !important; background: #31748f; background-color: #191724";
+  "font-size: 13pt; font-family: 'JetBrains Mono NL', 'Cascadia Code', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 0px; color: #e0def4 !important; background: #191724; background-color: #191724";
 
 api.Hints.style(hintsCss);
 api.Hints.style(hintsCss, "text");
@@ -36,13 +27,12 @@ settings.theme = `
   .sk_theme kbd {
     background: #26233a;
     color: #e0def4;
-    font-size: 15px;
   }
   .sk_theme .frame {
     background: #1f1d2e;
   }
   .sk_theme .omnibar_highlight {
-    color: #eb6f92;
+    color: #403d52;
   }
   .sk_theme .omnibar_folder {
     color: #e0def4;
@@ -60,13 +50,13 @@ settings.theme = `
     color: #e0def4;
   }
   .sk_theme .separator {
-    color: #f6c177;
+    color: #524f67;
   }
   body {
     margin: 0;
 
     font-family: "JetBrains Mono NL", "Cascadia Code", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 12px;
   }
   #sk_omnibar {
     overflow: hidden;
@@ -75,7 +65,7 @@ settings.theme = `
     max-height: 80%;
     left: 10%;
     text-align: left;
-    box-shadow: 5px 5px 10px #f6c177;
+    box-shadow: 0px 2px 10px #21202e;
     z-index: 2147483000;
   }
   .sk_omnibar_middle {
@@ -84,7 +74,7 @@ settings.theme = `
   }
   .sk_omnibar_bottom {
     bottom: 0;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 0px 0px;
   }
   #sk_omnibar span.omnibar_highlight {
     text-shadow: 0 0 0.01em;
@@ -108,7 +98,7 @@ settings.theme = `
   #sk_omnibarSearchArea {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #f6c177;
+    border-bottom: 1px solid #524f67;
   }
   .sk_omnibar_middle #sk_omnibarSearchArea {
     margin: 0.5rem 1rem;
@@ -135,7 +125,7 @@ settings.theme = `
   }
   #sk_omnibarSearchResult>ul>li {
     padding: 0.2rem 0rem;
-    display: flex;
+    display: block;
     max-height: 600px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -144,7 +134,7 @@ settings.theme = `
     background: #1f1d2e;
   }
   .sk_theme #sk_omnibarSearchResult>ul>li.focused {
-    background: #31748f;
+    background: #26233a;
   }
   .sk_theme #sk_omnibarSearchResult>ul>li.window {
     border: 2px solid #524f67;
@@ -163,12 +153,10 @@ settings.theme = `
   }
   #sk_omnibarSearchResult li div.title {
     text-align: left;
-    color: #9ccfd8;
-    font-weight: bold;
   }
   #sk_omnibarSearchResult li div.url {
+    font-weight: bold;
     white-space: nowrap;
-    font-weight: normal;
   }
   #sk_omnibarSearchResult li.focused div.url {
     white-space: normal;
@@ -180,8 +168,7 @@ settings.theme = `
     display: inline-block;
     padding: 5px;
     margin: 5px;
-    box-shadow: 2px 2px 10px #21202e;
-    
+    box-shadow: 0px 2px 10px #21202e;
   }
   #sk_status {
     position: fixed;
@@ -206,11 +193,11 @@ settings.theme = `
     display: inline-block;
   }
   .expandRichHints kbd>.candidates {
-    color: #eb6f92;
+    color: #e0def4;
     font-weight: bold;
   }
   .expandRichHints kbd {
-    padding: 3px 3px;
+    padding: 1px 2px;
   }
   #sk_find {
     border-style: none;
@@ -275,11 +262,11 @@ settings.theme = `
     white-space: nowrap;
     display: inline-block;
     padding: 3px 5px;
-    font: 12px "JetBrains Mono NL", "Cascadia Code", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 11px "JetBrains Mono NL", "Cascadia Code", "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 10px;
     vertical-align: middle;
     border: solid 1px #524f67;
-    border-bottom-color: #524f67;
+    border-bottom-lolor: #524f67;
     border-radius: 3px;
     box-shadow: inset 0 -1px 0 #21202e;
   }
@@ -290,9 +277,8 @@ settings.theme = `
     top: -3rem;
     z-index: 2147483000;
     width: 80%;
-    border-radius: 8px 8px 8px 8px;
-    border: 2px solid #6e6a8;
-    color: #eb6f92;
+    border-radius: 0px 0px 4px 4px;
+    border: 1px solid #524f67;
     border-top-style: none;
     text-align: center;
     background: #191724;
@@ -311,15 +297,21 @@ settings.theme = `
     z-index: 2147483000;
   }
   div.sk_tab {
-    display: inline-block;
+    display: inline-flex;
+    height: 28px;
+    width: 202px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
     border-radius: 3px;
     padding: 10px 20px;
     margin: 5px;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#191726), color-stop(100%,#191724));
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#191724), color-stop(100%,#191724));
     box-shadow: 0px 3px 7px 0px #21202e;
   }
   div.sk_tab_wrap {
     display: inline-block;
+    flex: 1;
   }
   div.sk_tab_icon {
     display: inline-block;
@@ -332,7 +324,7 @@ settings.theme = `
     width: 150px;
     display: inline-block;
     vertical-align: middle;
-    font-size: 11pt;
+    font-size: 10pt;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -351,12 +343,19 @@ settings.theme = `
     float:right;
     font-size: 10pt;
     font-weight: bold;
-    padding: 2px 2px 2px 2px;
+    padding: 0px 2px 0px 2px;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#191724), color-stop(100%,#191724));
-    color: #f6c177;
+    color: #e0def4;
     border: solid 1px #524f67;
     border-radius: 3px;
     box-shadow: #21202e;
+  }
+  #sk_tabs.vertical div.sk_tab_hint {
+    position: initial;
+    margin-inline: 0;
+  }
+  div.tab_rocket {
+    display: none;
   }
   #sk_bubble {
     position: absolute;
@@ -364,7 +363,7 @@ settings.theme = `
     border: 1px solid #524f67;
     border-radius: 4px;
     box-shadow: 0 0 20px #21202e;
-    color: #f6c177;
+    color: #e0def4;
     background-color: #191724;
     z-index: 2147483000;
     font-size: 14px;
@@ -385,7 +384,7 @@ settings.theme = `
     background-image: linear-gradient(transparent, #191724);
   }
   #sk_bubble * {
-    color: #f6c177 !important;
+    color: #e0def4 !important;
   }
   div.sk_arrow>div:nth-of-type(1) {
     left: 0;
@@ -410,7 +409,7 @@ settings.theme = `
     background: transparent;
   }
   div.sk_arrow[dir=down]>div:nth-of-type(2) {
-    border-top: 10px solid #f6c177;
+    border-top: 10px solid #e0def4;
   }
   div.sk_arrow[dir=up]>div:nth-of-type(2) {
     top: 2px;
@@ -435,7 +434,3 @@ settings.theme = `
     }
   }
 `;
-
-
-
-
