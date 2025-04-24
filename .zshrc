@@ -198,10 +198,11 @@ alias free='free -m'
 alias grep='grep --color=auto'
 alias free="free -mth"
 alias probe="sudo -E hw-probe -all -upload"
-alias m3="mpv '--ytdl-format=bestvideo[height=360]+worstaudio'"
-alias m4="mpv '--ytdl-format=bestvideo[height=480]+worstaudio'"
-alias m7="mpv '--ytdl-format=bestvideo[height=720]+worstaudio'"
-alias m10="mpv '--ytdl-format=bestvideo[height=1080]+worstaudio'"
+alias m3="mpv '--ytdl-format=bv*[height=360]+wa*'"
+alias m4="mpv '--ytdl-format=bv*[height=480]+wa*'"
+alias m7="mpv '--ytdl-format=bv*[height=720]+wa*'"
+alias m10="mpv '--ytdl-format=bv*[height=1080]+wa*'"
+alias myo="mpv '--ytdl-format=bv*[vcodec!*=av01]+ba*'"
 alias pdf="soffice --headless --convert-to pdf"
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -220,7 +221,8 @@ alias xm='vim ~/.config/mpv/mpv.conf'
 alias xp='vim ~/.config/polybar/config'
 alias xv='vim ~/.vimrc'
 alias xq="vim ~/.config/qtile/config.py"
-alias ymp3='yt-dlp --extract-audio --audio-format mp3 '
+alias ymp3='yt-dlp --extract-audio --audio-format mp3'
+alias yopus='yt-dlp --extract-audio --audio-format opus'
 alias merge='xrdb -merge ~/.Xresources'
 alias backup='rsync -av /home/mike/.bashrc /home/mike/.zshrc /home/mike/.zshrc-personal /home/mike/.local/share/fonts /home/mike/.bashrc-personal /home/mike/.vimrc /home/mike/.Xresources /home/mike/.vim /home/mike/.config/i3 /home/mike/.config/wm-wallpapers /home/mike/.config/awesome /home/mike/.config/polybar /home/mike/.config/ranger /home/mike/Public/dot-files/arco-linux/backup-config/'
 alias vim='nvim'
