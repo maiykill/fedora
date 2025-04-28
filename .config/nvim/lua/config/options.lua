@@ -5,3 +5,4 @@
 vim.opt.guicursor = "i-ci-sm:ver77-blinkon1"
 vim.g.lazyvim_python_lsp = "basedpyright"
 vim.lsp.set_log_level("OFF")
+vim.g.autoformat = false
