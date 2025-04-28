@@ -1,7 +1,7 @@
 # Fedora dot-files
 
 > [!IMPORTANT]
-> Thinkpad L490 on Fedora workstation 40, 41
+> Thinkpad L490 on Fedora xfce workstation 40, 41, 42
 
 - zshenv
 - zshrc
@@ -23,3 +23,4 @@
 - zathura
 - ghostty
 - mouse-cursor-themes
+- browser-extensions
