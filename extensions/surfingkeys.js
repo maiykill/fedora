@@ -4,6 +4,8 @@
 *  Keybindings Removed:     f,>>,<<
 *  Search Engines Added:    Brave, Yandex
 *  Search Engines Removes:  Baidu, Stack exchange, Github
+*  Enhancements:            maiykill
+*  license:                 UNLICENSE
 */
 
 // Search engines
