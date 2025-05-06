@@ -1,2 +1,16 @@
+# Open in full screen
 set window-height 3000
 set window-width 3000
+
+# Notification below
+set notification-bg "#90A959"
+set notification-fg "#151515"
+
+# Clipboard
+set selection-clipboard clipboard
+
+# Font
+set font "FiraSans 17"
+
+
+
