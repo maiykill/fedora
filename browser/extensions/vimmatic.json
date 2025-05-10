@@ -252,7 +252,7 @@
     ".": {
       "type": "repeat"
     },
-    "<S-Esc>": {
+    "<S-Insert>": {
       "type": "addon.toggle.enabled"
     }
   },

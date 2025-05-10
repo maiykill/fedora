@@ -190,6 +190,11 @@ dotter ()
 
 # ALIASES
 
+
+alias update-fc='sudo fc-cache -fv'
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias timec="sudo ntpd -qg; sudo hwclock --systohc"
+alias backup='rsync -av /home/mike/.bashrc /home/mike/.zshrc /home/mike/.zshrc-personal /home/mike/.local/share/fonts /home/mike/.bashrc-personal /home/mike/.vimrc /home/mike/.Xresources /home/mike/.vim /home/mike/.config/i3 /home/mike/.config/wm-wallpapers /home/mike/.config/awesome /home/mike/.config/polybar /home/mike/.config/ranger /home/mike/Public/dot-files/arco-linux/backup-config/'
 alias psmem='ps auxf | sort -nr -k 4 | head -5'
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 alias ls='ls --color=auto'
@@ -203,33 +208,28 @@ alias m4="mpv '--ytdl-format=bv*[height=480]+wa*'"
 alias m7="mpv '--ytdl-format=bv*[height=720]+wa*'"
 alias m10="mpv '--ytdl-format=bv*[height=1080]+wa*'"
 alias myo="mpv '--ytdl-format=bv*[vcodec!*=av01]+ba'"
-alias pdf="soffice --headless --convert-to pdf"
+alias topdf="soffice --headless --convert-to pdf"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
-alias timec="sudo ntpd -qg; sudo hwclock --systohc"
-alias update-fc='sudo fc-cache -fv'
-alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias jctl='journalctl -p 3 -xb'
 alias wget='wget -c'
-alias xb='vim ~/.bashrc'
-alias xz="vim /home/mike/.zshrc"
-alias xl='vim /home/mike/.config/lf/lfrc'
-alias xx='vim ~/.Xresources'
-alias xa='vim ~/.config/alacritty/alacritty.toml'
-alias xm='vim ~/.config/mpv/mpv.conf'
-alias xp='vim ~/.config/polybar/config'
-alias xv='vim ~/.vimrc'
-alias xq="vim ~/.config/qtile/config.py"
+alias xb='nvim ~/.bashrc'
+alias xz="nvim /home/mike/.zshrc"
+alias xl='nvim /home/mike/.config/lf/lfrc'
+alias xx='nvim ~/.Xresources'
+alias xa='nvim ~/.config/alacritty/alacritty.toml'
+alias xm='nvim ~/.config/mpv/mpv.conf'
+alias xp='nvim ~/.config/polybar/config'
+alias xv='nvim ~/.vimrc'
+alias xq="nvim ~/.config/qtile/config.py"
 alias ymp3='yt-dlp --extract-audio --audio-format mp3'
 alias yopus='yt-dlp --extract-audio --audio-format opus'
 alias merge='xrdb -merge ~/.Xresources'
-alias backup='rsync -av /home/mike/.bashrc /home/mike/.zshrc /home/mike/.zshrc-personal /home/mike/.local/share/fonts /home/mike/.bashrc-personal /home/mike/.vimrc /home/mike/.Xresources /home/mike/.vim /home/mike/.config/i3 /home/mike/.config/wm-wallpapers /home/mike/.config/awesome /home/mike/.config/polybar /home/mike/.config/ranger /home/mike/Public/dot-files/arco-linux/backup-config/'
-alias vim='nvim'
 alias p="python"
+alias p2="pypy3"
 alias ffmpeg="ffmpeg -hide_banner"
 alias ffprobe="ffprobe -hide_banner"
-alias ls="eza"
 
 ###############################################################################################################################################
 ##############################################################################################################################################
