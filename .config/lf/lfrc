@@ -43,7 +43,7 @@ cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
       text/*|application/json|inode/x-empty|application/x-subrip) "$EDITOR" $fx;;
       image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
-      image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
+      image/x-xcf) setsid -f gimp $fx >/dev/null 2>&1 ;;
       image/svg+xml) display -- $f ;;
       image/*) setsid -f nomacs $fx 2>/dev/null ;;
       audio/*|video/x-ms-asf) mpv --audio-display=no $fx ;;
@@ -167,7 +167,7 @@ map ev $nvim "$f"
 map P pasteoverride
 map <gt> extract
 map o &mimeopen $f
-map O $mimeopen --ask $f
+map O $mimeopen --ask $fx
 map S shell
 map . calcdirsize
 map x push :mkdir<space>

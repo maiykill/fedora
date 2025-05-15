@@ -195,7 +195,6 @@ dotter ()
 alias update-fc='sudo fc-cache -fv'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias timec="sudo ntpd -qg; sudo hwclock --systohc"
-alias backup='rsync -av /home/mike/.bashrc /home/mike/.zshrc /home/mike/.zshrc-personal /home/mike/.local/share/fonts /home/mike/.bashrc-personal /home/mike/.vimrc /home/mike/.Xresources /home/mike/.vim /home/mike/.config/i3 /home/mike/.config/wm-wallpapers /home/mike/.config/awesome /home/mike/.config/polybar /home/mike/.config/ranger /home/mike/Public/dot-files/arco-linux/backup-config/'
 alias psmem='ps auxf | sort -nr -k 4 | head -5'
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 alias ls='ls --color=auto'
@@ -234,6 +233,7 @@ alias ffmpeg="ffmpeg -hide_banner"
 alias ffprobe="ffprobe -hide_banner"
 alias rudo="sudo-rs"
 alias ru="su-rs"
+alias eza="eza --icons --time-style=long-iso"
 
 ###############################################################################################################################################
 ##############################################################################################################################################
