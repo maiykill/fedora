@@ -34,6 +34,9 @@ config.enable_tab_bar = false
 
 ---- remove the confirmation wizard asking Yes or No while Closing ----
 config.window_close_confirmation = "NeverPrompt"
+
+-- How many lines of scrollback you want to retain per tab
+config.scrollback_lines = 1000000
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
