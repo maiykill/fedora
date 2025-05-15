@@ -74,11 +74,9 @@
       <property name="&lt;Super&gt;m" type="string" value="alacritty -e btop"/>
       <property name="&lt;Alt&gt;&lt;Super&gt;b" type="string" value="chromium-browser --use-angle=vulkan --enable-zero-copy--enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;p" type="string" value="pcmanfm"/>
-      <property name="&lt;Super&gt;w" type="string" value="zen-browser"/>
       <property name="&lt;Super&gt;c" type="string" value="ffplay -f v4l2 -input_format mjpeg -framerate 30 -video_size 1280x720 -i /dev/video0"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;c" type="string" value="ffplay -f v4l2 -input_format mjpeg -framerate 30 -video_size 1280x720 -i /dev/video0 -vf hflip"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;b" type="string" value="floorp"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;w" type="string" value="zen-twilight"/>
       <property name="&lt;Super&gt;Print" type="string" value="scrot &apos;/home/mike/Downloads/%y%m%d_%H%M%S_$wx$h.png&apos;"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;Print" type="string" value="scrot --focused &apos;/home/mike/Downloads/%y%m%d_%H%M%S_$wx$h.png&apos;"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;Print" type="string" value="scrot --select &apos;/home/mike/Downloads/%y%m%d_%H%M%S_$wx$h.png&apos;"/>
@@ -97,6 +95,8 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;n" type="string" value="qutebrowser"/>
       <property name="&lt;Super&gt;n" type="string" value="librewolf"/>
       <property name="&lt;Super&gt;b" type="string" value="brave-browser  --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer --incognito"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;w" type="string" value="zen-browser"/>
+      <property name="&lt;Super&gt;w" type="string" value="zen-twilight"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
