@@ -15,14 +15,26 @@
 #command = "/home/mike/.local/share/nvim/mason/bin/ruff"
 #args = ["server"]
 
+###############################################################################
+
 ### Python ###
 
 ## Only Pylyzer configuration
 [[language]]
 name = "python"
 language-servers = ["pylyzer"]
+
 [language-server.pylyzer]
 command = "pylyzer"
 args = ["--server"]
+
+### Only Pyrefly configuration
+#[language-server.pyrefly]
+#command = "pyrefly"
+#args = ["lsp"]
+#
+#[[language]]
+#name = "python"
+#language-servers = ["pyrefly"]
 
 ### Python ###
