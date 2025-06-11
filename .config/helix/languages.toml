@@ -19,14 +19,14 @@
 
 ### Python ###
 
-## Only Pylyzer configuration
-[[language]]
-name = "python"
-language-servers = ["pylyzer"]
-
-[language-server.pylyzer]
-command = "pylyzer"
-args = ["--server"]
+# ## Only Pylyzer configuration
+# [[language]]
+# name = "python"
+# language-servers = ["pylyzer"]
+# 
+# [language-server.pylyzer]
+# command = "pylyzer"
+# args = ["--server"]
 
 ### Only Pyrefly configuration
 #[language-server.pyrefly]

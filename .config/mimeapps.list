@@ -114,3 +114,4 @@ application/x-extension-shtml=floorp.desktop;
 application/xhtml+xml=floorp.desktop;
 application/x-extension-xhtml=floorp.desktop;
 application/x-extension-xht=floorp.desktop;
+application/yaml=Helix.desktop;
