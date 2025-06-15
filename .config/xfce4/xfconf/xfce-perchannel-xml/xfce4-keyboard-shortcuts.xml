@@ -95,6 +95,8 @@
       <property name="&lt;Super&gt;b" type="string" value="brave-browser  --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer --incognito"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;w" type="string" value="zen-browser"/>
       <property name="&lt;Super&gt;w" type="string" value="zen-twilight"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;r" type="string" value="dmenu_run -fn &quot;Fira Sans:style=Bold:size=17&quot; -nb &quot;#1F1D2E&quot; -nf &quot;#E0DEF4&quot; -sb &quot;#EB6F92&quot; -sf &quot;#E0DEF4&quot; -b -i"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;s" type="string" value="rofi -dpi 150 -modi drun,run,window,ssh -show drun -font &quot;Fira Sans 12&quot; -show-icons -theme-str &apos;element-icon { size: 1em; }&apos; -display-drun &quot;Apps: &quot; -display-run &quot;Run: &quot; -display-window &quot;Windows: &quot; -display-ssh &quot;SSH: &quot;"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
@@ -196,7 +198,6 @@
       <property name="&lt;Super&gt;7" type="string" value="workspace_7_key"/>
       <property name="&lt;Super&gt;8" type="string" value="workspace_8_key"/>
       <property name="&lt;Super&gt;9" type="string" value="workspace_9_key"/>
-      <property name="&lt;Super&gt;0" type="string" value="workspace_10_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;q" type="string" value="close_window_key"/>
       <property name="&lt;Super&gt;period" type="string" value="maximize_window_key"/>
       <property name="&lt;Super&gt;comma" type="string" value="hide_window_key"/>
@@ -216,8 +217,9 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;asciitilde" type="string" value="move_window_workspace_6_key"/>
       <property name="&lt;Super&gt;grave" type="string" value="workspace_6_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;parenleft" type="string" value="move_window_workspace_9_key"/>
-      <property name="&lt;Shift&gt;&lt;Super&gt;parenright" type="string" value="move_window_workspace_10_key"/>
       <property name="&lt;Primary&gt;&lt;Super&gt;f" type="string" value="above_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;parenright" type="string" value="move_window_workspace_10_key"/>
+      <property name="&lt;Super&gt;0" type="string" value="workspace_10_key"/>
     </property>
   </property>
   <property name="providers" type="array">
