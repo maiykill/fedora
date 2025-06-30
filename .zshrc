@@ -184,6 +184,14 @@ dotter ()
   ln -f ~/.config/wezterm/wezterm.lua ~/Programs/fedora/.config/wezterm/wezterm.lua
   ln -f ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/Programs/fedora/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
   ln -f ~/.config/zathura/zathurarc ~/Programs/fedora/.config/zathura/zathurarc
+  ln -f ~/.config/awesome/rc.lua ~/Programs/fedora/.config/awesome/rc.lua
+  ln -f ~/.config/awesome/mywidgets/battery/battery.lua ~/Programs/fedora/.config/awesome/mywidgets/battery/battery.lua
+  ln -f ~/.config/awesome/mywidgets/ram/ram.lua ~/Programs/fedora/.config/awesome/mywidgets/ram/ram.lua
+  ln -f ~/.config/awesome/mywidgets/net/net.lua ~/Programs/fedora/.config/awesome/mywidgets/net/net.lua
+  ln -f ~/.config/awesome/mywidgets/net/icons/{up.svg,down.svg} ~/Programs/fedora/.config/awesome/mywidgets/net/icons/
+  ln -f ~/.config/awesome/mywidgets/uptime/uptime.lua ~/Programs/fedora/.config/awesome/mywidgets/uptime/uptime.lua
+  ln -f ~/.config/awesome/mywidgets/cpu/cpu.lua ~/Programs/fedora/.config/awesome/mywidgets/cpu/cpu.lua
+  ln -f ~/.config/awesome/mywidgets/calender/cal.lua ~/Programs/fedora/.config/awesome/mywidgets/calender/cal.lua
   rsync -a --delete ~/.local/share/fonts/ ~/Programs/fedora/.local/share/fonts/
 }
 
@@ -219,6 +227,7 @@ alias xz="nvim /home/mike/.zshrc"
 alias xl='nvim /home/mike/.config/lf/lfrc'
 alias xx='nvim ~/.Xresources'
 alias xa='nvim ~/.config/alacritty/alacritty.toml'
+alias xw='nvim ~/.config/awesome/rc.lua'
 alias xk='nvim ~/.config/kitty/kitty.conf'
 alias xm='nvim ~/.config/mpv/mpv.conf'
 alias xp='nvim ~/.config/polybar/config'
