@@ -1,0 +1,31 @@
+[global]
+font = Fira Sans Bold 16
+corner_radius = 20
+frame_width = 6
+frame_color = "#261447"
+separator_color = frame
+
+# Dynamic width/height: min 400x122, no max
+width = (400, 10000)
+height = (122, 10000)
+
+origin = top-right
+sort = yes
+markup = full
+icon_theme = HighContrast
+
+[urgency_low]
+background = "#0d0221"
+foreground = "#D8DEE9"
+frame_color = "#261447"
+
+[urgency_normal]
+background = "#0d0221"
+foreground = "#D8DEE9"
+frame_color = "#261447"
+
+[urgency_critical]
+background = "#650d89"
+foreground = "#2de6e2"
+frame_color = "#f6019d"
+
