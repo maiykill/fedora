@@ -14,7 +14,7 @@ local outrun = {
 }
 
 local clock = wibox.widget.textclock(
-	'<span foreground="#D8DEE9"> %A of %B %d.%m.%Y</span> <span foreground="#fab795">%H:%M:%S</span>',
+	'<span foreground="#D8DEE9"> %A of %B %d.%m.%Y</span>  <span foreground="#fab795">%H:%M:%S </span>',
 	1
 )
 clock.font = "Fira Sans Bold 14"

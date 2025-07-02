@@ -116,11 +116,12 @@ local function update_temp_and_fan()
 			end
 		end
 		if temp_val then
+			local temp_int = tostring(math.floor(tonumber(temp_val) or 0))
 			temp_text.markup = string.format(
 				"<span font='%s' foreground='%s'>%s°C</span>",
 				widget_font,
-				color_for_temp(temp_val),
-				temp_val
+				color_for_temp(temp_int),
+				temp_int
 			)
 		else
 			temp_text.markup = string.format("<span font='%s' foreground='#cccccc'>N/A°C</span>", widget_font)
@@ -209,7 +210,7 @@ local function worker(user_args)
 	-- Horizontal layout: icon, temp, fan, graph
 	cpu_widget = wibox.widget({
 		{
-			markup = "<span foreground='#bd93f9'>  </span>", -- icon with Dracula purple color
+			markup = "<span foreground='#2de6e2'>  </span>", -- icon with Dracula purple color
 			font = widget_font,
 			widget = wibox.widget.textbox,
 		},

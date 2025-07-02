@@ -7,9 +7,9 @@ local color_bg     = "#232136"    -- dark background (from Rose Pine)
 local color_fg     = "#e0def4"    -- light foreground (from Rose Pine)
 local color_used   = "#f9e2af"    -- Catppuccin Mocha yellow
 local color_cached = "#8bd5ca"    -- Catppuccin Macchiato teal
-local color_avail  = "#a3be8c"    -- Nord green
+local color_avail  = "#50c878"    -- Emerald Green
 local color_swap   = "#fe8019"    -- Gruvbox orange
-local color_icon   = "#f5c2e7"    -- Catppuccin Mocha pink
+local color_icon   = "#2dece2"    -- Nord Green
 
 local font_icon = "FiraCode Nerd Font 14"
 local font_text = "Fira Sans Bold 14"
@@ -55,7 +55,7 @@ local ram_widget = wibox.widget({
 		ram_text.markup = string.format(
 			'<span font="%s" color="%s">  </span> <span font="%s"><span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span></span>',
 			font_icon,
-			color_avail,
+			color_icon,
 			font_text,
 			color_used,
 			used_p,

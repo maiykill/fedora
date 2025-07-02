@@ -51,7 +51,7 @@ local function get_color_by_capacity(capacity)
 	elseif capacity <= 80 then
 		return colors.cat_green
 	elseif capacity <= 90 then
-		return colors.rose_pine
+		return colors.rose_foam
 	elseif capacity <= 98 then
 		return colors.one_blue
 	else

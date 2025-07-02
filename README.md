@@ -24,3 +24,5 @@
 - ghostty
 - mouse-cursor-themes
 - browser-extensions
+- awesome
+- dunst

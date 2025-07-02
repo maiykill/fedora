@@ -160,10 +160,12 @@ dotter ()
   ln -f ~/.vimrc ~/Programs/fedora/.vimrc
   ln -f ~/.zshenv ~/Programs/fedora/.zshenv
   ln -f ~/.zshrc ~/Programs/fedora/.zshrc
+  ln -f ~/.Xresources ~/Programs/fedora/.Xresources
   ln -f ~/.config/mimeapps.list ~/Programs/fedora/.config/mimeapps.list
   ln -f ~/.config/alacritty/alacritty.toml ~/Programs/fedora/.config/alacritty
   ln -f ~/.config/btop/themes/rose-pine.theme ~/Programs/fedora/.config/btop/themes/rose-pine.theme
   ln -f ~/.config/ghostty/config ~/Programs/fedora/.config/ghostty/config
+  ln -f ~/.config/dunst/dunstrc ~/Programs/fedora/.config/dunst/dunstrc
   ln -f ~/.config/helix/config.toml ~/Programs/fedora/.config/helix/config.toml
   ln -f ~/.config/helix/languages.toml ~/Programs/fedora/.config/helix/languages.toml
   ln -f ~/.config/kitty/kitty.conf ~/Programs/fedora/.config/kitty/kitty.conf
@@ -192,6 +194,8 @@ dotter ()
   ln -f ~/.config/awesome/mywidgets/uptime/uptime.lua ~/Programs/fedora/.config/awesome/mywidgets/uptime/uptime.lua
   ln -f ~/.config/awesome/mywidgets/cpu/cpu.lua ~/Programs/fedora/.config/awesome/mywidgets/cpu/cpu.lua
   ln -f ~/.config/awesome/mywidgets/calender/cal.lua ~/Programs/fedora/.config/awesome/mywidgets/calender/cal.lua
+  ln -f ~/.config/awesome/mywidgets/gpu/gpu.lua ~/Programs/fedora/.config/awesome/mywidgets/gpu/gpu.lua
+  ln -f ~/.config/awesome/mywidgets/volume/volume.lua ~/Programs/fedora/.config/awesome/mywidgets/volume/volume.lua
   rsync -a --delete ~/.local/share/fonts/ ~/Programs/fedora/.local/share/fonts/
 }
 
