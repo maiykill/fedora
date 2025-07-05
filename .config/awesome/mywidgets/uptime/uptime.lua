@@ -17,11 +17,11 @@ local function update_uptime()
 		local minutes = math.floor((total_seconds % 3600) / 60)
 		local text = ""
 		if days > 0 then
-			text = string.format(" %dd%02dh%02dm ", days, hours, minutes)
+			text = string.format("%dd%02dh%02dm ", days, hours, minutes)
 		elseif hours > 0 then
-			text = string.format(" %dh%02dm ", hours, minutes)
+			text = string.format("%dh%02dm ", hours, minutes)
 		else
-			text = string.format(" %dm ", minutes)
+			text = string.format("%dm ", minutes)
 		end
 		uptime_widget.markup = '<span foreground="#f6c177">' .. text .. "</span>"
 	end)

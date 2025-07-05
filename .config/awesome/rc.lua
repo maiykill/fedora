@@ -10,8 +10,10 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
-local naughty = require("naughty")
+-- local naughty = require("naughty")
+
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local myfont = "Fira Sans Bold 14"
@@ -60,12 +62,13 @@ do
 end
 -- }}}
 
+-- M.
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
--- M.
---- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- beautiful.init("/home/mike/.config/awesome/themes/default/theme.lua")
 beautiful.init("/home/mike/.config/awesome/themes/xresources/theme.lua")
+
 beautiful.font = "Fira Sans 10"
 beautiful.tooltip_font = "Fira Sans Bold 14"
 --- terminal = "xterm"
@@ -75,40 +78,35 @@ local editor_cmd = terminal .. " -e " .. editor
 
 -- M. Notification Configuration
 -- Notification theming for "outrun" style and bigger size
-beautiful.notification_bg = "#0d0221"
-beautiful.notification_fg = "#D8DEE9"
-beautiful.notification_border_color = "#261447"
-beautiful.notification_border_width = 6
-beautiful.notification_minimum_width = 400
-beautiful.notification_minimum_height = 122
-beautiful.notification_margin = 32
-beautiful.notification_icon_size = 64
-beautiful.notification_font = "Fira Sans Bold 16"
-beautiful.notification_shape = function(cr, w, h)
-	gears.shape.rounded_rect(cr, w, h, 20)
-end
-beautiful.notification_critical_bg = "#650d89"
-beautiful.notification_critical_fg = "#2de6e2"
-
-naughty.config.defaults.shape = beautiful.notification_shape
-naughty.config.defaults.width = beautiful.notification_width
-naughty.config.defaults.height = beautiful.notification_height
-naughty.config.defaults.margin = beautiful.notification_margin
-naughty.config.defaults.border_width = beautiful.notification_border_width
-naughty.config.defaults.border_color = beautiful.notification_border_color
-naughty.config.defaults.bg = beautiful.notification_bg
-naughty.config.defaults.fg = beautiful.notification_fg
-naughty.config.defaults.icon_size = beautiful.notification_icon_size
-naughty.config.presets.critical.bg = beautiful.notification_critical_bg
-naughty.config.presets.critical.fg = beautiful.notification_critical_fg
--- naughty.config.defaults.position = "top_right"
-naughty.config.defaults.stack_policy = "top"
+-- beautiful.notification_bg = "#0d0221"
+-- beautiful.notification_fg = "#D8DEE9"
+-- beautiful.notification_border_color = "#261447"
+-- beautiful.notification_border_width = 6
+-- beautiful.notification_minimum_width = 400
+-- beautiful.notification_minimum_height = 122
+-- beautiful.notification_margin = 32
+-- beautiful.notification_icon_size = 64
+-- beautiful.notification_font = "Fira Sans Bold 16"
+-- beautiful.notification_shape = function(cr, w, h)
+-- 	gears.shape.rounded_rect(cr, w, h, 20)
+-- end
+-- beautiful.notification_critical_bg = "#650d89"
+-- beautiful.notification_critical_fg = "#2de6e2"
+-- naughty.config.defaults.shape = beautiful.notification_shape
+-- naughty.config.defaults.width = beautiful.notification_width
+-- naughty.config.defaults.height = beautiful.notification_height
+-- naughty.config.defaults.margin = beautiful.notification_margin
+-- naughty.config.defaults.border_width = beautiful.notification_border_width
+-- naughty.config.defaults.border_color = beautiful.notification_border_color
+-- naughty.config.defaults.bg = beautiful.notification_bg
+-- naughty.config.defaults.fg = beautiful.notification_fg
+-- naughty.config.defaults.icon_size = beautiful.notification_icon_size
+-- naughty.config.presets.critical.bg = beautiful.notification_critical_bg
+-- naughty.config.presets.critical.fg = beautiful.notification_critical_fg
+-- -- naughty.config.defaults.position = "top_right"
+-- naughty.config.defaults.stack_policy = "top"
 
 -- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 local superkey = "Mod4"
 local altkey = "Mod1"
 
@@ -117,6 +115,7 @@ awful.layout.layouts = {
 	awful.layout.suit.tile,
 	awful.layout.suit.floating,
 	awful.layout.suit.fair,
+
 	-- awful.layout.suit.corner.nw,
 	-- awful.layout.suit.fair.horizontal,
 	-- awful.layout.suit.tile.left,
@@ -134,7 +133,7 @@ awful.layout.layouts = {
 -- }}}
 
 local function show_volume_notification()
-	-- Wait 0.1s to let the volume change take effect
+	-- Wait briefly to let the volume take effect
 	gears.timer.start_new(0.1, function()
 		awful.spawn.easy_async_with_shell("wpctl get-volume @DEFAULT_AUDIO_SINK@", function(stdout)
 			local volume = stdout:match("(%d%.%d+)")
@@ -142,27 +141,35 @@ local function show_volume_notification()
 			if volume then
 				local percent = math.floor(tonumber(volume) * 100)
 				local icon, urgency, text
+
 				if muted then
 					icon = "/usr/share/icons/HighContrast/scalable/status/audio-volume-muted.svg"
 					urgency = "critical"
 					text = percent .. "% (muted)"
 				else
 					icon = "/usr/share/icons/HighContrast/scalable/status/audio-volume-high.svg"
-					urgency = "low"
+					urgency = "normal"
 					text = percent .. "%"
 				end
+
 				awful.spawn(
-					"dunstify -a Volume -u "
+					"dunstify -a Volume"
+						.. " -u "
 						.. urgency
+						.. " -h int:value:"
+						.. percent -- ✨ Progress bar hint here!
 						.. " -i '"
 						.. icon
-						.. "' -r 9118 -t 1200 'Volume' '"
+						.. "'"
+						.. " -r 9118" -- 🔁 Replace previous volume notification
+						.. " -t 1500"
+						.. " 'Volume' '"
 						.. text
 						.. "'"
 				)
 			end
 		end)
-		return false -- Don't repeat timer
+		return false
 	end)
 end
 
@@ -176,7 +183,15 @@ local function show_brightness_notification()
 			if current and max then
 				local percent = math.floor(tonumber(current) * 100 / tonumber(max) + 0.5)
 				local icon = "/usr/share/icons/HighContrast/scalable/status/weather-clear.svg"
-				awful.spawn("dunstify -a Brightness -u low -i '" .. icon .. "' 'Brightness: " .. percent .. "%'")
+				awful.spawn(
+					"dunstify -i '"
+						.. icon
+						.. "' -r 9119 -h int:value:"
+						.. percent
+						.. " 'Brightness' '"
+						.. percent
+						.. "%'"
+				)
 			end
 		end
 	)
@@ -209,7 +224,7 @@ mymainmenu = awful.menu({
 	},
 })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
+-- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -286,24 +301,26 @@ awful.screen.connect_for_each_screen(function(s)
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7" }, s, awful.layout.layouts[1])
 
 	-- Create a promptbox for each screen
-	s.mypromptbox = awful.widget.prompt()
+	-- s.mypromptbox = awful.widget.prompt()
+
 	-- Create an imagebox widget which will contain an icon indicating which layout we're using.
 	-- We need one layoutbox per screen.
-	s.mylayoutbox = awful.widget.layoutbox(s)
-	s.mylayoutbox:buttons(gears.table.join(
-		awful.button({}, 1, function()
-			awful.layout.inc(1)
-		end),
-		awful.button({}, 3, function()
-			awful.layout.inc(-1)
-		end),
-		awful.button({}, 4, function()
-			awful.layout.inc(1)
-		end),
-		awful.button({}, 5, function()
-			awful.layout.inc(-1)
-		end)
-	))
+	-- s.mylayoutbox = awful.widget.layoutbox(s)
+	-- s.mylayoutbox:buttons(gears.table.join(
+	-- 	awful.button({}, 1, function()
+	-- 		awful.layout.inc(1)
+	-- 	end),
+	-- 	awful.button({}, 3, function()
+	-- 		awful.layout.inc(-1)
+	-- 	end),
+	-- 	awful.button({}, 4, function()
+	-- 		awful.layout.inc(1)
+	-- 	end),
+	-- 	awful.button({}, 5, function()
+	-- 		awful.layout.inc(-1)
+	-- 	end)
+	-- ))
+
 	-- Create a taglist widget
 	s.mytaglist = awful.widget.taglist({
 		screen = s,
@@ -328,7 +345,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			-- mylauncher,
 			s.mytaglist,
-			s.mypromptbox,
+			-- s.mypromptbox,
 		},
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
@@ -350,7 +367,7 @@ awful.screen.connect_for_each_screen(function(s)
 			ram_widget,
 			calender,
 			battery_widget,
-			s.mylayoutbox,
+			-- s.mylayoutbox,
 		},
 	})
 end)
@@ -590,7 +607,7 @@ globalkeys = gears.table.join(
 	awful.key({ superkey, "Control", "Shift" }, "m", function()
 		awful.spawn("ghostty -e btop")
 	end, { description = "btop in ghostty", group = "launcher" }),
-	awful.key({ superkey, "altkey" }, "m", function()
+	awful.key({ superkey, altkey }, "m", function()
 		awful.spawn("wezterm -e btop")
 	end, { description = "btop in wezterm", group = "launcher" }),
 	awful.key({ superkey }, "m", function()
@@ -598,7 +615,7 @@ globalkeys = gears.table.join(
 	end, { description = "btop in alacritty", group = "launcher" }),
 	awful.key({ superkey, altkey }, "b", function()
 		awful.spawn(
-			"chromium-browser --use-angle=vulkan --enable-zero-copy--enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"
+			"chromium-browser --force-device-scale-factor=1.25 --use-angle=vulkan --enable-zero-copy--enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"
 		)
 	end, { description = "chromium-browser", group = "launcher" }),
 	awful.key({ superkey, "Shift" }, "p", function()
@@ -633,7 +650,7 @@ globalkeys = gears.table.join(
 	end, { description = "librewolf", group = "launcher" }),
 	awful.key({ superkey }, "b", function()
 		awful.spawn(
-			"brave-browser  --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer --incognito"
+			"brave-browser --force-device-scale-factor=1.2 --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer --incognito"
 		)
 	end, { description = "brave incognito", group = "launcher" }),
 	awful.key({ superkey, "Shift" }, "w", function()
@@ -664,9 +681,11 @@ clientkeys = gears.table.join(
 	awful.key({ superkey }, "apostrophe", function(c)
 		c:move_to_screen()
 	end, { description = "move to screen", group = "client" }),
+
 	-- awful.key({ superkey }, "t", function(c)
 	-- 	c.ontop = not c.ontop
 	-- end, { description = "toggle keep on top", group = "client" }),
+
 	awful.key({ superkey }, "minus", function(c)
 		-- The client currently has the input focus, so it cannot be
 		-- minimized, since minimized clients can't have the focus.
@@ -786,7 +805,10 @@ awful.rules.rules = {
 				"xtightvncviewer",
 				-- M. rules
 				"mpv",
+				"vlc",
 				"pavucontrol",
+				"R_x11", -- R language graph pop-up
+				"Pcmanfm",
 			},
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -803,7 +825,7 @@ awful.rules.rules = {
 		properties = { floating = true },
 	},
 
-	-- Add titlebars to normal clients and dialogs
+	-- Remove titlebars to normal clients and dialogs
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
 	-- M. rules
@@ -813,6 +835,18 @@ awful.rules.rules = {
 	},
 
 	{ rule = { class = "Mousepad" }, properties = { floating = true, placement = awful.placement.centered } },
+	{ rule = { class = "Zathura" }, properties = { maximized = true } },
+	{
+		rule_any = {
+			name = { "File Operation Progress", "Copying files", "Confirm" },
+			-- class = { "Thunar", "thunar" },
+		},
+		properties = {
+			floating = true,
+			placement = awful.placement.centered,
+			ontop = true,
+		},
+	},
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
 	-- { rule = { class = "Firefox" },
@@ -885,12 +919,19 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 -- }}}
---
---
--- Autostart apps
+
+-- M. Autostart apps
 awesome.connect_signal("startup", function()
-	awful.spawn("nm-applet --indicator", false)
+	-- awful.spawn("nm-applet --indicator", false)
+	awful.spawn("nm-applet", false)
+	awful.spawn("xset -b")
+	awful.spawn('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
+	awful.spawn('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0')
+	awful.spawn("dunst")
 end)
 
-awful.spawn.once("xset -b")
-awful.spawn.single_instance("dunst")
+-- awful.spawn.once("nm-applet")
+-- awful.spawn.once("xset -b")
+-- awful.spawn.once('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
+-- awful.spawn.once('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0')
+-- awful.spawn.single_instance("dunst")

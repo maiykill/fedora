@@ -82,8 +82,6 @@ ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan,bold
 ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan,bold
 
 
-# Golang specifics
-export GOPATH=$HOME/.local/go
 
 # Zoxide Command
 eval "$(zoxide init --cmd cd zsh)"
@@ -111,13 +109,16 @@ stty stop undef
 ## Custom SCRIPTS
 
 # bin folders
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+# if [ -d "$HOME/.local/bin" ] ; then
+#     PATH="$HOME/.local/bin:$PATH"
+# fi
+# if [ -d "$HOME/.bin" ] ; then
+#     PATH="$HOME/.bin:$PATH"
+# fi
+[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
 
-if [ -d "$HOME/.bin" ] ; then
-    PATH="$HOME/.bin:$PATH"
-fi
 
 ## Zellij
 # eval "$(zellij setup --generate-auto-start zsh)"
@@ -190,7 +191,6 @@ dotter ()
   ln -f ~/.config/awesome/mywidgets/battery/battery.lua ~/Programs/fedora/.config/awesome/mywidgets/battery/battery.lua
   ln -f ~/.config/awesome/mywidgets/ram/ram.lua ~/Programs/fedora/.config/awesome/mywidgets/ram/ram.lua
   ln -f ~/.config/awesome/mywidgets/net/net.lua ~/Programs/fedora/.config/awesome/mywidgets/net/net.lua
-  ln -f ~/.config/awesome/mywidgets/net/icons/{up.svg,down.svg} ~/Programs/fedora/.config/awesome/mywidgets/net/icons/
   ln -f ~/.config/awesome/mywidgets/uptime/uptime.lua ~/Programs/fedora/.config/awesome/mywidgets/uptime/uptime.lua
   ln -f ~/.config/awesome/mywidgets/cpu/cpu.lua ~/Programs/fedora/.config/awesome/mywidgets/cpu/cpu.lua
   ln -f ~/.config/awesome/mywidgets/calender/cal.lua ~/Programs/fedora/.config/awesome/mywidgets/calender/cal.lua
@@ -204,16 +204,15 @@ dotter ()
 # ALIASES
 
 
-alias update-fc='sudo fc-cache -fv'
-alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias timec="sudo ntpd -qg; sudo hwclock --systohc"
+# alias update-fc='sudo fc-cache -fv'
+# alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+# alias timec="sudo ntpd -qg; sudo hwclock --systohc"
+# alias xp='nvim ~/.config/polybar/config'
 alias psmem='ps auxf | sort -nr -k 4 | head -5'
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 alias ls='ls --color=auto'
 alias df='df -Th'
-alias free='free -m'
 alias grep='grep --color=auto'
-alias free="free -mth"
 alias probe="sudo -E hw-probe -all -upload"
 alias m3="mpv '--ytdl-format=bv*[height=360]+wa*'"
 alias m4="mpv '--ytdl-format=bv*[height=480]+wa*'"
@@ -223,7 +222,7 @@ alias myo="mpv '--ytdl-format=bv*[vcodec!*=av01]+ba'"
 alias topdf="soffice --headless --convert-to pdf"
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="rm -iv"
+alias rm="rm -v"
 alias jctl='journalctl -p 3 -xb'
 alias wget='wget -c'
 alias xb='nvim ~/.bashrc'
@@ -234,9 +233,8 @@ alias xa='nvim ~/.config/alacritty/alacritty.toml'
 alias xw='nvim ~/.config/awesome/rc.lua'
 alias xk='nvim ~/.config/kitty/kitty.conf'
 alias xm='nvim ~/.config/mpv/mpv.conf'
-alias xp='nvim ~/.config/polybar/config'
 alias xv='nvim ~/.vimrc'
-alias xq="nvim ~/.config/qtile/config.py"
+# alias xq="nvim ~/.config/qtile/config.py"
 alias ymp3='yt-dlp --extract-audio --audio-format mp3'
 alias yopus='yt-dlp --extract-audio --audio-format opus'
 alias merge='xrdb -merge ~/.Xresources'
@@ -247,6 +245,7 @@ alias ffprobe="ffprobe -hide_banner"
 alias rudo="sudo-rs"
 alias ru="su-rs"
 alias eza="eza --icons --time-style=long-iso"
+alias history="history 1 | fzf"
 
 ###############################################################################################################################################
 ##############################################################################################################################################

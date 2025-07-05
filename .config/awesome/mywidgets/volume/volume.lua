@@ -79,8 +79,8 @@ local last_muted = nil
 local function send_mute_notification(muted)
 	if muted then
 		awful.spawn("dunstify -a Volume -u critical -t 1500 'Muted' 'Audio is muted'")
-	else
-		awful.spawn("dunstify -a Volume -u low -t 1500 'Unmuted' 'Audio is unmuted'")
+		-- else
+		-- 	awful.spawn("dunstify -a Volume -u low -t 1500 'Unmuted' 'Audio is unmuted'")
 	end
 end
 
@@ -191,14 +191,7 @@ local slider_popup = awful.popup({
 	shape = gears.shape.rounded_rect,
 	border_width = 2,
 	border_color = outrun.border,
-	placement = function(popup)
-		awful.placement.next_to(popup, {
-			preferred_positions = { "bottom" },
-			preferred_alignments = { "middle" },
-			geometry = mouse.current_widget_geometry or mouse.coords(),
-			parent = mouse.screen,
-		})
-	end,
+	-- Removed the placement function here, will handle it manually on `property::geometry`
 })
 
 -- Popup hide logic: always hide after 2s if mouse is not on popup
@@ -230,7 +223,7 @@ slider:connect_signal("property::value", function()
 	set_volume(slider.value)
 end)
 
--- Only activate popup on left click, not on scroll
+-- The main click handler for the volume widget
 volume_widget:buttons(gears.table.join(awful.button({}, 1, function()
 	awful.spawn.easy_async_with_shell("wpctl get-volume @DEFAULT_AUDIO_SINK@", function(stdout)
 		local volume = stdout:match("(%d%.%d+)")
@@ -246,11 +239,27 @@ volume_widget:buttons(gears.table.join(awful.button({}, 1, function()
 				slider_icon.markup = '<span foreground="' .. outrun.fg .. '">' .. dev_icon .. "</span>"
 				slider_percent.markup = '<span foreground="' .. outrun.fg .. '">' .. percent .. "%%</span>"
 			end
+
+			-- Toggle visibility FIRST
 			slider_popup.visible = not slider_popup.visible
+
+			-- Only place if it became visible, and only once its geometry is ready
 			if slider_popup.visible then
-				slider_popup:move_next_to(mouse.current_widget_geometry)
-				-- Do not start the timer immediately; wait for mouse leave
+				-- Connect to geometry signal to place the popup only when it has a size
+				local on_geometry_set
+				on_geometry_set = function()
+					awful.placement.next_to(slider_popup, {
+						preferred_positions = { "bottom" },
+						preferred_alignments = { "middle" },
+						geometry = mouse.current_widget_geometry or mouse.coords(),
+						parent = mouse.screen,
+					})
+					-- Disconnect the signal immediately after first successful placement
+					slider_popup:disconnect_signal("property::geometry", on_geometry_set)
+				end
+				slider_popup:connect_signal("property::geometry", on_geometry_set)
 			else
+				-- If it became invisible, stop the hide timer
 				hide_timer:stop()
 			end
 		end)

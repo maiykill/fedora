@@ -1,31 +1,137 @@
-[global]
-font = Fira Sans Bold 16
-corner_radius = 20
-frame_width = 6
-frame_color = "#261447"
-separator_color = frame
+##[global]
+##font = Fira Sans Bold 16
+##corner_radius = 20
+##frame_width = 6
+##frame_color = "#261447"
+##separator_color = frame
+##
+### Dynamic width/height: min 400x122, no max
+##width = (400, 10000)
+##height = (122, 10000)
+##
+##origin = top-right
+##sort = yes
+##markup = full
+##icon_theme = HighContrast
+##
+##[urgency_low]
+##background = "#0d0221"
+##foreground = "#D8DEE9"
+##frame_color = "#261447"
+##
+##[urgency_normal]
+##background = "#0d0221"
+##foreground = "#D8DEE9"
+##frame_color = "#261447"
+##
+##[urgency_critical]
+##background = "#650d89"
+##foreground = "#2de6e2"
+##frame_color = "#f6019d"
 
-# Dynamic width/height: min 400x122, no max
+
+# Internet inspiration
+
+[global]
+# Display and geometry
+monitor = 0
+# title = Dunst
+# class = Dunst
+# verbosity = mesg
+follow = mouse
 width = (400, 10000)
 height = (122, 10000)
-
 origin = top-right
-sort = yes
+offset = 15x45
+gap_size = 10
+
+# Style and effects
+frame_width = 5
+frame_color = "#39ff14"
+separator_height = 10
+separator_color = frame
+
+progress_bar = true
+progress_bar_height = 15
+progress_bar_frame_width = 1
+progress_bar_min_width = 100
+progress_bar_max_width = 200
+progress_bar_corner_radius = 5
+highlight = "#0aff9d"
+
+shrink = yes
+indicate_hidden = yes
+notification_limit = 7
+
+# Padding and corner radius
+padding = 8
+horizontal_padding = 8
+corner_radius = 20
+
+# Text / font / alignment
+font = FiraCode Nerd Font Propo Bold 15
 markup = full
-icon_theme = HighContrast
+format = "<b>%s</b>\n%b"
+alignment = center            # Center text horizontally
+vertical_alignment = center
+word_wrap = yes
+ellipsize = middle
+
+# Icons
+icon_position = left
+min_icon_size = 56            # Large min icon size
+max_icon_size = 96            # Large max icon size
+# icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+enable_recursive_icon_lookup = true
+icon_theme = "Mint-Y-Purple, Adwaita, HighContrast"
+
+
+# Behavior
+sort = yes
+stack_duplicates = false
+hide_duplicate_count = false
+show_indicators = yes
+show_age_threshold = 60
+history_length = 5
+sticky_history = no
+idle_threshold = 0
+
+# Misc
+dmenu = /usr/bin/dmenu -p dunst:
+browser = /usr/bin/brave-browser -new-tab
+title = Dunst
+class = Dunst
+ignore_dbusclose = false
+
+# Mouse actions
+mouse_left_click = close_current
+mouse_middle_click = do_action, close_current
+mouse_right_click = close_all
+
+[experimental]
+per_monitor_dpi = false
 
 [urgency_low]
-background = "#0d0221"
-foreground = "#D8DEE9"
-frame_color = "#261447"
+background = "#111C13"      # Deep dark hacker terminal[2][10]
+foreground = "#00FF00"      # Terminal green text[1][10]
+frame_color = "#18FF6D"     # Accent green[1]
+timeout = 5
+history_ignore = yes
 
 [urgency_normal]
-background = "#0d0221"
-foreground = "#D8DEE9"
-frame_color = "#261447"
+background = "#181F18"      # Slightly lighter, dark greenish[1][2]
+foreground = "#ADFF2F"      # "Hackerish" yellow-green accent[1]
+frame_color = "#00FF00"     # Terminal green border
+timeout = 5
 
 [urgency_critical]
-background = "#650d89"
-foreground = "#2de6e2"
-frame_color = "#f6019d"
+background = "#2B0A1A"      # Deep hacker magenta/black[1]
+foreground = "#f6019d"      # Terminal green to stay on-theme
+frame_color = "#FF1C6F"     # Hyper-vivid magenta for urgent pop[1]
+timeout = 0
+
+# You may add custom rules for specific applications below
+# [appname = SomeApp]
+# background = "#222"
+# foreground = "#fff"
 

@@ -25,14 +25,14 @@ local gpu_widget = wibox.widget({
 
 local function update_gpu_widget()
 	awful.spawn.easy_async_with_shell(
-		[[doas intel_gpu_top -J -s 1000 -o - 2>/dev/null | awk '/"engines"/{e=1} e&&/"Video"/{v=1} v&&/"busy"/{gsub(/[ ,}]/,"",$2); print $2; exit}']],
+		[[doas intel_gpu_top -c -s 1000 -o - 2>/dev/null | awk -F, 'NR>2 {print $15; exit}']],
 		function(out)
 			local percent = tonumber(out)
 			if percent then
-				local percent_int = tostring(math.floor(percent))
+				local percent_int = tostring(math.floor(percent + 0.5))
 				gpu_text.markup = string.format('<span foreground="#beef00">%s%%</span>', percent_int)
 			else
-				gpu_text.markup = '<span foreground="#beef00">--%</span>'
+				gpu_text.markup = '<span foreground="#beef00">--%%</span>'
 			end
 		end
 	)

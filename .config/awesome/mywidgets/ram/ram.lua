@@ -11,8 +11,8 @@ local color_avail  = "#50c878"    -- Emerald Green
 local color_swap   = "#fe8019"    -- Gruvbox orange
 local color_icon   = "#2dece2"    -- Nord Green
 
-local font_icon = "FiraCode Nerd Font 14"
-local font_text = "Fira Sans Bold 14"
+local font_icon = "FiraCode Nerd Font Propo 14"
+local font_text = "Fira Sans Bold 13"
 
 local function human_readable(kb)
 	kb = tonumber(kb)
@@ -53,7 +53,8 @@ local ram_widget = wibox.widget({
 	widget = wibox.container.background,
 	set_text = function(self, used_p, used, cached_p, cached, avail_p, avail, swap_p, swap)
 		ram_text.markup = string.format(
-			'<span font="%s" color="%s">  </span> <span font="%s"><span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span></span>',
+			-- '<span font="%s" color="%s"> </span> <span font="%s"><span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span> <span color="%s">%d%% (%s)</span></span>',
+			'<span font="%s" color="%s"> </span> <span font="%s"><span color="%s">%d (%s)</span> <span color="%s">%d (%s)</span> <span color="%s">%d (%s)</span> <span color="%s">%d (%s)</span></span>',
 			font_icon,
 			color_icon,
 			font_text,
@@ -74,7 +75,8 @@ local ram_widget = wibox.widget({
 })
 
 local function update_ram()
-	awful.spawn.easy_async_with_shell("LANG=C free | grep -E 'Mem|Swap'", function(out)
+	-- awful.spawn.easy_async_with_shell("LANG=C free | grep -E 'Mem|Swap'", function(out)
+	awful.spawn.easy_async_with_shell("LANG=C free | rg 'Mem|Swap'", function(out)
 		local mem_total, mem_used, mem_free, mem_shared, mem_buffcache, mem_available =
 			out:match("Mem:%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)")
 		local swap_total, swap_used, swap_free = out:match("Swap:%s+(%d+)%s+(%d+)%s+(%d+)")

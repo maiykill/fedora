@@ -23,16 +23,18 @@ local font_header = "FiraCode Nerd Font Bold 16"
 local font_week = "FiraCode Nerd Font Bold 15"
 local font_day = "FiraCode Nerd Font Bold 14"
 
+-- ✅ FIXED version of this function
 local function month_table(year, month)
 	local first_day = os.time({ year = year, month = month, day = 1 })
-	local first_wday = tonumber(os.date("%w", first_day))
-	local start_col = (first_wday == 0) and 7 or first_wday
-	start_col = (start_col == 7) and 1 or start_col + 1
+	local wday = tonumber(os.date("%w", first_day)) -- Lua: Sunday = 0, Monday = 1...
+	local start_col = (wday == 0) and 7 or wday -- Shift Sunday to 7
+
 	local days_in_month = tonumber(os.date("%d", os.time({ year = year, month = month + 1, day = 0 })))
 	local today = tonumber(os.date("%d"))
 	local this_month = tonumber(os.date("%m"))
 	local this_year = tonumber(os.date("%Y"))
 	local weeks, week, day = {}, {}, 1
+
 	for i = 1, 7 do
 		if i < start_col then
 			week[i] = ""
