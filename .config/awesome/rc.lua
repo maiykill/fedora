@@ -590,7 +590,7 @@ globalkeys = gears.table.join(
 	awful.key({ superkey, "Control", "Shift" }, "m", function()
 		awful.spawn("ghostty -e btop")
 	end, { description = "btop in ghostty", group = "launcher" }),
-	awful.key({ superkey, "altkey" }, "m", function()
+	awful.key({ superkey, altkey }, "m", function()
 		awful.spawn("wezterm -e btop")
 	end, { description = "btop in wezterm", group = "launcher" }),
 	awful.key({ superkey }, "m", function()
@@ -885,12 +885,15 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 -- }}}
---
---
+
 -- Autostart apps
 awesome.connect_signal("startup", function()
 	awful.spawn("nm-applet --indicator", false)
+	awful.spawn("nm-applet", false)
+	awful.spawn("xset -b")
+	awful.spawn('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
+  awful.spawn('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0')
+	awful.spawn.single_instance("dunst")
 end)
 
-awful.spawn.once("xset -b")
-awful.spawn.single_instance("dunst")
+-- awful.spawn("xinput set-prop 11 325 1")

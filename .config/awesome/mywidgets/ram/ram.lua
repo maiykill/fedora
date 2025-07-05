@@ -12,7 +12,7 @@ local color_swap   = "#fe8019"    -- Gruvbox orange
 local color_icon   = "#2dece2"    -- Nord Green
 
 local font_icon = "FiraCode Nerd Font 14"
-local font_text = "Fira Sans Bold 14"
+local font_text = "Fira Sans Bold 13"
 
 local function human_readable(kb)
 	kb = tonumber(kb)

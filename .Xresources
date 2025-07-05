@@ -2,8 +2,8 @@
 ! 96 is default for 1080p; increase for larger UI
 Xft.dpi:        100
 Xft.antialias:  true
-Xft.hinting:    true
-Xft.hintstyle:  hintslight
+! Xft.hinting:    true
+! Xft.hintstyle:  hintslight
 Xft.rgba:       rgb
 
 !--------------- Colors (Rose Pine) ---------------
