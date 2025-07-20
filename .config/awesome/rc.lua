@@ -508,7 +508,7 @@ globalkeys = gears.table.join(
 	awful.key({ superkey }, "a", function()
 		-- menubar.show()
 		awful.spawn.with_shell(
-			'rofi -dpi 150 -modi drun,run,window,ssh -show drun -font "Fira Sans 8" -show-icons -theme-str "element-icon { size: 1em; }" -display-drun "Apps: " -display-run "Run: " -display-window "Windows: " -display-ssh "SSH: "'
+			'rofi -dpi 150 -modi drun,run,window,ssh -show drun -font "Fira Sans 10" -show-icons -theme-str "element-icon { size: 1.5em; }" -display-drun "Apps: " -display-run "Run: " -display-window "Windows: " -display-ssh "SSH: "'
 		)
 	end, { description = "show the menubar", group = "launcher" }),
 
@@ -658,7 +658,13 @@ globalkeys = gears.table.join(
 	end, { description = "zen-browser", group = "launcher" }),
 	awful.key({ superkey }, "w", function()
 		awful.spawn("zen-twilight")
-	end, { description = "zen-twilight", group = "launcher" })
+	end, { description = "zen-twilight", group = "launcher" }),
+	awful.key({ superkey }, "y", function()
+		awful.spawn.with_shell("dash ~/Programs/shell/urlinmpv.sh >/dev/null 2>&1")
+	end, {
+		description = "Play URL in mpv",
+		group = "launcher",
+	})
 )
 
 clientkeys = gears.table.join(
@@ -924,10 +930,10 @@ end)
 awesome.connect_signal("startup", function()
 	-- awful.spawn("nm-applet --indicator", false)
 	awful.spawn("nm-applet", false)
-	awful.spawn("xset -b")
-	awful.spawn('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
-	awful.spawn('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0')
-	awful.spawn("dunst")
+	awful.spawn('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1', false)
+	awful.spawn('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0', false)
+	awful.spawn("xset -b", false)
+	awful.spawn("dunst", false)
 end)
 
 -- awful.spawn.once("nm-applet")
