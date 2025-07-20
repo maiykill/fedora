@@ -2,9 +2,11 @@
 ! 96 is default for 1080p; increase for larger UI
 Xft.dpi:        100
 Xft.antialias:  true
-! Xft.hinting:    true
-! Xft.hintstyle:  hintslight
-Xft.rgba:       rgb
+Xft.rgba:       bgr
+
+!----------------- Xcursor (mouse pointer) ----------
+Xcursor.theme: volantes_light_cursors
+Xcursor.size: 38
 
 !--------------- Colors (Rose Pine) ---------------
 *background:   #232136
@@ -43,7 +45,4 @@ Xft.rgba:       rgb
 *color7:       #e0def4
 *color15:      #f6c177
 
-!----------------- Xcursor (mouse pointer) ----------
-Xcursor.theme: volantes_light_cursors
-Xcursor.size: 38
 

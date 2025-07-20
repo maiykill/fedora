@@ -162,6 +162,7 @@ dotter ()
   ln -f ~/.zshenv ~/Programs/fedora/.zshenv
   ln -f ~/.zshrc ~/Programs/fedora/.zshrc
   ln -f ~/.Xresources ~/Programs/fedora/.Xresources
+  ln -f ~/.config/gtk-3.0/settings.ini ~/Programs/fedora/.config/gtk-3.0/settings.ini
   ln -f ~/.config/mimeapps.list ~/Programs/fedora/.config/mimeapps.list
   ln -f ~/.config/alacritty/alacritty.toml ~/Programs/fedora/.config/alacritty
   ln -f ~/.config/btop/themes/rose-pine.theme ~/Programs/fedora/.config/btop/themes/rose-pine.theme
