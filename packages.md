@@ -72,7 +72,7 @@ sudo dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-releas
 ### Zen Browser
 
 ```bash
-sudo dnf copr enable firminunderscore/zen-browser
+sudo dnf copr enable sneexy/zen-browser
 ```
 
 ### Wezterm
@@ -96,5 +96,5 @@ curl -fsSL https://repo.librewolf.net/librewolf.repo | pkexec tee /etc/yum.repos
 ### Others
 
 ```bash
-sudo dnf install fzf google-noto-fonts-common axel qbittorent neovim git fd-find ripgrep lua helix ruby ruby-devel yarn intel-media-driver libva libva-utils gstreamer1-vaapi ffmpeg intel-gpu-tools mesa-dri-drivers python3-secretstorage zig yt-dlp aria2 chafa btop mpv vlc ffmpeg alacritty kitty chromium pcmanfm thunar firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch yarnpkg zathura zathura-pdf-mupdf zathura-zsh-completion zathura-bash-completion zathura-cb zathura-djvu zathura-ps virtualenv prename perl-core wavemon skim eza zellij lazygit wezterm brave-browser zen-twilight lf perl-File-MimeInfo dnf-plugins-core bat zoxide python3-neovim python3-devel golang xdotool wmctrl pypy3 groff floorp uv duf cheat cmatrix R lm_sensors hwinfo inxi lightdm-gtk-greeter-settings perl-Image-ExifTool scrot librewolf sudo-rs opendoas rofi dmenu awesome brightnessctl dunst xinput xev
+sudo dnf install fzf google-noto-fonts-common axel qbittorent neovim git fd-find ripgrep lua helix ruby ruby-devel yarn intel-media-driver libva libva-utils gstreamer1-vaapi ffmpeg intel-gpu-tools mesa-dri-drivers python3-secretstorage zig yt-dlp aria2 chafa btop mpv vlc ffmpeg alacritty kitty chromium pcmanfm thunar firefox nomacs libreoffice gimp inkscape fastfetch fastfetch-zsh-completion fastfetch-bash-completion afetch cpufetch onefetch yarnpkg zathura zathura-pdf-mupdf zathura-zsh-completion zathura-bash-completion zathura-cb zathura-djvu zathura-ps virtualenv prename perl-core wavemon skim eza zellij lazygit wezterm brave-browser zen-twilight lf perl-File-MimeInfo dnf-plugins-core bat zoxide python3-neovim python3-devel golang xdotool wmctrl pypy3 groff floorp uv duf cheat cmatrix R lm_sensors hwinfo inxi lightdm-gtk-greeter-settings perl-Image-ExifTool scrot librewolf sudo-rs opendoas rofi dmenu awesome brightnessctl dunst xinput xev rpmdevtools createrepo_c rpmlint
 ```
