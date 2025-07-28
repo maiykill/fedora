@@ -660,7 +660,9 @@ globalkeys = gears.table.join(
 		awful.spawn("zen-twilight")
 	end, { description = "zen-twilight", group = "launcher" }),
 	awful.key({ superkey }, "y", function()
-		awful.spawn.with_shell("dash ~/Programs/shell/urlinmpv.sh >/dev/null 2>&1")
+		awful.spawn.with_shell(
+			'export PATH="$HOME/.local/bin:$PATH"; dash ~/Programs/shell/urlinmpv.sh >/dev/null 2>&1'
+		)
 	end, {
 		description = "Play URL in mpv",
 		group = "launcher",
@@ -933,7 +935,8 @@ awesome.connect_signal("startup", function()
 	awful.spawn('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1', false)
 	awful.spawn('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0', false)
 	awful.spawn("xset -b", false)
-	awful.spawn("dunst", false)
+	-- awful.spawn("dunst", false)
+	awful.spawn.with_shell("dash ~/Programs/shell/capslock_withlock.sh")
 end)
 
 -- awful.spawn.once("nm-applet")
