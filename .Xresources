@@ -13,36 +13,36 @@ Xcursor.size: 38
 *foreground:   #e0def4
 *cursorColor:  #e0def4
 
-! Black
-*color0:       #393552
-*color8:       #6e6a86
+! black
+*.color0:       #1f1d2e
+*.color8:       #26233a
 
-! Red
-*color1:       #eb6f92
-*color9:       #eb6f92
+! red
+*.color1:       #eb6f92
+*.color9:       #eb6f92
 
-! Green
-*color2:       #9ccfd8
-*color10:      #9ccfd8
+! green
+*.color2:       #f6c177
+*.color10:      #f6c177
 
-! Yellow
-*color3:       #f6c177
-*color11:      #f6c177
+! yellow
+*.color3:       #ebbcba
+*.color11:      #ebbcba
 
-! Blue
-*color4:       #31748f
-*color12:      #31748f
+! blue
+*.color4:       #31748f
+*.color12:      #31748f
 
-! Magenta/Purple
-*color5:       #c4a7e7
-*color13:      #c4a7e7
+! magenta
+*.color5:       #c4a7e7
+*.color13:      #c4a7e7
 
-! Cyan
-*color6:       #ebbcba
-*color14:      #ebbcba
+! cyan
+*.color6:       #9ccfd8
+*.color14:      #9ccfd8
 
-! White
-*color7:       #e0def4
-*color15:      #f6c177
+! white
+*.color7:       #6e6a86
+*.color15:      #908caa
 
 
