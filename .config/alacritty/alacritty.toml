@@ -2,8 +2,8 @@
 blink_interval = 200
 
 [cursor.style]
-blinking = "On"
-shape = "Block"
+blinking = "Never"
+shape = "Beam"
 
 [font]
 size = 17.5
