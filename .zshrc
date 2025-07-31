@@ -189,6 +189,7 @@ dotter ()
   ln -f ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/Programs/fedora/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
   ln -f ~/.config/zathura/zathurarc ~/Programs/fedora/.config/zathura/zathurarc
   ln -f ~/.config/awesome/rc.lua ~/Programs/fedora/.config/awesome/rc.lua
+  ln -f ~/.config/awesome/theme.lua ~/Programs/fedora/.config/awesome/theme.lua
   ln -f ~/.config/awesome/mywidgets/battery/battery.lua ~/Programs/fedora/.config/awesome/mywidgets/battery/battery.lua
   ln -f ~/.config/awesome/mywidgets/ram/ram.lua ~/Programs/fedora/.config/awesome/mywidgets/ram/ram.lua
   ln -f ~/.config/awesome/mywidgets/net/net.lua ~/Programs/fedora/.config/awesome/mywidgets/net/net.lua
