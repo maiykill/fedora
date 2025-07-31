@@ -19,10 +19,12 @@ config.default_cursor_style = 'SteadyBar'
 
 ---- Color Scheme ----
 -- config.color_scheme = 'VisiBone (terminal.sexy)'
--- config.color_scheme = 'UnderTheSea'
--- config.color_scheme = 'Tangoesque (terminal.sexy)'
-config.color_scheme = 'Tomorrow Night (Gogh)'
--- config.color_scheme = 'Red Planet'
+config.color_scheme = 'Pixiefloss (Gogh)'
+-- config.color_scheme = 'Poimandres'
+-- config.color_scheme = 'Popping and Locking'
+-- config.color_scheme = 'Purpledream (base16)'
+
+
 
 ---- Maximised view since by default the window is small ----
 config.initial_rows = 35
