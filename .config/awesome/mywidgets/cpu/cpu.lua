@@ -1,6 +1,7 @@
 -------------------------------------------------
 -- CPU Widget for Awesome Window Manager
--- Shows the current CPU utilization, temperature, and fan speed (horizontal, Fira Sans 13 for wibar only)
+-- Shows the current CPU utilization, temperature, and fan speed
+-- (horizontal)
 -------------------------------------------------
 
 local awful = require("awful")
@@ -8,6 +9,28 @@ local watch = require("awful.widget.watch")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
+
+-- Theme colors table
+local themecolors = {
+	temp_na = "#cccccc",
+	temp_cool = "#268bd2", -- blue
+	temp_ok = "#859900", -- green
+	temp_warm = "#b58900", -- yellow/orange
+	temp_hot = "#dc322f", -- red
+	icon = "#2de6e2", -- icon color
+}
+
+-- Theme fonts table
+local themefonts = {
+	widget = "FiraCode Nerd Font Propo Bold 13",
+	popup_header = "FiraCode Nerd Font Propo 13", -- for popup headers if needed
+	popup_text = "FiraCode Nerd Font Propo 13", -- for popup texts if needed
+}
+
+-- Theme icons table
+local themeicons = {
+	cpu = "",
+}
 
 local CMD =
 	[[sh -c "grep '^cpu.' /proc/stat; ps -eo 'pid:10,pcpu:5,pmem:5,comm:30,cmd' --sort=-pcpu | grep -v [p]s | grep -v [g]rep | head -11 | tail -n +2"]]
@@ -17,9 +40,6 @@ local CMD_SENSORS = "sensors"
 local HOME_DIR = os.getenv("HOME")
 local WIDGET_DIR = HOME_DIR .. "/.config/awesome/awesome-wm-widgets/cpu-widget"
 
--- *** FONT FOR WIBAR ***
-local widget_font = "Fira Sans Bold 14"
-
 local cpu_widget = {}
 local cpu_rows = { spacing = 4, layout = wibox.layout.fixed.vertical }
 local is_update = true
@@ -28,6 +48,7 @@ local process_rows = { layout = wibox.layout.fixed.vertical }
 local function trim(s)
 	return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
+
 local function starts_with(str, start)
 	return str:sub(1, #start) == start
 end
@@ -74,13 +95,14 @@ end
 -- *** Wibar widgets ***
 local temp_text = wibox.widget({
 	text = "N/A°C",
-	font = widget_font,
+	font = themefonts.widget,
 	widget = wibox.widget.textbox,
 	align = "center",
 })
+
 local fan_text = wibox.widget({
 	text = "N/ARPM",
-	font = widget_font,
+	font = themefonts.widget,
 	widget = wibox.widget.textbox,
 	align = "center",
 })
@@ -88,16 +110,16 @@ local fan_text = wibox.widget({
 local function color_for_temp(temp)
 	temp = tonumber(temp)
 	if not temp then
-		return "#cccccc"
+		return themecolors.temp_na
 	end
 	if temp < 45 then
-		return "#268bd2" -- blue
+		return themecolors.temp_cool
 	elseif temp < 60 then
-		return "#859900" -- green
+		return themecolors.temp_ok
 	elseif temp < 75 then
-		return "#b58900" -- yellow/orange
+		return themecolors.temp_warm
 	else
-		return "#dc322f" -- red
+		return themecolors.temp_hot
 	end
 end
 
@@ -119,12 +141,13 @@ local function update_temp_and_fan()
 			local temp_int = tostring(math.floor(tonumber(temp_val) or 0))
 			temp_text.markup = string.format(
 				"<span font='%s' foreground='%s'>%s°C</span>",
-				widget_font,
+				themefonts.widget,
 				color_for_temp(temp_int),
 				temp_int
 			)
 		else
-			temp_text.markup = string.format("<span font='%s' foreground='#cccccc'>N/A°C</span>", widget_font)
+			temp_text.markup =
+				string.format("<span font='%s' foreground='%s'>N/A°C</span>", themefonts.widget, themecolors.temp_na)
 		end
 
 		-- Get first fan speed
@@ -141,9 +164,9 @@ local function update_temp_and_fan()
 		end
 		if fan_val then
 			-- No spaces between fan speed and RPM
-			fan_text.markup = string.format("<span font='%s'>%s RPM</span>", widget_font, fan_val)
+			fan_text.markup = string.format("<span font='%s'>%sRPM</span>", themefonts.widget, fan_val)
 		else
-			fan_text.markup = string.format("<span font='%s'>N/A RPM</span>", widget_font)
+			fan_text.markup = string.format("<span font='%s'>N/A RPM</span>", themefonts.widget)
 		end
 	end)
 end
@@ -210,8 +233,8 @@ local function worker(user_args)
 	-- Horizontal layout: icon, temp, fan, graph
 	cpu_widget = wibox.widget({
 		{
-			markup = "<span foreground='#2de6e2'>  </span>", -- icon with Dracula purple color
-			font = widget_font,
+			markup = string.format("<span foreground='%s'>%s</span>", themecolors.icon, themeicons.cpu), -- Use icon from themeicons
+			font = themefonts.widget,
 			widget = wibox.widget.textbox,
 		},
 		temp_text,
@@ -229,7 +252,7 @@ local function worker(user_args)
 	local maincpu = {}
 	watch(CMD_slim, timeout, function(widget, stdout)
 		local _, user, nice, system, idle, iowait, irq, softirq, steal, _, _ =
-			stdout:match("(%w+)%s+(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)")
+			stdout:match("(%w+)%s+(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)")
 		local total = user + nice + system + idle + iowait + irq + softirq + steal
 		local diff_idle = idle - tonumber(maincpu["idle_prev"] == nil and 0 or maincpu["idle_prev"])
 		local diff_total = total - tonumber(maincpu["total_prev"] == nil and 0 or maincpu["total_prev"])

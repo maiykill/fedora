@@ -188,16 +188,7 @@ dotter ()
   ln -f ~/.config/wezterm/wezterm.lua ~/Programs/fedora/.config/wezterm/wezterm.lua
   ln -f ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/Programs/fedora/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
   ln -f ~/.config/zathura/zathurarc ~/Programs/fedora/.config/zathura/zathurarc
-  ln -f ~/.config/awesome/rc.lua ~/Programs/fedora/.config/awesome/rc.lua
-  ln -f ~/.config/awesome/theme.lua ~/Programs/fedora/.config/awesome/theme.lua
-  ln -f ~/.config/awesome/mywidgets/battery/battery.lua ~/Programs/fedora/.config/awesome/mywidgets/battery/battery.lua
-  ln -f ~/.config/awesome/mywidgets/ram/ram.lua ~/Programs/fedora/.config/awesome/mywidgets/ram/ram.lua
-  ln -f ~/.config/awesome/mywidgets/net/net.lua ~/Programs/fedora/.config/awesome/mywidgets/net/net.lua
-  ln -f ~/.config/awesome/mywidgets/uptime/uptime.lua ~/Programs/fedora/.config/awesome/mywidgets/uptime/uptime.lua
-  ln -f ~/.config/awesome/mywidgets/cpu/cpu.lua ~/Programs/fedora/.config/awesome/mywidgets/cpu/cpu.lua
-  ln -f ~/.config/awesome/mywidgets/calender/cal.lua ~/Programs/fedora/.config/awesome/mywidgets/calender/cal.lua
-  ln -f ~/.config/awesome/mywidgets/gpu/gpu.lua ~/Programs/fedora/.config/awesome/mywidgets/gpu/gpu.lua
-  ln -f ~/.config/awesome/mywidgets/volume/volume.lua ~/Programs/fedora/.config/awesome/mywidgets/volume/volume.lua
+  rsync -a --delete ~/.config/awesome/ ~/Programs/fedora/.config/awesome/
   rsync -a --delete ~/.local/share/fonts/ ~/Programs/fedora/.local/share/fonts/
 }
 

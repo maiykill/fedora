@@ -2,7 +2,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
 
-local outrun = {
+-- Theme colors table
+local themecolors = {
 	bg = "#0d0221",
 	fg = "#D8DEE9",
 	focus_date_bg = "#650d89",
@@ -11,23 +12,37 @@ local outrun = {
 	weekday_fg = "#2de6e2",
 	header_fg = "#f6019d",
 	border = "#261447",
+	clock_fg_1 = "#D8DEE9",
+	clock_fg_2 = "#fab795",
 }
 
+-- Theme fonts table
+local themefonts = {
+	clock = "FiraCode Nerd Font Propo Bold 13",
+	header = "FiraCode Nerd Font Propo Bold 16",
+	week = "FiraCode Nerd Font Propo Bold 15",
+	day = "FiraCode Nerd Font Propo Bold 14",
+}
+
+-- Theme icons table (empty now, can add icons if needed)
+local themeicons = {}
+
+-- Clock widget with safe string.format usage
 local clock = wibox.widget.textclock(
-	'<span foreground="#D8DEE9"> %A of %B %d.%m.%Y</span>  <span foreground="#fab795">%H:%M:%S </span>',
+	string.format(
+		'<span foreground="%s">%%A,%%B,%%d.%%m.%%Y</span> <span foreground="%s">%%H:%%M:%%S</span>',
+		themecolors.clock_fg_1,
+		themecolors.clock_fg_2
+	),
 	1
 )
-clock.font = "Fira Sans Bold 14"
+clock.font = themefonts.clock
 
-local font_header = "FiraCode Nerd Font Bold 16"
-local font_week = "FiraCode Nerd Font Bold 15"
-local font_day = "FiraCode Nerd Font Bold 14"
-
--- ✅ FIXED version of this function
+-- Fixed month table generator
 local function month_table(year, month)
 	local first_day = os.time({ year = year, month = month, day = 1 })
-	local wday = tonumber(os.date("%w", first_day)) -- Lua: Sunday = 0, Monday = 1...
-	local start_col = (wday == 0) and 7 or wday -- Shift Sunday to 7
+	local wday = tonumber(os.date("%w", first_day)) -- Sunday = 0
+	local start_col = (wday == 0) and 7 or wday -- Sunday shifted to 7
 
 	local days_in_month = tonumber(os.date("%d", os.time({ year = year, month = month + 1, day = 0 })))
 	local today = tonumber(os.date("%d"))
@@ -35,6 +50,7 @@ local function month_table(year, month)
 	local this_year = tonumber(os.date("%Y"))
 	local weeks, week, day = {}, {}, 1
 
+	-- First week partial days
 	for i = 1, 7 do
 		if i < start_col then
 			week[i] = ""
@@ -44,6 +60,8 @@ local function month_table(year, month)
 		end
 	end
 	table.insert(weeks, week)
+
+	-- Following weeks
 	while day <= days_in_month do
 		week = {}
 		for i = 1, 7 do
@@ -63,28 +81,50 @@ local popup = nil
 local cal_state = { month = tonumber(os.date("%m")), year = tonumber(os.date("%Y")) }
 local cal_grid, header_widget
 
+-- Helper to increment month/year safely
+local function increment_month()
+	cal_state.month = tonumber(cal_state.month) or tonumber(os.date("%m"))
+	cal_state.year = tonumber(cal_state.year) or tonumber(os.date("%Y"))
+	cal_state.month = cal_state.month + 1
+	if cal_state.month > 12 then
+		cal_state.month = 1
+		cal_state.year = cal_state.year + 1
+	end
+end
+
+-- Helper to decrement month/year safely
+local function decrement_month()
+	cal_state.month = tonumber(cal_state.month) or tonumber(os.date("%m"))
+	cal_state.year = tonumber(cal_state.year) or tonumber(os.date("%Y"))
+	cal_state.month = cal_state.month - 1
+	if cal_state.month < 1 then
+		cal_state.month = 12
+		cal_state.year = cal_state.year - 1
+	end
+end
+
 local function update_calendar_content()
 	local year, month = cal_state.year, cal_state.month
 	local weeks, today, this_month, this_year = month_table(year, month)
 	local weekday_names = { "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su" }
 
 	header_widget.markup = '<span foreground="'
-		.. outrun.header_fg
+		.. themecolors.header_fg
 		.. '">'
 		.. os.date("%B %Y", os.time({ year = year, month = month, day = 1 }))
 		.. "</span>"
-	header_widget.font = font_header
+	header_widget.font = themefonts.header
 	cal_grid:reset()
 
 	for i = 1, 7 do
-		local fg = (i == 6 or i == 7) and outrun.header_fg or outrun.weekday_fg
+		local fg = (i == 6 or i == 7) and themecolors.header_fg or themecolors.weekday_fg
 		cal_grid:add_widget_at(
 			wibox.widget({
 				markup = '<b><span foreground="' .. fg .. '">' .. weekday_names[i] .. "</span></b>",
 				align = "center",
 				valign = "center",
 				widget = wibox.widget.textbox,
-				font = font_week,
+				font = themefonts.week,
 			}),
 			1,
 			i
@@ -96,8 +136,9 @@ local function update_calendar_content()
 			local d = weeks[row][col]
 			local is_today = (d ~= "" and d == today and month == this_month and year == this_year)
 			local is_weekend = (col == 6 or col == 7)
-			local fg = outrun.fg
-			local bg = outrun.bg
+
+			local fg = themecolors.fg
+			local bg = themecolors.bg
 			local cell_shape = function(cr, w, h)
 				gears.shape.rounded_rect(cr, w, h, 6)
 			end
@@ -109,11 +150,11 @@ local function update_calendar_content()
 							text = tostring(d),
 							align = "center",
 							valign = "center",
-							font = font_day,
+							font = themefonts.day,
 							widget = wibox.widget.textbox,
-							markup = '<span foreground="' .. outrun.focus_date_fg .. '">' .. d .. "</span>",
+							markup = '<span foreground="' .. themecolors.focus_date_fg .. '">' .. d .. "</span>",
 						},
-						bg = outrun.focus_date_bg,
+						bg = themecolors.focus_date_bg,
 						shape = cell_shape,
 						widget = wibox.container.background,
 					}),
@@ -127,11 +168,11 @@ local function update_calendar_content()
 							text = tostring(d),
 							align = "center",
 							valign = "center",
-							font = font_day,
+							font = themefonts.day,
 							widget = wibox.widget.textbox,
-							markup = '<span foreground="' .. outrun.fg .. '">' .. d .. "</span>",
+							markup = '<span foreground="' .. themecolors.fg .. '">' .. d .. "</span>",
 						},
-						bg = outrun.weekend_day_bg,
+						bg = themecolors.weekend_day_bg,
 						shape = cell_shape,
 						widget = wibox.container.background,
 					}),
@@ -145,11 +186,11 @@ local function update_calendar_content()
 							text = tostring(d),
 							align = "center",
 							valign = "center",
-							font = font_day,
+							font = themefonts.day,
 							widget = wibox.widget.textbox,
-							markup = '<span foreground="' .. outrun.fg .. '">' .. d .. "</span>",
+							markup = '<span foreground="' .. themecolors.fg .. '">' .. d .. "</span>",
 						},
-						bg = outrun.bg,
+						bg = themecolors.bg,
 						shape = cell_shape,
 						widget = wibox.container.background,
 					}),
@@ -162,7 +203,7 @@ local function update_calendar_content()
 						text = " ",
 						align = "center",
 						valign = "center",
-						font = font_day,
+						font = themefonts.day,
 						widget = wibox.widget.textbox,
 					}),
 					row + 1,
@@ -176,7 +217,7 @@ end
 local function create_popup()
 	header_widget = wibox.widget({
 		align = "center",
-		font = font_header,
+		font = themefonts.header,
 		widget = wibox.widget.textbox,
 	})
 	cal_grid = wibox.widget({
@@ -194,9 +235,9 @@ local function create_popup()
 		shape = function(cr, w, h)
 			gears.shape.rounded_rect(cr, w, h, 32)
 		end,
-		bg = outrun.bg,
+		bg = themecolors.bg,
 		border_width = 3,
-		border_color = outrun.border,
+		border_color = themecolors.border,
 		widget = {
 			{
 				{
@@ -208,7 +249,7 @@ local function create_popup()
 				margins = 24,
 				widget = wibox.container.margin,
 			},
-			bg = outrun.bg,
+			bg = themecolors.bg,
 			widget = wibox.container.background,
 		},
 		placement = function(w)
@@ -227,18 +268,10 @@ local function show_popup()
 		popup = create_popup()
 		popup:connect_signal("button::press", function(_, _, _, button)
 			if button == 1 then
-				cal_state.month = cal_state.month + 1
-				if cal_state.month > 12 then
-					cal_state.month = 1
-					cal_state.year = cal_state.year + 1
-				end
+				increment_month()
 				update_calendar_content()
 			elseif button == 3 then
-				cal_state.month = cal_state.month - 1
-				if cal_state.month < 1 then
-					cal_state.month = 12
-					cal_state.year = cal_state.year - 1
-				end
+				decrement_month()
 				update_calendar_content()
 			end
 		end)

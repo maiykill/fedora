@@ -2,11 +2,21 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 
+-- Theme colors table
+local themecolors = {
+	uptime_fg = "#f6c177",
+}
+
+-- Theme fonts table
+local themefonts = {
+	uptime_text = "FiraCode Nerd Font Propo Bold 13",
+}
+
 local uptime_widget = wibox.widget({
 	widget = wibox.widget.textbox,
 	align = "center",
 	-- valign = "center",
-	font = "Fira Sans Bold 14",
+	font = themefonts.uptime_text,
 })
 
 local function update_uptime()
@@ -23,7 +33,7 @@ local function update_uptime()
 		else
 			text = string.format("%dm ", minutes)
 		end
-		uptime_widget.markup = '<span foreground="#f6c177">' .. text .. "</span>"
+		uptime_widget.markup = '<span foreground="' .. themecolors.uptime_fg .. '">' .. text .. "</span>"
 	end)
 end
 

@@ -2,7 +2,8 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 
-local outrun = {
+-- Theme colors table
+local themecolors = {
 	bg = "#0d0221",
 	fg = "#D8DEE9",
 	focus_date_bg = "#650d89",
@@ -11,6 +12,15 @@ local outrun = {
 	weekday_fg = "#2de6e2",
 	header_fg = "#f6019d",
 	border = "#261447",
+}
+
+-- Theme fonts table
+local themefonts = {
+	icon_large = "FiraCode Nerd Font Propo Bold 18",
+	icon_medium = "FiraCode Nerd Font Propo Bold 16",
+	text_medium = "FiraCode Nerd Font Propo Bold 13",
+	text_small = "FiraCode Nerd Font Propo 12",
+	percent_large = "FiraCode Nerd Font Propo Bold 16",
 }
 
 -- Utility: get active port using your preferred command
@@ -47,14 +57,14 @@ end
 -- Widget parts
 local volume_icon = wibox.widget({
 	markup = "🔊",
-	font = "Fira Sans Bold 16",
+	font = themefonts.icon_medium,
 	align = "center",
 	valign = "center",
 	widget = wibox.widget.textbox,
 })
 local volume_text = wibox.widget({
 	markup = "0",
-	font = "Fira Sans Bold 14",
+	font = themefonts.text_medium,
 	align = "center",
 	valign = "center",
 	widget = wibox.widget.textbox,
@@ -71,7 +81,7 @@ local volume_widget = wibox.widget({
 	right = 8,
 	top = 2,
 	bottom = 2,
-	bg = outrun.bg,
+	bg = themecolors.bg,
 })
 
 -- Notification helper
@@ -80,7 +90,7 @@ local function send_mute_notification(muted)
 	if muted then
 		awful.spawn("dunstify -a Volume -u critical -t 1500 'Muted' 'Audio is muted'")
 		-- else
-		-- 	awful.spawn("dunstify -a Volume -u low -t 1500 'Unmuted' 'Audio is unmuted'")
+		-- awful.spawn("dunstify -a Volume -u low -t 1500 'Unmuted' 'Audio is unmuted'")
 	end
 end
 
@@ -92,19 +102,19 @@ local function update_volume_widget(send_notification)
 		if volume then
 			local percent = math.floor(tonumber(volume) * 100)
 			if muted then
-				volume_icon.markup = '<span foreground="' .. outrun.header_fg .. '">🔇</span>'
-				volume_text.markup = '<span foreground="' .. outrun.header_fg .. '">' .. percent .. "</span>"
+				volume_icon.markup = '<span foreground="' .. themecolors.header_fg .. '">🔇</span>'
+				volume_text.markup = '<span foreground="' .. themecolors.header_fg .. '">' .. percent .. "</span>"
 			else
-				volume_icon.markup = '<span foreground="' .. outrun.fg .. '">🔊</span>'
-				volume_text.markup = '<span foreground="' .. outrun.fg .. '">' .. percent .. "</span>"
+				volume_icon.markup = '<span foreground="' .. themecolors.fg .. '">🔊</span>'
+				volume_text.markup = '<span foreground="' .. themecolors.fg .. '">' .. percent .. "</span>"
 			end
 			if send_notification and last_muted ~= nil and muted ~= last_muted then
 				send_mute_notification(muted)
 			end
 			last_muted = muted
 		else
-			volume_icon.markup = '<span foreground="' .. outrun.fg .. '">--</span>'
-			volume_text.markup = '<span foreground="' .. outrun.fg .. '">--</span>'
+			volume_icon.markup = '<span foreground="' .. themecolors.fg .. '">--</span>'
+			volume_text.markup = '<span foreground="' .. themecolors.fg .. '">--</span>'
 		end
 	end)
 end
@@ -130,21 +140,21 @@ gears.timer({
 -- Popup slider with icon, device, and percent
 local slider_icon = wibox.widget({
 	markup = "🔊",
-	font = "Fira Sans Bold 18",
+	font = themefonts.icon_large,
 	align = "center",
 	valign = "center",
 	widget = wibox.widget.textbox,
 })
 local slider_device = wibox.widget({
 	markup = "Speakers",
-	font = "Fira Sans 12",
+	font = themefonts.text_small,
 	align = "center",
 	valign = "center",
 	widget = wibox.widget.textbox,
 })
 local slider_percent = wibox.widget({
 	markup = "0%",
-	font = "Fira Sans Bold 16",
+	font = themefonts.percent_large,
 	align = "center",
 	valign = "center",
 	widget = wibox.widget.textbox,
@@ -153,9 +163,9 @@ local slider_percent = wibox.widget({
 local slider = wibox.widget({
 	bar_shape = gears.shape.rounded_rect,
 	bar_height = 18,
-	bar_color = outrun.weekend_day_bg,
-	bar_active_color = outrun.header_fg,
-	handle_color = outrun.focus_date_fg,
+	bar_color = themecolors.weekend_day_bg,
+	bar_active_color = themecolors.header_fg,
+	handle_color = themecolors.focus_date_fg,
 	handle_shape = gears.shape.circle,
 	handle_width = 28,
 	minimum = 0,
@@ -182,7 +192,7 @@ local slider_popup = awful.popup({
 			widget = wibox.container.margin,
 			margins = 16,
 		},
-		bg = outrun.bg,
+		bg = themecolors.bg,
 		shape = gears.shape.rounded_rect,
 		widget = wibox.container.background,
 	},
@@ -190,7 +200,7 @@ local slider_popup = awful.popup({
 	ontop = true,
 	shape = gears.shape.rounded_rect,
 	border_width = 2,
-	border_color = outrun.border,
+	border_color = themecolors.border,
 	-- Removed the placement function here, will handle it manually on `property::geometry`
 })
 
@@ -214,7 +224,7 @@ local function set_volume(percent)
 	awful.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ " .. (percent / 100))
 	gears.timer.start_new(0.1, function()
 		update_volume_widget(false)
-		slider_percent.markup = '<span foreground="' .. outrun.fg .. '">' .. percent .. "%%</span>"
+		slider_percent.markup = '<span foreground="' .. themecolors.fg .. '">' .. percent .. "%%</span>"
 		return false
 	end)
 end
@@ -231,13 +241,13 @@ volume_widget:buttons(gears.table.join(awful.button({}, 1, function()
 		local percent = volume and math.floor(tonumber(volume) * 100) or 0
 		get_device_icon_and_name(function(dev_icon, dev_label)
 			slider.value = percent
-			slider_device.markup = '<span foreground="' .. outrun.focus_date_fg .. '">' .. dev_label .. "</span>"
+			slider_device.markup = '<span foreground="' .. themecolors.focus_date_fg .. '">' .. dev_label .. "</span>"
 			if muted then
-				slider_icon.markup = '<span foreground="' .. outrun.header_fg .. '">🔇</span>'
-				slider_percent.markup = '<span foreground="' .. outrun.header_fg .. '">' .. percent .. "%%</span>"
+				slider_icon.markup = '<span foreground="' .. themecolors.header_fg .. '">🔇</span>'
+				slider_percent.markup = '<span foreground="' .. themecolors.header_fg .. '">' .. percent .. "%%</span>"
 			else
-				slider_icon.markup = '<span foreground="' .. outrun.fg .. '">' .. dev_icon .. "</span>"
-				slider_percent.markup = '<span foreground="' .. outrun.fg .. '">' .. percent .. "%%</span>"
+				slider_icon.markup = '<span foreground="' .. themecolors.fg .. '">' .. dev_icon .. "</span>"
+				slider_percent.markup = '<span foreground="' .. themecolors.fg .. '">' .. percent .. "%%</span>"
 			end
 
 			-- Toggle visibility FIRST

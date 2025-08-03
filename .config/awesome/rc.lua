@@ -347,12 +347,13 @@ awful.screen.connect_for_each_screen(function(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
+      spacing = 5,
 			-- mykeyboardlayout,
 			wibox.widget.systray(),
 			volume_widget,
 			uptime_widget,
 			net_speed({
-				width = 65,
+				width = 185,
 			}),
 			cpu_widget({
 				width = 75,
@@ -360,7 +361,9 @@ awful.screen.connect_for_each_screen(function(s)
 				-- 	step_spacing = 0,
 				-- 	color = "#838c5e",
 			}),
-			gpu_widget,
+			gpu_widget({
+				width = 35,
+			}),
 			ram_widget,
 			calender_widget,
 			battery_widget,
