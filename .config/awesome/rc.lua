@@ -10,16 +10,15 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
-
--- Notification library
 -- local naughty = require("naughty")
-
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
-local myfont = "Fira Sans Bold 14"
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
+-- Reduce noice in this file
+local awesome, client, root, screen = awesome, client, root, screen
 
 -- M. widgets
 local cpu_widget = require("mywidgets.cpu.cpu")
@@ -27,50 +26,48 @@ local net_speed = require("mywidgets.net.net")
 local ram_widget = require("mywidgets.ram.ram")
 local battery_widget = require("mywidgets.battery.battery")
 local uptime_widget = require("mywidgets.uptime.uptime")
-local calender = require("mywidgets.calender.cal")
-local volume = require("mywidgets.volume.volume")
-local gpu = require("mywidgets.gpu.gpu")
+local calender_widget = require("mywidgets.calender.cal")
+local volume_widget = require("mywidgets.volume.volume")
+local gpu_widget = require("mywidgets.gpu.gpu")
 
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-	naughty.notify({
-		preset = naughty.config.presets.critical,
-		title = "Oops, there were errors during startup!",
-		text = awesome.startup_errors,
-	})
-end
-
--- Handle runtime errors after startup
-do
-	local in_error = false
-	awesome.connect_signal("debug::error", function(err)
-		-- Make sure we don't go into an endless error loop
-		if in_error then
-			return
-		end
-		in_error = true
-
-		naughty.notify({
-			preset = naughty.config.presets.critical,
-			title = "Oops, an error happened!",
-			text = tostring(err),
-		})
-		in_error = false
-	end)
-end
--- }}}
+-- -- {{{ Error handling
+-- -- Check if awesome encountered an error during startup and fell back to
+-- -- another config (This code will only ever execute for the fallback config)
+-- if awesome.startup_errors then
+-- 	naughty.notify({
+-- 		preset = naughty.config.presets.critical,
+-- 		title = "Oops, there were errors during startup!",
+-- 		text = awesome.startup_errors,
+-- 	})
+-- end
+-- -- Handle runtime errors after startup
+-- do
+-- 	local in_error = false
+-- 	awesome.connect_signal("debug::error", function(err)
+-- 		-- Make sure we don't go into an endless error loop
+-- 		if in_error then
+-- 			return
+-- 		end
+-- 		in_error = true
+--
+-- 		naughty.notify({
+-- 			preset = naughty.config.presets.critical,
+-- 			title = "Oops, an error happened!",
+-- 			text = tostring(err),
+-- 		})
+-- 		in_error = false
+-- 	end)
+-- end
+-- -- Error handling }}}
 
 -- M.
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- beautiful.init("/home/mike/.config/awesome/themes/default/theme.lua")
-beautiful.init("/home/mike/.config/awesome/themes/xresources/theme.lua")
+-- beautiful.init("/home/mike/.config/awesome/themes/xresources/theme.lua")
+beautiful.init("/home/mike/.config/awesome/theme.lua")
 
-beautiful.font = "Fira Sans 10"
-beautiful.tooltip_font = "Fira Sans Bold 14"
 --- terminal = "xterm"
 local terminal = "alacritty"
 local editor = os.getenv("EDITOR") or "vi"
@@ -199,7 +196,7 @@ end
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
+local myawesomemenu = {
 	{
 		"hotkeys",
 		function()
@@ -217,7 +214,7 @@ myawesomemenu = {
 	},
 }
 
-mymainmenu = awful.menu({
+local mymainmenu = awful.menu({
 	items = {
 		{ "awesome", myawesomemenu, beautiful.awesome_icon },
 		{ "open terminal", terminal },
@@ -231,7 +228,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 
@@ -352,7 +349,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			-- mykeyboardlayout,
 			wibox.widget.systray(),
-			volume,
+			volume_widget,
 			uptime_widget,
 			net_speed({
 				width = 65,
@@ -363,9 +360,9 @@ awful.screen.connect_for_each_screen(function(s)
 				-- 	step_spacing = 0,
 				-- 	color = "#838c5e",
 			}),
-			gpu,
+			gpu_widget,
 			ram_widget,
-			calender,
+			calender_widget,
 			battery_widget,
 			-- s.mylayoutbox,
 		},
@@ -384,7 +381,7 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
-globalkeys = gears.table.join(
+local globalkeys = gears.table.join(
 	-- awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	awful.key({ superkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
 	awful.key({ superkey }, "Right", awful.tag.viewnext, { description = "view next", group = "tag" }),
@@ -522,8 +519,8 @@ globalkeys = gears.table.join(
 
 	-- M. Custom key Bindings
 	awful.key({ superkey }, "`", function()
-		local screen = awful.screen.focused()
-		local tag = screen.tags[5]
+		local fscreen = awful.screen.focused()
+		local tag = fscreen.tags[5]
 		if tag then
 			tag:view_only()
 		end
@@ -669,7 +666,7 @@ globalkeys = gears.table.join(
 	})
 )
 
-clientkeys = gears.table.join(
+local clientkeys = gears.table.join(
 	awful.key({ superkey }, "f", function(c)
 		c.fullscreen = not c.fullscreen
 		c:raise()
@@ -710,7 +707,10 @@ clientkeys = gears.table.join(
 	awful.key({ superkey, "Shift" }, "period", function(c)
 		c.maximized_horizontal = not c.maximized_horizontal
 		c:raise()
-	end, { description = "(un)maximize horizontally", group = "client" })
+	end, { description = "(un)maximize horizontally", group = "client" }),
+	awful.key({ superkey, "Shift" }, "backslash", function(c)
+		awful.titlebar.toggle(c)
+	end, { description = "toggle titlebar", group = "client" })
 )
 
 -- Bind all key numbers to tags.
@@ -721,16 +721,16 @@ for i = 1, 9 do
 		globalkeys,
 		-- View tag only.
 		awful.key({ superkey }, "#" .. i + 9, function()
-			local screen = awful.screen.focused()
-			local tag = screen.tags[i]
+			local focused_screen = awful.screen.focused()
+			local tag = focused_screen.tags[i]
 			if tag then
 				tag:view_only()
 			end
 		end, { description = "view tag #" .. i, group = "tag" }),
 		-- Toggle tag display.
 		awful.key({ superkey, "Control" }, "#" .. i + 9, function()
-			local screen = awful.screen.focused()
-			local tag = screen.tags[i]
+			local focused_screen = awful.screen.focused()
+			local tag = focused_screen.tags[i]
 			if tag then
 				awful.tag.viewtoggle(tag)
 			end
@@ -756,7 +756,7 @@ for i = 1, 9 do
 	)
 end
 
-clientbuttons = gears.table.join(
+local clientbuttons = gears.table.join(
 	awful.button({}, 1, function(c)
 		c:emit_signal("request::activate", "mouse_click", { raise = true })
 	end),
@@ -830,10 +830,11 @@ awful.rules.rules = {
 				"pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
 			},
 		},
-		properties = { floating = true },
+		properties = {
+			floating = true,
+		},
 	},
-
-	-- Remove titlebars to normal clients and dialogs
+	-- Titlebars to normal clients and dialogs
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
 	-- M. rules
@@ -853,6 +854,7 @@ awful.rules.rules = {
 			floating = true,
 			placement = awful.placement.centered,
 			ontop = true,
+			titlebars_enabled = true,
 		},
 	},
 
@@ -926,7 +928,7 @@ end)
 client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
--- }}}
+-- Signals }}}
 
 -- M. Autostart apps
 awesome.connect_signal("startup", function()
