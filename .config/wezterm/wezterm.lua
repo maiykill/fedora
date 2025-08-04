@@ -19,10 +19,26 @@ config.default_cursor_style = 'SteadyBar'
 
 ---- Color Scheme ----
 -- config.color_scheme = 'VisiBone (terminal.sexy)'
-config.color_scheme = 'Pixiefloss (Gogh)'
 -- config.color_scheme = 'Poimandres'
--- config.color_scheme = 'Popping and Locking'
+config.color_scheme = 'Popping and Locking'
 -- config.color_scheme = 'Purpledream (base16)'
+-- config.color_scheme = 'Obsidian (Gogh)'
+-- config.color_scheme = 'Ocean Dark (Gogh)'
+-- config.color_scheme = 'Oceanic Next (Gogh)'
+-- config.color_scheme = 'OceanicMaterial'
+-- config.color_scheme = 'Nancy (terminal.sexy)'
+-- config.color_scheme = 'Nature Suede (terminal.sexy)'
+-- config.color_scheme = 'Night Owl (Gogh)'
+-- config.color_scheme = 'Nord (Gogh)'
+-- config.color_scheme = 'NvimDark'
+-- config.color_scheme = 'Mashup Colors (terminal.sexy)'
+-- config.color_scheme = 'MaterialDesignColors'
+-- config.color_scheme = 'MaterialOcean'
+-- config.color_scheme = 'Mellifluous'
+-- config.color_scheme = 'Mikado (terminal.sexy)'
+-- config.color_scheme = 'Mikazuki (terminal.sexy)'
+
+
 
 
 

@@ -102,3 +102,4 @@ video/x-matroska=vlc.desktop;
 x-scheme-handler/http=xfce4-web-browser.desktop;
 x-scheme-handler/https=xfce4-web-browser.desktop;
 application/yaml=Helix.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;brave-browser.desktop;
