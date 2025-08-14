@@ -178,6 +178,8 @@ dotter ()
   ln -f ~/.config/lf/previewer ~/Programs/fedora/.config/lf/previewer
   ln -f ~/.config/mpv/mpv.conf ~/Programs/fedora/.config/mpv/mpv.conf
   ln -f ~/.config/mpv/input.conf ~/Programs/fedora/.config/mpv/input.conf
+  ln -f ~/.config/mpv/scripts/accurate_slicer.lua ~/Programs/fedora/.config/mpv/scripts/accurate_slicer.lua
+  ln -f ~/.config/mpv/scripts/slicer.lua ~/Programs/fedora/.config/mpv/scripts/slicer.lua
   ln -f ~/.config/nvim/lua/config/keymaps.lua ~/Programs/fedora/.config/nvim/lua/config/keymaps.lua
   ln -f ~/.config/nvim/lua/config/options.lua ~/Programs/fedora/.config/nvim/lua/config/options.lua
   ln -f ~/.config/nvim/lua/plugins/nvim-lspconfig.lua ~/Programs/fedora/.config/nvim/lua/plugins/nvim-lspconfig.lua
