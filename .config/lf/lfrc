@@ -163,6 +163,7 @@ map egh $hx .
 map eh $hx "$f"
 map en $nvim "$f"
 map ev $vim "$f"
+map ee push $nvim<space>
 map P pasteoverride
 map <gt> extract
 map o &mimeopen $f
@@ -193,8 +194,3 @@ map gf cd ~/.local/share/fonts/
 map gl cd ~/.local/
 map gj cd ~/Documents/jobs/
 map <c-y> yank-file
-
-
-
-
-
