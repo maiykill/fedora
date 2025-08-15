@@ -58,7 +58,7 @@ local function save_slice(from, to)
 		"hevc_vaapi",
 		"-qp",
 		"18",
-		"-g",
+		"-g", -- gives frame refresh every 1 second on v=25
 		"25",
 		"-bf",
 		"2",

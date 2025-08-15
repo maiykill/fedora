@@ -15,10 +15,13 @@ config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" })
 
 ---- Cursor ----
 config.colors = { cursor_fg = "#ff0000", cursor_bg = "#00ff00" }
-config.default_cursor_style = 'SteadyBar'
+config.default_cursor_style = "SteadyBar"
 
 ---- Color Scheme ----
 -- config.color_scheme = 'VisiBone (terminal.sexy)'
+-- config.color_scheme = 'Tokyo Night'
+-- config.color_scheme = 'tokyonight_night'
+-- config.color_scheme = 'Rosé Pine (Gogh)'
 -- config.color_scheme = 'Poimandres'
 -- config.color_scheme = 'Popping and Locking'
 -- config.color_scheme = 'Purpledream (base16)'
@@ -35,7 +38,7 @@ config.default_cursor_style = 'SteadyBar'
 -- config.color_scheme = 'MaterialDesignColors'
 -- config.color_scheme = 'MaterialOcean'
 -- config.color_scheme = 'Mellifluous'
--- config.color_scheme = 'Mikado (terminal.sexy)'
+config.color_scheme = 'Mikado (terminal.sexy)'
 -- config.color_scheme = 'Mikazuki (terminal.sexy)'
 -- config.color_scheme = 'Molokai (Gogh)'
 -- config.color_scheme = 'Mona Lisa (Gogh)'
@@ -46,14 +49,15 @@ config.default_cursor_style = 'SteadyBar'
 -- config.color_scheme = 'lovelace'
 -- config.color_scheme = 'Kanagawa (Gogh)'
 -- config.color_scheme = 'Glacier'
-config.color_scheme = 'GruvboxDarkHard'
+-- config.color_scheme = 'GruvboxDarkHard'
+-- config.color_scheme = "Github Dark (Gogh)"
 -- config.color_scheme = 'flexoki-dark'
 -- config.color_scheme = 'ForestBlue'
 -- config.color_scheme = 'Ef-Cherie'
+-- config.color_scheme = 'Catppuccin Mocha'
 
-
-
-
+-- Fps --
+config.max_fps = 120
 
 ---- Maximised view since by default the window is small ----
 config.initial_rows = 35

@@ -249,13 +249,13 @@ local taglist_buttons = gears.table.join(
 		if client.focus then
 			client.focus:toggle_tag(t)
 		end
-	end),
-	awful.button({}, 4, function(t)
-		awful.tag.viewnext(t.screen)
-	end),
-	awful.button({}, 5, function(t)
-		awful.tag.viewprev(t.screen)
 	end)
+	-- awful.button({}, 4, function(t)
+	-- 	awful.tag.viewnext(t.screen)
+	-- end),
+	-- awful.button({}, 5, function(t)
+	-- 	awful.tag.viewprev(t.screen)
+	-- end)
 )
 
 local tasklist_buttons = gears.table.join(
@@ -349,7 +349,7 @@ awful.screen.connect_for_each_screen(function(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
-      spacing = 5,
+			spacing = 5,
 			-- mykeyboardlayout,
 			wibox.widget.systray(),
 			volume_widget,
@@ -379,9 +379,9 @@ end)
 root.buttons(gears.table.join(
 	awful.button({}, 3, function()
 		mymainmenu:toggle()
-	end),
-	awful.button({}, 4, awful.tag.viewnext),
-	awful.button({}, 5, awful.tag.viewprev)
+	end)
+	-- awful.button({}, 4, awful.tag.viewnext),
+	-- awful.button({}, 5, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -933,6 +933,23 @@ end)
 client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
+
+-- Rounded windows --
+local function set_shape(c)
+	if c.fullscreen then
+		-- Use a normal rectangle: no corner radius
+		c.shape = function(cr, w, h)
+			gears.shape.rectangle(cr, w, h)
+		end
+	else
+		-- Use rounded rectangle for everything else
+		c.shape = function(cr, w, h)
+			gears.shape.rounded_rect(cr, w, h, 25) -- change 16 to your preferred radius
+		end
+	end
+end
+client.connect_signal("manage", set_shape)
+client.connect_signal("property::fullscreen", set_shape)
 -- Signals }}}
 
 -- M. Autostart apps
