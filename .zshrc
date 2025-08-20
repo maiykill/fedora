@@ -87,13 +87,25 @@ ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan,bold
 eval "$(zoxide init --cmd cd zsh)"
 
 # XDG_RUNTIME_DIR for mpv hardware acceleration
- if [ -z "$XDG_RUNTIME_DIR" ]; then
-     export XDG_RUNTIME_DIR=/tmp
-     if [ ! -d  "$XDG_RUNTIME_DIR" ]; then
-         mkdir "$XDG_RUNTIME_DIR"
-         chmod 0700 "$XDG_RUNTIME_DIR"
-     fi
- fi
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+    export XDG_RUNTIME_DIR=/tmp
+    if [ ! -d  "$XDG_RUNTIME_DIR" ]; then
+        mkdir "$XDG_RUNTIME_DIR"
+        chmod 0700 "$XDG_RUNTIME_DIR"
+    fi
+fi
+
+
+# Classic colored man pages
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 1)      # Red - blinking
+export LESS_TERMCAP_md=$(tput bold; tput setaf 2)      # Green - bold headers
+export LESS_TERMCAP_se=$(tput sgr0)                    # End standout
+export LESS_TERMCAP_us=$(tput smul; tput setaf 4)      # Blue - underline
+export LESS_TERMCAP_ue=$(tput sgr0)                    # End underline
+export LESS_TERMCAP_me=$(tput sgr0)                    # End all modes
+export LESS_TERMCAP_so=$(tput setab 3; tput setaf 0)   # Highlighting foralternative-->(6,0)
+# Use MANROFFOPT for compatibility
+export MANROFFOPT="-c"
 
 
 #NOTE: Experimental features on 2025-01-24 19:57
@@ -244,5 +256,3 @@ alias historys="history 1 | fzf"
 
 ###############################################################################################################################################
 ##############################################################################################################################################
-
-
