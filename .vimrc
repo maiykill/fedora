@@ -174,6 +174,7 @@ let g:terminal_ansi_colors = [
 
 
 
+
 filetype plugin indent on 
 filetype plugin on
 filetype on
@@ -190,4 +191,7 @@ set background=dark
 "set statusline&
 set laststatus=2
 set statusline=%F\ %m%r\ %=%l/%L:%c\ %y\ [%{&fileencoding}]
+let &t_SI = "\e[6 q"   " Line (bar) cursor in insert mode
+let &t_EI = "\e[2 q"   " Block cursor in normal and visual modes
+
 

@@ -850,6 +850,7 @@ awful.rules.rules = {
 
 	{ rule = { class = "Mousepad" }, properties = { floating = true, placement = awful.placement.centered } },
 	{ rule = { class = "Zathura" }, properties = { maximized = true } },
+	{ rule = { class = "Alacritty" }, properties = { floating = true, maximized = true } },
 	{
 		rule_any = {
 			name = { "File Operation Progress", "Copying files", "Confirm" },

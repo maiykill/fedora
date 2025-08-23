@@ -20,6 +20,7 @@ cursor-style = block
 
 
 # theme = "duckbones"
-theme = "Harper"
+# theme = "Harper"
+theme = "Banana Blueberry"
 
 
