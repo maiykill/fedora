@@ -65,7 +65,7 @@ local function save_slice(from, to)
 		"-profile:v",
 		"main",
 		"-c:a",
-		"copy",
+		"ac3",
 		"-avoid_negative_ts",
 		"make_zero",
 		output_name,
