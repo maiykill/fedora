@@ -355,7 +355,7 @@ awful.screen.connect_for_each_screen(function(s)
 			volume_widget,
 			uptime_widget,
 			net_speed({
-				width = 178,
+				width = 167,
 			}),
 			cpu_widget({
 				width = 75,

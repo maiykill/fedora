@@ -108,7 +108,8 @@ cmd pasteoverride &{{
 
 
 cmd fzf_jump ${{
-    res="$(fd -H . | fzf --reverse --header="Fzf to location")"
+    # res="$(fd -H . | fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
+    res="$(fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             cmd="cd"

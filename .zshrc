@@ -25,7 +25,7 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 
-## prompt ZSH start
+## Manual prompt ZSH start
 # Load colors once at startup
 autoload -Uz colors && colors
 # Git prompt with caching and remote tracking
@@ -72,7 +72,10 @@ precmd() {
     PROMPT="%F{green}╭─%f %B%F{magenta}[%~]%f ${venv_prompt}%F{green}${git_prompt}%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}"$'\n'"%F{green}╰─%f %F{yellow}%f%b "
     cmd_start=0
 }
-## prompt ZSH end
+## Manual prompt ZSH end
+
+
+
 
 
 
@@ -113,6 +116,9 @@ export MANROFFOPT="-c"
 stty stop undef
 
 
+# FZF flags for previewing in the side
+# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --strip-cwd-prefix'
+export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
 
 
 ###############################################################################################################################################
