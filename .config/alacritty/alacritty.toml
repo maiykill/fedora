@@ -6,7 +6,8 @@ blinking = "Never"
 shape = "Beam"
 
 [font]
-size = 17.5
+# size = 17.5 # for xfce4
+size = 15.5   # for awesomewm
 
 [font.bold]
 family = "CodeNewRoman Nerd Font"

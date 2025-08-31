@@ -9,7 +9,8 @@ local config = wezterm.config_builder()
 -----------------------------------------------------------------
 
 ---- Font ----
-config.font_size = 17
+-- config.font_size = 17 -- while using xfce
+config.font_size = 15.25 -- while using awesome
 -- config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" })
 config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" })
 
@@ -38,12 +39,11 @@ config.default_cursor_style = "SteadyBar"
 -- config.color_scheme = 'MaterialDesignColors'
 -- config.color_scheme = 'MaterialOcean'
 -- config.color_scheme = 'Mellifluous'
-config.color_scheme = 'Mikado (terminal.sexy)'
+-- config.color_scheme = 'Mikado (terminal.sexy)'
 -- config.color_scheme = 'Mikazuki (terminal.sexy)'
 -- config.color_scheme = 'Molokai (Gogh)'
 -- config.color_scheme = 'Mona Lisa (Gogh)'
--- config.color_scheme = 'Monokai Dark (Gogh)'
--- config.color_scheme = 'Moonfly (Gogh)'
+config.color_scheme = 'Moonfly (Gogh)'
 -- config.color_scheme = 'Laserwave (Gogh)'
 -- config.color_scheme = 'Londontube (dark) (terminal.sexy)'
 -- config.color_scheme = 'lovelace'

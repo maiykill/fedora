@@ -25,7 +25,7 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 
-## prompt ZSH start
+## Manual prompt ZSH start
 # Load colors once at startup
 autoload -Uz colors && colors
 # Git prompt with caching and remote tracking
@@ -72,7 +72,10 @@ precmd() {
     PROMPT="%F{green}╭─%f %B%F{magenta}[%~]%f ${venv_prompt}%F{green}${git_prompt}%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}"$'\n'"%F{green}╰─%f %F{yellow}%f%b "
     cmd_start=0
 }
-## prompt ZSH end
+## Manual prompt ZSH end
+
+
+
 
 
 
@@ -113,6 +116,9 @@ export MANROFFOPT="-c"
 stty stop undef
 
 
+# FZF flags for previewing in the side
+# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --strip-cwd-prefix'
+export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
 
 
 ###############################################################################################################################################
@@ -215,11 +221,11 @@ dotter ()
 # alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 # alias timec="sudo ntpd -qg; sudo hwclock --systohc"
 # alias xp='nvim ~/.config/polybar/config'
+# alias ls='ls --color=auto'
+# alias grep='grep --color=auto'
 alias psmem='ps auxf | sort -nr -k 4 | head -5'
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
-alias ls='ls --color=auto'
 alias df='df -Th'
-alias grep='grep --color=auto'
 alias probe="sudo -E hw-probe -all -upload"
 alias m3="mpv '--ytdl-format=bv*[height=360]+wa*'"
 alias m4="mpv '--ytdl-format=bv*[height=480]+wa*'"
@@ -253,6 +259,8 @@ alias rudo="sudo-rs"
 alias ru="su-rs"
 alias eza="eza --icons --time-style=long-iso"
 alias historys="history 1 | fzf"
+alias ll="eza --long"
+alias lt="eza --tree"
 
 ###############################################################################################################################################
 ##############################################################################################################################################

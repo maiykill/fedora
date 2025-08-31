@@ -355,7 +355,7 @@ awful.screen.connect_for_each_screen(function(s)
 			volume_widget,
 			uptime_widget,
 			net_speed({
-				width = 178,
+				width = 167,
 			}),
 			cpu_widget({
 				width = 75,
@@ -954,19 +954,9 @@ client.connect_signal("property::fullscreen", set_shape)
 -- Signals }}}
 
 -- M. Autostart apps
-awesome.connect_signal("startup", function()
-	-- awful.spawn("nm-applet --indicator", false)
-	awful.spawn("nm-applet", false)
-	awful.spawn('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1', false)
-	awful.spawn('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0', false)
-	awful.spawn("xset -b", false)
-	awful.spawn("copyq")
-	-- awful.spawn("dunst", false)
-	awful.spawn.with_shell("dash ~/Programs/shell/capslock_withlock.sh")
-end)
-
--- awful.spawn.once("nm-applet")
--- awful.spawn.once("xset -b")
--- awful.spawn.once('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
--- awful.spawn.once('xinput set-prop "ELAN Touchscreen"  "Device Enabled" 0')
--- awful.spawn.single_instance("dunst")
+awful.spawn.with_shell("dash ~/.config/awesome/autostart.sh")
+awful.spawn.with_shell('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
+awful.spawn.with_shell('xinput set-prop "Elan Touchpad" "libinput Accel Speed" 0.5')
+awful.spawn.with_shell('xinput set-prop "ELAN Touchscreen" "Device Enabled" 0')
+awful.spawn.with_shell("xset -b")
+awful.spawn.with_shell("dash ~/Programs/shell/capslock_withlock.sh")

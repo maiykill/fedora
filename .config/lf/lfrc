@@ -46,7 +46,8 @@ cmd open ${{
       image/x-xcf) setsid -f gimp $fx >/dev/null 2>&1 ;;
       image/svg+xml) display -- $f ;;
       image/*) setsid -f nomacs $fx 2>/dev/null ;;
-      audio/*|video/x-ms-asf) mpv --audio-display=no --force-window=no $fx ;; 
+      # audio/*|video/x-ms-asf) mpv --audio-display=no --force-window=no $fx ;; 
+      audio/*|video/x-ms-asf) mpv --force-window=no $fx ;; 
       video/*) setsid -f mpv --quiet $fx >/dev/null 2>&1 ;;
       video/*) setsid -f vlc --quiet $fx >/dev/null 2>&1 ;;
       application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura "$fx" >/dev/null 2>&1 ;;
@@ -108,7 +109,8 @@ cmd pasteoverride &{{
 
 
 cmd fzf_jump ${{
-    res="$(fd -H . | fzf --reverse --header="Fzf to location")"
+    # res="$(fd -H . | fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
+    res="$(fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             cmd="cd"
@@ -123,7 +125,8 @@ cmd fzf_jump ${{
 
 
 cmd skim_jump ${{
-    res="$(sk --reverse --header="Skim to location")"
+    res="$(fd --hidden . | sk --reverse --header="Skim to location")"
+    # res="$(sk --reverse --header="Skim to location")"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             cmd="cd"
