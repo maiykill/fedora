@@ -3,16 +3,16 @@
 case "$(file -Lb --mime-type -- "$1")" in
 image/*)
   # chafa -f sixel -s "$2x$3" --animate off --polite on "$1"
-  chafa -s "$2x$3" --animate off --polite on "$1"
+  chafa -s "$2x$3" --animate off --polite on -t 1 --bg black "$1"
   exit 1
   ;;
 text/*)
-  bat --color=always --style=plain "$1"
+  bat --color=always --terminal-width "$2" --style=plain "$1"
   ;;
 application/javascript | application/json)
-  bat --color=always --style=plain "$1"
+  bat --color=always --terminal-width "$2" --style=plain "$1"
   ;;
 *)
-  exiftool "$1" | bat --color=always --style=plain -l nix
+  exiftool "$1" | bat --color=always --terminal-width "$2" --style=plain -l nix
   ;;
 esac

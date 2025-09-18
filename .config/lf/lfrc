@@ -8,7 +8,6 @@
 
 ## Experimental stuffs
 set incsearch true
-set sixel true
 
 
 #set ratios 1:3:3
