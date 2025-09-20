@@ -19,6 +19,7 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt share_history
+setopt correct
 
 # Command completion
 autoload -Uz compinit && compinit
@@ -238,16 +239,17 @@ alias mv="mv -iv"
 alias rm="rm -v"
 alias jctl='journalctl -p 3 -xb'
 alias wget='wget -c'
-alias xb='nvim ~/.bashrc'
-alias xz="nvim /home/mike/.zshrc"
-alias xl='nvim /home/mike/.config/lf/lfrc'
-alias xx='nvim ~/.Xresources'
-alias xa='nvim ~/.config/alacritty/alacritty.toml'
-alias xw='nvim ~/.config/awesome/rc.lua'
-alias xk='nvim ~/.config/kitty/kitty.conf'
-alias xm='nvim ~/.config/mpv/mpv.conf'
-alias xv='nvim ~/.vimrc'
-# alias xq="nvim ~/.config/qtile/config.py"
+alias vimb='nvim ~/.bashrc'
+alias vimz="nvim /home/mike/.zshrc"
+alias viml='nvim /home/mike/.config/lf/lfrc'
+alias vimx='nvim ~/.Xresources'
+alias vimta='nvim ~/.config/alacritty/alacritty.toml'
+alias vimtk='nvim ~/.config/kitty/kitty.conf'
+alias vimtw='nvim ~/.config/wezterm/wezterm.lua'
+alias vima='nvim ~/.config/awesome/rc.lua'
+alias vimm='nvim ~/.config/mpv/mpv.conf'
+alias vimv='nvim ~/.vimrc'
+# alias vimq="nvim ~/.config/qtile/config.py"
 alias ymp3='yt-dlp --extract-audio --audio-format mp3'
 alias yopus='yt-dlp --extract-audio --audio-format opus'
 alias merge='xrdb -merge ~/.Xresources'
