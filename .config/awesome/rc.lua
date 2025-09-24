@@ -652,7 +652,7 @@ local globalkeys = gears.table.join(
 	end, { description = "librewolf", group = "launcher" }),
 	awful.key({ superkey }, "b", function()
 		awful.spawn(
-			"brave-browser --force-device-scale-factor=1.2 --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer --incognito"
+			"brave-browser --force-device-scale-factor=1.2 --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer"
 		)
 	end, { description = "brave incognito", group = "launcher" }),
 	awful.key({ superkey, "Shift" }, "w", function()
@@ -668,7 +668,16 @@ local globalkeys = gears.table.join(
 	end, {
 		description = "Play URL in mpv",
 		group = "launcher",
-	})
+	}),
+	-- awful.key({ superkey }, "Escape", function()
+	-- 	local s = mouse.screen
+	-- 	s.mywibox.visible = not s.mywibox.visible
+	-- end, { description = "toggle wibar visibility", group = "awesome" })
+	awful.key({ superkey }, "Escape", function()
+		local s = mouse.screen
+		s.mywibox.visible = not s.mywibox.visible
+		s.mywibox.ontop = s.mywibox.visible -- Only on top while shown
+	end, { description = "toggle wibar visibility", group = "awesome" })
 )
 
 local clientkeys = gears.table.join(
@@ -938,14 +947,14 @@ end)
 -- Rounded windows --
 local function set_shape(c)
 	if c.fullscreen then
-		-- Use a normal rectangle: no corner radius
+		-- Use a normal rectangle: no corner radius (fullscreen)
 		c.shape = function(cr, w, h)
 			gears.shape.rectangle(cr, w, h)
 		end
 	else
-		-- Use rounded rectangle for everything else
+		-- Use rounded rectangle for everything else (Normal windows)
 		c.shape = function(cr, w, h)
-			gears.shape.rounded_rect(cr, w, h, 25) -- change 16 to your preferred radius
+			gears.shape.rounded_rect(cr, w, h, 1) -- increase the number to get more rounded effect
 		end
 	end
 end
