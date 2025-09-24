@@ -260,9 +260,12 @@ alias ffprobe="ffprobe -hide_banner"
 alias rudo="sudo-rs"
 alias ru="su-rs"
 alias eza="eza --icons --time-style=long-iso"
-alias historys="history 1 | fzf"
-alias ll="eza --long"
-alias lt="eza --tree"
+alias historys="history 1 | fzf --preview='' --preview-window='hidden'"
+alias ll="eza --icons --time-style=long-iso --long"
+alias lt="eza --icons --time-style=long-iso --tree"
+alias la="eza --icons --time-style=long-iso --all"
+alias lla="eza --icons --time-style=long-iso --long --all"
+
 
 ###############################################################################################################################################
 ##############################################################################################################################################
