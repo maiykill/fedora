@@ -213,6 +213,11 @@ dotter ()
   rsync -a --delete ~/.local/share/fonts/ ~/Programs/fedora/.local/share/fonts/
 }
 
+top5 ()
+  {
+    fd . "$1" -H --exact-depth 1 -0 | xargs -0 du -sh | sort -hr | head -5 
+  }
+
 ###############################################################################################################################################
 
 # ALIASES
@@ -224,9 +229,9 @@ dotter ()
 # alias xp='nvim ~/.config/polybar/config'
 # alias ls='ls --color=auto'
 # alias grep='grep --color=auto'
-alias psmem='ps auxf | sort -nr -k 4 | head -5'
-alias pscpu='ps auxf | sort -nr -k 3 | head -5'
-alias df='df -Th'
+alias psmem='ps auxf | sort --numeric-sort --reverse --key=4 | head -5 | bat --style=plain -l dml'
+alias pscpu='ps auxf | sort --numeric-sort --reverse --key=3 | head -5 | bat --style=plain -l dml'
+alias df='df --print-type --human-readable'
 alias probe="sudo -E hw-probe -all -upload"
 alias m3="mpv '--ytdl-format=bv*[height=360]+wa*'"
 alias m4="mpv '--ytdl-format=bv*[height=480]+wa*'"
@@ -234,11 +239,11 @@ alias m7="mpv '--ytdl-format=bv*[height=720]+wa*'"
 alias m10="mpv '--ytdl-format=bv*[height=1080]+wa*'"
 alias myo="mpv '--ytdl-format=bv*[vcodec!*=av01]+ba'"
 alias topdf="soffice --headless --convert-to pdf"
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -v"
-alias jctl='journalctl -p 3 -xb'
-alias wget='wget -c'
+alias cp="cp --interactive --verbose"
+alias mv="mv --interactive --verbose"
+alias rm="rm --verbose"
+alias jctl='journalctl --priority=3 --catalog --boot=0'
+alias wget='wget --continue'
 alias vimb='nvim ~/.bashrc'
 alias vimz="nvim /home/mike/.zshrc"
 alias viml='nvim /home/mike/.config/lf/lfrc'
@@ -260,9 +265,14 @@ alias ffprobe="ffprobe -hide_banner"
 alias rudo="sudo-rs"
 alias ru="su-rs"
 alias eza="eza --icons --time-style=long-iso"
-alias historys="history 1 | fzf"
-alias ll="eza --long"
-alias lt="eza --tree"
+alias historys="history 1 | fzf --preview='' --preview-window='hidden'"
+alias ll="eza --icons --time-style=long-iso --long"
+alias lt="eza --icons --time-style=long-iso --tree"
+alias la="eza --icons --time-style=long-iso --all"
+alias lla="eza --icons --time-style=long-iso --long --all"
+alias curip='curl --silent --location https://am.i.mullvad.net/json | gojq'
+
+
 
 ###############################################################################################################################################
 ##############################################################################################################################################

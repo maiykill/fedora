@@ -30,9 +30,10 @@ theme.fg_urgent     = xrdb.background
 theme.fg_minimize   = xrdb.background
 
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(0.5)
 theme.border_normal = xrdb.color0
-theme.border_focus  = "#7F00FF"
+-- theme.border_focus  = "#7F00FF"
+theme.border_focus  = "#AAFF00"
 theme.border_marked = xrdb.color10
 
 theme.tooltip_fg = theme.fg_normal
@@ -62,6 +63,7 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(16)
 theme.menu_width  = dpi(133)
+
 
 
 -- Define the image to load

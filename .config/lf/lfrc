@@ -157,6 +157,7 @@ cmd ripgrep_jump ${{
 ## Custom Mappings
 map f
 map e
+map q
 map ff :fzf_jump
 map fs :skim_jump
 map fr :ripgrep_jump
@@ -196,3 +197,4 @@ map gf cd ~/.local/share/fonts/
 map gl cd ~/.local/
 map gj cd ~/Documents/jobs/
 map <c-y> yank-file
+map Q quit

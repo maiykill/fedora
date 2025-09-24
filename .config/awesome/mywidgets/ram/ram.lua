@@ -40,7 +40,7 @@ local function human_readable(kb)
 	end
 end
 
--- Visible RAM widget: icon + used size (no percentage, no Pango markup)
+-- Visible RAM widget: icon + used size (no Pango markup)
 local icon_tb = wibox.widget({
 	text = themeicons.ram,
 	font = themefonts.icon,
