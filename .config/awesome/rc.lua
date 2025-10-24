@@ -20,16 +20,6 @@ require("awful.hotkeys_popup.keys")
 -- Reduce noice in this file
 local awesome, client, root, screen = awesome, client, root, screen
 
--- M. widgets
-local cpu_widget = require("mywidgets.cpu.cpu")
-local net_speed = require("mywidgets.net.net")
-local ram_widget = require("mywidgets.ram.ram")
-local battery_widget = require("mywidgets.battery.battery")
-local uptime_widget = require("mywidgets.uptime.uptime")
-local calender_widget = require("mywidgets.calender.cal")
-local volume_widget = require("mywidgets.volume.volume")
-local gpu_widget = require("mywidgets.gpu.gpu")
-
 -- -- {{{ Error handling
 -- -- Check if awesome encountered an error during startup and fell back to
 -- -- another config (This code will only ever execute for the fallback config)
@@ -69,6 +59,15 @@ local gpu_widget = require("mywidgets.gpu.gpu")
 beautiful.init("/home/mike/.config/awesome/theme.lua")
 
 beautiful.wallpaper = "/home/mike/Public/a_colorful_circle_with_dots.jpg"
+
+-- M. widgets
+local cpu_widget = require("mywidgets.cpu.cpu")
+local net_speed = require("mywidgets.net.net")
+local ram_widget = require("mywidgets.ram.ram")
+local battery_widget = require("mywidgets.battery.battery")
+local volume_widget = require("mywidgets.volume.volume")
+local filesystem_widget = require("mywidgets.filesystem.filesystem")
+local clock_widget = require("mywidgets.time.time")
 
 --- terminal = "xterm"
 local terminal = "alacritty"
@@ -233,6 +232,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
+--
+-- Create textclock widget with custom format and 1-second refresh
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -349,25 +350,15 @@ awful.screen.connect_for_each_screen(function(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
-			spacing = 5,
+			spacing = 3,
 			-- mykeyboardlayout,
 			wibox.widget.systray(),
-			volume_widget,
-			uptime_widget,
-			net_speed({
-				width = 167,
-			}),
-			cpu_widget({
-				width = 75,
-				-- 	step_width = 5,
-				-- 	step_spacing = 0,
-				-- 	color = "#838c5e",
-			}),
-			gpu_widget({
-				width = 35,
-			}),
+			net_speed,
+			cpu_widget,
+			filesystem_widget,
 			ram_widget,
-			calender_widget,
+			clock_widget,
+      volume_widget,
 			battery_widget,
 			-- s.mylayoutbox,
 		},
@@ -860,6 +851,7 @@ awful.rules.rules = {
 	{ rule = { class = "Mousepad" }, properties = { floating = true, placement = awful.placement.centered } },
 	{ rule = { class = "Zathura" }, properties = { maximized = true } },
 	{ rule = { class = "Alacritty" }, properties = { floating = true, maximized = true } },
+	{ rule = { class = "libreoffice" }, properties = { floating = true, maximized = true } },
 	{
 		rule_any = {
 			name = { "File Operation Progress", "Copying files", "Confirm" },

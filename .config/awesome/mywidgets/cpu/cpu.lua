@@ -1,400 +1,205 @@
--------------------------------------------------
--- CPU Widget for Awesome Window Manager
--- Shows the current CPU utilization, temperature, and fan speed
--- (horizontal)
--------------------------------------------------
-
-local awful = require("awful")
-local watch = require("awful.widget.watch")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 local gears = require("gears")
+local beautiful = require("beautiful")
 
--- Theme colors table
+-- Theme colors (customize as needed)
 local themecolors = {
-	temp_na = "#cccccc",
-	temp_cool = "#268bd2", -- blue
-	temp_ok = "#859900", -- green
-	temp_warm = "#b58900", -- yellow/orange
-	temp_hot = "#dc322f", -- red
-	icon = "#2de6e2", -- icon color
+	bg = "#232136",
+	fg = "#e0def4",
+	temp = "#f6cba8",
+	fan = "#74c7ec",
+	cpu = "#f4b8e4",
 }
 
--- Theme fonts table
+-- Fonts
 local themefonts = {
-	widget = "FiraCode Nerd Font Propo Bold 13",
-	popup_header = "FiraCode Nerd Font Propo 13", -- for popup headers if needed
-	popup_text = "FiraCode Nerd Font Propo 13", -- for popup texts if needed
+	icon = "Iosevka Term Extended Bold 14",
+	text = "Iosevka Term Extended Bold 14",
 }
 
--- Theme icons table
-local themeicons = {
-	cpu = "",
+-- Icons (Nerd Fonts/Unicode)
+local icons = {
+	temp = "", -- No icon before temp.
+	fan = " ",
+	cpu = " ",
 }
 
-local CMD =
-	[[sh -c "grep '^cpu.' /proc/stat; ps -eo 'pid:10,pcpu:5,pmem:5,comm:30,cmd' --sort=-pcpu | grep -v [p]s | grep -v [g]rep | head -11 | tail -n +2"]]
-local CMD_slim = [[grep --max-count=1 '^cpu.' /proc/stat]]
-local CMD_SENSORS = "sensors"
-
-local HOME_DIR = os.getenv("HOME")
-local WIDGET_DIR = HOME_DIR .. "/.config/awesome/awesome-wm-widgets/cpu-widget"
-
-local cpu_widget = {}
-local cpu_rows = { spacing = 4, layout = wibox.layout.fixed.vertical }
-local is_update = true
-local process_rows = { layout = wibox.layout.fixed.vertical }
-
-local function trim(s)
-	return (s:gsub("^%s*(.-)%s*$", "%1"))
-end
-
-local function starts_with(str, start)
-	return str:sub(1, #start) == start
-end
-
-local function create_textbox(args)
-	return wibox.widget({
-		text = args.text,
-		align = args.align or "left",
-		markup = args.markup,
-		forced_width = args.forced_width or 40,
-		widget = wibox.widget.textbox,
-	})
-end
-
-local function create_process_header(params)
-	local res = wibox.widget({
-		create_textbox({ markup = "<b>PID</b>" }),
-		create_textbox({ markup = "<b>Name</b>" }),
-		{
-			create_textbox({ markup = "<b>%CPU</b>" }),
-			create_textbox({ markup = "<b>%MEM</b>" }),
-			params.with_action_column and create_textbox({ forced_width = 20 }) or nil,
-			layout = wibox.layout.align.horizontal,
-		},
-		layout = wibox.layout.ratio.horizontal,
-	})
-	res:ajust_ratio(2, 0.2, 0.47, 0.33)
-	return res
-end
-
-local function create_kill_process_button()
-	return wibox.widget({
-		{
-			id = "icon",
-			image = WIDGET_DIR .. "/window-close-symbolic.svg",
-			resize = false,
-			opacity = 0.1,
-			widget = wibox.widget.imagebox,
-		},
-		widget = wibox.container.background,
-	})
-end
-
--- *** Wibar widgets ***
-local temp_text = wibox.widget({
-	text = "N/A°C",
-	font = themefonts.widget,
+-- Textboxes for each metric
+local temp_tb = wibox.widget({
+	text = "--°C",
+	font = themefonts.text,
 	widget = wibox.widget.textbox,
-	align = "center",
+})
+local temp_box = wibox.widget({
+	temp_tb,
+	fg = themecolors.temp,
+	widget = wibox.container.background,
 })
 
-local fan_text = wibox.widget({
-	text = "N/ARPM",
-	font = themefonts.widget,
+local fan_tb = wibox.widget({
+	text = "--" .. icons.fan,
+	font = themefonts.text,
 	widget = wibox.widget.textbox,
-	align = "center",
+})
+local fan_box = wibox.widget({
+	fan_tb,
+	fg = themecolors.fan,
+	widget = wibox.container.background,
 })
 
-local function color_for_temp(temp)
-	temp = tonumber(temp)
-	if not temp then
-		return themecolors.temp_na
-	end
-	if temp < 45 then
-		return themecolors.temp_cool
-	elseif temp < 60 then
-		return themecolors.temp_ok
-	elseif temp < 75 then
-		return themecolors.temp_warm
-	else
-		return themecolors.temp_hot
-	end
-end
+local cpu_tb = wibox.widget({
+	text = "--" .. icons.cpu,
+	font = themefonts.text,
+	widget = wibox.widget.textbox,
+})
+local cpu_box = wibox.widget({
+	cpu_tb,
+	fg = themecolors.cpu,
+	widget = wibox.container.background,
+})
 
-local function update_temp_and_fan()
-	awful.spawn.easy_async_with_shell(CMD_SENSORS, function(stdout)
-		-- Get first core temp (or any temp if not found)
-		local temp_val
-		for core, temp in stdout:gmatch("(Core %d+):%s*[%+]?([%d%.]+)°C") do
-			temp_val = temp
-			break
-		end
-		if not temp_val then
-			for label, temp in stdout:gmatch("(%w+ temp):%s*[%+]?([%d%.]+)°C") do
-				temp_val = temp
-				break
-			end
-		end
-		if temp_val then
-			local temp_int = tostring(math.floor(tonumber(temp_val) or 0))
-			temp_text.markup = string.format(
-				"<span font='%s' foreground='%s'>%s°C</span>",
-				themefonts.widget,
-				color_for_temp(temp_int),
-				temp_int
-			)
-		else
-			temp_text.markup =
-				string.format("<span font='%s' foreground='%s'>N/A°C</span>", themefonts.widget, themecolors.temp_na)
-		end
+local content_row = wibox.widget({
+	temp_box,
+	fan_box,
+	cpu_box,
+	spacing = 6,
+	layout = wibox.layout.fixed.horizontal,
+})
 
-		-- Get first fan speed
-		local fan_val
-		for label, speed in stdout:gmatch("(%w+ fan)%s*:%s*([%d]+) RPM") do
-			fan_val = speed
-			break
-		end
-		if not fan_val then
-			for label, speed in stdout:gmatch("(fan%d+):%s*([%d]+) RPM") do
-				fan_val = speed
-				break
-			end
-		end
-		if fan_val then
-			-- No spaces between fan speed and RPM
-			fan_text.markup = string.format("<span font='%s'>%sRPM</span>", themefonts.widget, fan_val)
-		else
-			fan_text.markup = string.format("<span font='%s'>N/A RPM</span>", themefonts.widget)
-		end
-	end)
-end
+local cpu_widget = wibox.widget({
+	{
+		content_row,
+		left = 6,
+		right = 6,
+		top = 2,
+		bottom = 2,
+		widget = wibox.container.margin,
+	},
+	bg = beautiful.cat_surface0,
+	shape = gears.shape.rounded_rect,
+	widget = wibox.container.background,
+})
 
-local function worker(user_args)
-	local args = user_args or {}
-
-	local width = args.width or 50
-	local step_width = args.step_width or 2
-	local step_spacing = args.step_spacing or 1
-	local color = args.color or beautiful.fg_normal
-	local background_color = args.background_color or "#00000000"
-	local enable_kill_button = args.enable_kill_button or false
-	local process_info_max_length = args.process_info_max_length or -1
-	local timeout = args.timeout or 1
-
-	local cpugraph_widget = wibox.widget({
-		max_value = 100,
-		background_color = background_color,
-		forced_width = width,
-		step_width = step_width,
-		step_spacing = step_spacing,
-		widget = wibox.widget.graph,
-		color = "linear:0,0:0,20:0,#FF0000:0.3,#FFFF00:0.6," .. color,
-	})
-
-	local popup_timer = gears.timer({ timeout = timeout })
-	local sensors_timer = gears.timer({
-		timeout = 1, -- updated to 1 second interval
-		autostart = true,
-		call_now = true,
-		callback = update_temp_and_fan,
-	})
-
-	local popup = awful.popup({
-		ontop = true,
-		visible = false,
-		shape = gears.shape.rounded_rect,
-		border_width = 1,
-		border_color = beautiful.bg_normal,
-		maximum_width = 500,
-		offset = { y = 5 },
-		widget = {},
-	})
-
-	popup:connect_signal("mouse::enter", function()
-		is_update = false
-	end)
-	popup:connect_signal("mouse::leave", function()
-		is_update = true
-	end)
-
-	cpugraph_widget:buttons(awful.util.table.join(awful.button({}, 1, function()
-		if popup.visible then
-			popup.visible = not popup.visible
-			popup_timer:stop()
-		else
-			popup:move_next_to(mouse.current_widget_geometry)
-			popup_timer:start()
-			popup_timer:emit_signal("timeout")
-		end
-	end)))
-
-	-- Horizontal layout: icon, temp, fan, graph
-	cpu_widget = wibox.widget({
-		{
-			markup = string.format("<span foreground='%s'>%s</span>", themecolors.icon, themeicons.cpu), -- Use icon from themeicons
-			font = themefonts.widget,
-			widget = wibox.widget.textbox,
-		},
-		temp_text,
-		fan_text,
-		{
-			cpugraph_widget,
-			reflection = { horizontal = true },
-			layout = wibox.container.mirror,
-		},
-		layout = wibox.layout.fixed.horizontal,
-		spacing = 6,
-	})
-
-	-- Update graph in wibar
-	local maincpu = {}
-	watch(CMD_slim, timeout, function(widget, stdout)
-		local _, user, nice, system, idle, iowait, irq, softirq, steal, _, _ =
-			stdout:match("(%w+)%s+(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)")
-		local total = user + nice + system + idle + iowait + irq + softirq + steal
-		local diff_idle = idle - tonumber(maincpu["idle_prev"] == nil and 0 or maincpu["idle_prev"])
-		local diff_total = total - tonumber(maincpu["total_prev"] == nil and 0 or maincpu["total_prev"])
-		local diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
-		maincpu["total_prev"] = total
-		maincpu["idle_prev"] = idle
-		widget:add_value(diff_usage)
-	end, cpugraph_widget)
-
-	-- Update popup
-	local cpus = {}
-	popup_timer:connect_signal("timeout", function()
-		awful.spawn.easy_async(CMD, function(stdout, _, _, _)
-			local i = 1
-			local j = 1
-			for line in stdout:gmatch("[^\r\n]+") do
-				if starts_with(line, "cpu") then
-					if cpus[i] == nil then
-						cpus[i] = {}
-					end
-					local name, user, nice, system, idle, iowait, irq, softirq, steal, _, _ =
-						line:match("(%w+)%s+(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)")
-					local total = user + nice + system + idle + iowait + irq + softirq + steal
-					local diff_idle = idle - tonumber(cpus[i]["idle_prev"] == nil and 0 or cpus[i]["idle_prev"])
-					local diff_total = total - tonumber(cpus[i]["total_prev"] == nil and 0 or cpus[i]["total_prev"])
-					local diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
-					cpus[i]["total_prev"] = total
-					cpus[i]["idle_prev"] = idle
-					local row = wibox.widget({
-						create_textbox({ text = name }),
-						create_textbox({ text = math.floor(diff_usage) .. "%" }),
-						{
-							max_value = 100,
-							value = diff_usage,
-							forced_height = 40,
-							forced_width = 150,
-							paddings = 1,
-							margins = 4,
-							border_width = 1,
-							border_color = beautiful.bg_focus,
-							background_color = beautiful.bg_normal,
-							bar_border_width = 1,
-							bar_border_color = beautiful.bg_focus,
-							color = "linear:150,0:0,0:0,#D08770:0.3,#BF616A:0.6," .. beautiful.fg_normal,
-							widget = wibox.widget.progressbar,
-						},
-						layout = wibox.layout.ratio.horizontal,
-					})
-					row:ajust_ratio(2, 0.15, 0.15, 0.7)
-					cpu_rows[i] = row
-					i = i + 1
-				else
-					if is_update == true then
-						local pid = trim(string.sub(line, 1, 10))
-						local cpu = trim(string.sub(line, 12, 16))
-						local mem = trim(string.sub(line, 18, 22))
-						local comm = trim(string.sub(line, 24, 53))
-						local cmd = trim(string.sub(line, 54))
-						local kill_proccess_button = enable_kill_button and create_kill_process_button() or nil
-						local pid_name_rest = wibox.widget({
-							create_textbox({ text = pid }),
-							create_textbox({ text = comm }),
-							{
-								create_textbox({ text = cpu, align = "center" }),
-								create_textbox({ text = mem, align = "center" }),
-								kill_proccess_button,
-								layout = wibox.layout.fixed.horizontal,
-							},
-							layout = wibox.layout.ratio.horizontal,
-						})
-						pid_name_rest:ajust_ratio(2, 0.2, 0.47, 0.33)
-						local row = wibox.widget({
-							{
-								pid_name_rest,
-								top = 4,
-								bottom = 4,
-								widget = wibox.container.margin,
-							},
-							widget = wibox.container.background,
-						})
-						row:connect_signal("mouse::enter", function(c)
-							c:set_bg(beautiful.bg_focus)
-						end)
-						row:connect_signal("mouse::leave", function(c)
-							c:set_bg(beautiful.bg_normal)
-						end)
-						if enable_kill_button then
-							row:connect_signal("mouse::enter", function()
-								kill_proccess_button.icon.opacity = 1
-							end)
-							row:connect_signal("mouse::leave", function()
-								kill_proccess_button.icon.opacity = 0.1
-							end)
-							kill_proccess_button:buttons(awful.util.table.join(awful.button({}, 1, function()
-								row:set_bg("#ff0000")
-								awful.spawn.with_shell("kill -9 " .. pid)
-							end)))
-						end
-						awful.tooltip({
-							objects = { row },
-							mode = "outside",
-							preferred_positions = { "bottom" },
-							timer_function = function()
-								local text = cmd
-								if process_info_max_length > 0 and text:len() > process_info_max_length then
-									text = text:sub(0, process_info_max_length - 3) .. "..."
-								end
-								return text:gsub("%s%-", "\n\t-"):gsub(":/", "\n\t\t:/")
-							end,
-						})
-						process_rows[j] = row
-						j = j + 1
-					end
+-- ----- Helper: Find hwmonX path for named sensor -----
+local function find_hwmon_path(sensor_name, sensor_file)
+	for i = 0, 20 do
+		local base = "/sys/class/hwmon/hwmon" .. i
+		local fname = base .. "/name"
+		local f = io.open(fname, "r")
+		if f then
+			local name = f:read("*l")
+			f:close()
+			if name == sensor_name then
+				local candidate = base .. "/" .. sensor_file
+				local f2 = io.open(candidate)
+				if f2 then
+					f2:close()
+					return candidate
 				end
 			end
-			popup:setup({
-				{
-					cpu_rows,
-					{
-						orientation = "horizontal",
-						forced_height = 15,
-						color = beautiful.bg_focus,
-						widget = wibox.widget.separator,
-					},
-					create_process_header({ with_action_column = enable_kill_button }),
-					process_rows,
-					layout = wibox.layout.fixed.vertical,
-				},
-				margins = 8,
-				widget = wibox.container.margin,
-			})
-		end)
-	end)
-
-	-- Initial update
-	update_temp_and_fan()
-
-	return cpu_widget
+		end
+	end
+	return nil
 end
 
-return setmetatable(cpu_widget, {
-	__call = function(_, ...)
-		return worker(...)
-	end,
+-- ----- Helper: Read number from file (once) -----
+local function read_file_num(path)
+	if not path then
+		return nil
+	end
+	local f = io.open(path, "r")
+	if not f then
+		return nil
+	end
+	local value = f:read("*l")
+	f:close()
+	return tonumber(value)
+end
+
+-- ----- CPU Usage calculation (pure Lua, minimal memory) -----
+local prev_total, prev_idle = nil, nil
+local function get_cpu_usage()
+	local f = io.open("/proc/stat", "r")
+	if not f then
+		return nil
+	end
+	local l = f:read("*l")
+	f:close()
+	if not l then
+		return nil
+	end
+	local user, nice, system, idle, iowait, irq, softirq, steal =
+		l:match("cpu%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)")
+	user, nice, system, idle, iowait, irq, softirq, steal =
+		tonumber(user),
+		tonumber(nice),
+		tonumber(system),
+		tonumber(idle),
+		tonumber(iowait),
+		tonumber(irq),
+		tonumber(softirq),
+		tonumber(steal)
+	if not user then
+		return nil
+	end
+	local idle_all = idle + iowait
+	local non_idle = user + nice + system + irq + softirq + steal
+	local total = idle_all + non_idle
+
+	if (not prev_total) or not prev_idle then
+		prev_total = total
+		prev_idle = idle_all
+		return nil
+	end
+
+	local diff_total = total - prev_total
+	local diff_idle = idle_all - prev_idle
+	prev_total = total
+	prev_idle = idle_all
+	if diff_total == 0 then
+		return 0
+	end
+	local cpu_pct = (diff_total - diff_idle) / diff_total * 100
+	return math.floor(cpu_pct + 0.5)
+end
+
+-- ----- Sensor path discovery (once per boot, per widget lifetime) -----
+local temp_path, fan_path = nil, nil
+local function discover_paths()
+	temp_path = find_hwmon_path("thinkpad", "temp1_input")
+	fan_path = find_hwmon_path("thinkpad", "fan1_input")
+end
+discover_paths()
+
+-- Minimal periodic update
+local function update_widget()
+	-- -- Sensor paths may change after suspend/resume, so rediscover if missing
+	-- if not temp_path then
+	-- 	temp_path = find_hwmon_path("thinkpad", "temp1_input")
+	-- end
+	-- if not fan_path then
+	-- 	fan_path = find_hwmon_path("thinkpad", "fan1_input")
+	-- end
+
+	-- Temperature (in millidegree C)
+	local temp_raw = read_file_num(temp_path)
+	local temp_c = temp_raw and math.floor(temp_raw / 1000 + 0.5) or "--"
+	temp_tb.text = string.format("%s°C", temp_c)
+
+	-- Fan (RPM)
+	local fan = read_file_num(fan_path)
+	fan_tb.text = string.format("%s%s", fan or "--", icons.fan)
+
+	-- CPU percentage (as before)
+	local cpu_pct = get_cpu_usage()
+	cpu_tb.text = string.format("%s%s", cpu_pct and tostring(cpu_pct) or "--", icons.cpu)
+end
+
+gears.timer({
+	timeout = 2,
+	autostart = true,
+	call_now = true,
+	callback = update_widget,
 })
+
+return cpu_widget

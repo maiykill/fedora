@@ -1,139 +1,137 @@
 local wibox = require("wibox")
 local gears = require("gears")
-local awful = require("awful")
+local beautiful = require("beautiful")
 
--- Theme colors table (including all your original colors)
+-- Theme colors (add all you need)
 local themecolors = {
-	-- Rosé Pine
 	rose_love = "#eb6f92",
 	rose_gold = "#f6c177",
 	rose_foam = "#9ccfd8",
-	rose_iris = "#c4a7e7",
-	rose_pine = "#31748f",
-	-- Catppuccin
 	cat_lavender = "#b4befe",
 	cat_peach = "#fab387",
-	cat_mauve = "#cba6f7",
-	cat_green = "#a6e3a1",
-	cat_red = "#f38ba8",
-	-- One Dark
-	one_blue = "#61afef",
-	one_yellow = "#e5c07b",
-	one_red = "#e06c75",
-	one_green = "#98c379",
-	one_fg = "#abb2bf",
-	-- Zenburn
-	zen_yellow = "#f0dfaf",
-	zen_orange = "#dfaf8f",
-	zen_green = "#afd787",
 	zen_red = "#dca3a3",
-	zen_bg = "#3f3f3f",
+	zen_orange = "#dfaf8f",
+	cat_green = "#a6e3a1",
+	one_blue = "#61afef",
+	one_red = "#e06c75",
 }
 
--- Theme fonts table
+-- Fonts
 local themefonts = {
-	main = "FiraCode Nerd Font Propo Bold 13",
+	text = "Iosevka Term Extended Bold 14",
 }
 
--- Theme icons table
-local themeicons = {
+-- Icons
+local icons = {
 	battery = "🔋",
 	charging = "🔌",
 	full = "⚡",
 }
 
--- Battery widget textbox
-local battery_widget = wibox.widget({
+-- Battery value textbox (NO markup)
+local battery_textbox = wibox.widget({
+	text = "--%",
+	font = themefonts.text,
 	widget = wibox.widget.textbox,
-	align = "center",
-	valign = "center",
-	font = themefonts.main,
 })
 
--- Stepwise color selector by capacity %
-local function get_color_by_capacity(capacity)
-	if capacity <= 10 then
+local battery_iconbox = wibox.widget({
+	text = icons.battery,
+	font = themefonts.text,
+	widget = wibox.widget.textbox,
+})
+
+local battery_row = wibox.widget({
+	battery_iconbox,
+	battery_textbox,
+	layout = wibox.layout.fixed.horizontal,
+	spacing = 2,
+})
+
+local battery_widget = wibox.widget({
+	{
+		battery_row,
+		left = 6,
+		right = 6,
+		top = 2,
+		bottom = 2,
+		widget = wibox.container.margin,
+	},
+	bg = beautiful.cat_surface0,
+	-- fg = themecolors.one_red,
+	shape = gears.shape.rounded_rect,
+	widget = wibox.container.background,
+})
+
+-- Stepwise color logic
+local function get_color_by_capacity(cap)
+	if cap <= 10 then
 		return themecolors.one_red
-	elseif capacity <= 20 then
+	elseif cap <= 20 then
 		return themecolors.rose_love
-	elseif capacity <= 35 then
+	elseif cap <= 35 then
 		return themecolors.cat_peach
-	elseif capacity <= 50 then
+	elseif cap <= 50 then
 		return themecolors.zen_red
-	elseif capacity <= 65 then
+	elseif cap <= 65 then
 		return themecolors.zen_orange
-	elseif capacity <= 80 then
+	elseif cap <= 80 then
 		return themecolors.cat_green
-	elseif capacity <= 90 then
+	elseif cap <= 90 then
 		return themecolors.rose_foam
-	elseif capacity <= 98 then
+	elseif cap <= 98 then
 		return themecolors.one_blue
 	else
 		return themecolors.cat_lavender
 	end
 end
 
--- Update battery widget markup based on current status and capacity
+-- Actual update logic: only set values and widget fg/icon
 local function update_battery()
-	local bat_path = "/sys/class/power_supply/BAT0/"
-	local f_capacity = io.open(bat_path .. "capacity", "r")
-	local f_status = io.open(bat_path .. "status", "r")
+	local base = "/sys/class/power_supply/BAT0/"
+	local fcap = io.open(base .. "capacity", "r")
+	local fstat = io.open(base .. "status", "r")
 
-	if not f_capacity or not f_status then
-		battery_widget:set_markup(
-			string.format('<span foreground="%s">%s N/A</span>', themecolors.one_red, themeicons.battery)
-		)
+	if not fcap or not fstat then
+		battery_textbox.text = "N/A"
+		battery_iconbox.text = icons.battery
+		battery_widget.fg = themecolors.one_red
+		if fcap then
+			fcap:close()
+		end
+		if fstat then
+			fstat:close()
+		end
 		return
 	end
 
-	local capacity = tonumber(f_capacity:read("*all"))
-	local status = f_status:read("*all"):gsub("\n", "")
+	local cap = tonumber(fcap:read("*all"))
+	local stat = fstat:read("*all"):gsub("%s+", "")
+	fcap:close()
+	fstat:close()
 
-	f_capacity:close()
-	f_status:close()
-
-	local icon, color
-
-	if status == "Charging" then
-		icon = themeicons.charging
-		color = get_color_by_capacity(capacity)
-	elseif status == "Discharging" then
-		icon = themeicons.battery
-		color = get_color_by_capacity(capacity)
+	local fgcolor, icon
+	fgcolor = get_color_by_capacity(cap)
+	if stat == "Charging" then
+		icon = icons.charging
+	elseif stat == "Discharging" then
+		icon = icons.battery
 	else
-		-- Full, Unknown, or other statuses
-		icon = themeicons.full
-		color = themecolors.rose_gold
+		icon = icons.full
+		fgcolor = themecolors.rose_gold
 	end
 
-	battery_widget:set_markup(string.format('<span foreground="%s">%s%d%%</span>', color, icon, capacity))
+	battery_widget.fg = fgcolor
+	battery_iconbox.text = icon
+	battery_textbox.text = string.format("%d%%", cap)
 end
 
--- Initial update
 update_battery()
-
--- Timer to update the widget every second (or change as needed)
 gears.timer({
-	timeout = 1,
+	timeout = 6,
 	autostart = true,
 	call_now = true,
 	callback = update_battery,
-})
-
--- Tooltip showing status
-awful.tooltip({
-	objects = { battery_widget },
-	timer_function = function()
-		local f_status = io.open("/sys/class/power_supply/BAT0/status", "r")
-		local status = f_status and f_status:read("*all"):gsub("\n", "") or "N/A"
-		if f_status then
-			f_status:close()
-		end
-		return "Status: " .. status
-	end,
-	font = themefonts.main,
-	bg = "#757b90", -- Cement-like background
-	fg = "#ffffff",
 })
 
 return battery_widget
