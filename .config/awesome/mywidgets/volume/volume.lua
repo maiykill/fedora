@@ -1,279 +1,86 @@
 local wibox = require("wibox")
 local gears = require("gears")
-local awful = require("awful")
+local beautiful = require("beautiful")
 
--- Theme colors table
-local themecolors = {
-	bg = "#0d0221",
-	fg = "#D8DEE9",
-	focus_date_bg = "#650d89",
-	focus_date_fg = "#2de6e2",
-	weekend_day_bg = "#261447",
-	weekday_fg = "#2de6e2",
-	header_fg = "#f6019d",
-	border = "#261447",
-}
-
--- Theme fonts table
 local themefonts = {
-	icon_large = "FiraCode Nerd Font Propo Bold 18",
-	icon_medium = "FiraCode Nerd Font Propo Bold 16",
-	text_medium = "FiraCode Nerd Font Propo Bold 13",
-	text_small = "FiraCode Nerd Font Propo 12",
-	percent_large = "FiraCode Nerd Font Propo Bold 16",
+	text = "Iosevka Term Extended Bold 14",
 }
 
--- Utility: get active port using your preferred command
-local function get_device_icon_and_name(callback)
-	awful.spawn.easy_async_with_shell(
-		[[pactl list sinks | rg -e "Active Port" | awk -F'-' '{print $NF}' | head -n1]],
-		function(port)
-			port = port:gsub("\n", ""):lower()
-			local icon, label
-			if port:find("headphone") then
-				icon = "🎧"
-				label = "Headphones"
-			elseif port:find("speaker") then
-				icon = "🔊"
-				label = "Speakers"
-			elseif port:find("hdmi") then
-				icon = "🖥️"
-				label = "HDMI"
-			elseif port:find("usb") then
-				icon = "🔈"
-				label = "USB"
-			elseif port ~= "" then
-				icon = "🔊"
-				label = port:gsub("_", " "):gsub("^%l", string.upper)
-			else
-				icon = "🔊"
-				label = "Speakers"
-			end
-			callback(icon, label)
-		end
-	)
+local icon_unmuted = "🔊"
+local icon_muted = "󰝛 "
+
+local volume_text = wibox.widget.textbox()
+volume_text.font = themefonts.text
+volume_text.halign = "center"
+volume_text.valign = "center"
+
+local volume_capsule = wibox.widget({
+	{
+		volume_text,
+		left = 7,
+		right = 2,
+		top = 2,
+		bottom = 2,
+		widget = wibox.container.margin,
+	},
+	bg = beautiful.cat_surface0,
+	fg = beautiful.cat_teal,
+	shape = gears.shape.rounded_rect,
+	widget = wibox.container.background,
+	forced_width = 70,
+})
+
+-- Parse volume and mute status from amixer output
+
+local function get_volume_info()
+	local f_vol = io.popen("wpctl get-volume @DEFAULT_AUDIO_SINK@")
+	if not f_vol then
+		return nil, nil
+	end
+	local vol_str = f_vol:read("*all")
+	f_vol:close()
+
+	-- Extract volume decimal number
+	local volume = tonumber(vol_str:match("Volume:%s*([0-9]*%.?[0-9]+)"))
+
+	-- Determine mute state by presence of [MUTED]
+	local muted = vol_str:find("%[MUTED%]") ~= nil
+
+	if not volume then
+		volume = 0
+	end
+
+	-- Convert volume decimal (0.0-1.0) to percentage
+	volume = math.floor(volume * 100)
+
+	return volume, muted
 end
 
--- Widget parts
-local volume_icon = wibox.widget({
-	markup = "🔊",
-	font = themefonts.icon_medium,
-	align = "center",
-	valign = "center",
-	widget = wibox.widget.textbox,
-})
-local volume_text = wibox.widget({
-	markup = "0",
-	font = themefonts.text_medium,
-	align = "center",
-	valign = "center",
-	widget = wibox.widget.textbox,
-})
-local volume_widget = wibox.widget({
-	{
-		volume_icon,
-		volume_text,
-		spacing = 4,
-		layout = wibox.layout.fixed.horizontal,
-	},
-	widget = wibox.container.margin,
-	left = 8,
-	right = 8,
-	top = 2,
-	bottom = 2,
-	bg = themecolors.bg,
-})
+-- Update function
+local function update_volume()
+	local volume, muted = get_volume_info()
+	if not volume then
+		volume_text.text = "N/A " .. icon_muted
+		volume_capsule.bg = beautiful.kana_samuraired
+		return
+	end
 
--- Notification helper
-local last_muted = nil
-local function send_mute_notification(muted)
+	local icon = muted and icon_muted or icon_unmuted
+	volume_text.text = string.format("%d%%%s", volume, icon)
+
 	if muted then
-		awful.spawn("dunstify -a Volume -u critical -t 1500 'Muted' 'Audio is muted'")
-		-- else
-		-- awful.spawn("dunstify -a Volume -u low -t 1500 'Unmuted' 'Audio is unmuted'")
+		volume_capsule.bg = beautiful.kana_samuraired
+	else
+		volume_capsule.bg = beautiful.cat_surface0
 	end
 end
 
--- Widget updater
-local function update_volume_widget(send_notification)
-	awful.spawn.easy_async_with_shell("wpctl get-volume @DEFAULT_AUDIO_SINK@", function(stdout)
-		local volume = stdout:match("(%d%.%d+)")
-		local muted = stdout:find("MUTED")
-		if volume then
-			local percent = math.floor(tonumber(volume) * 100)
-			if muted then
-				volume_icon.markup = '<span foreground="' .. themecolors.header_fg .. '">🔇</span>'
-				volume_text.markup = '<span foreground="' .. themecolors.header_fg .. '">' .. percent .. "</span>"
-			else
-				volume_icon.markup = '<span foreground="' .. themecolors.fg .. '">🔊</span>'
-				volume_text.markup = '<span foreground="' .. themecolors.fg .. '">' .. percent .. "</span>"
-			end
-			if send_notification and last_muted ~= nil and muted ~= last_muted then
-				send_mute_notification(muted)
-			end
-			last_muted = muted
-		else
-			volume_icon.markup = '<span foreground="' .. themecolors.fg .. '">--</span>'
-			volume_text.markup = '<span foreground="' .. themecolors.fg .. '">--</span>'
-		end
-	end)
-end
-
--- Initial update and timer
-update_volume_widget(false)
-gears.timer({
-	timeout = 5,
-	autostart = true,
-	call_now = true,
-	callback = function()
-		update_volume_widget(false)
-	end,
-})
+-- Timer to update volume every 0.5 seconds (adjust if needed)
 gears.timer({
 	timeout = 0.5,
 	autostart = true,
-	callback = function()
-		update_volume_widget(true)
-	end,
+	call_now = true,
+	callback = update_volume,
 })
 
--- Popup slider with icon, device, and percent
-local slider_icon = wibox.widget({
-	markup = "🔊",
-	font = themefonts.icon_large,
-	align = "center",
-	valign = "center",
-	widget = wibox.widget.textbox,
-})
-local slider_device = wibox.widget({
-	markup = "Speakers",
-	font = themefonts.text_small,
-	align = "center",
-	valign = "center",
-	widget = wibox.widget.textbox,
-})
-local slider_percent = wibox.widget({
-	markup = "0%",
-	font = themefonts.percent_large,
-	align = "center",
-	valign = "center",
-	widget = wibox.widget.textbox,
-})
-
-local slider = wibox.widget({
-	bar_shape = gears.shape.rounded_rect,
-	bar_height = 18,
-	bar_color = themecolors.weekend_day_bg,
-	bar_active_color = themecolors.header_fg,
-	handle_color = themecolors.focus_date_fg,
-	handle_shape = gears.shape.circle,
-	handle_width = 28,
-	minimum = 0,
-	maximum = 100,
-	value = 50,
-	widget = wibox.widget.slider,
-})
-
-local slider_row = wibox.widget({
-	slider_icon,
-	slider_device,
-	slider,
-	slider_percent,
-	spacing = 14,
-	layout = wibox.layout.fixed.horizontal,
-})
-
-local slider_popup = awful.popup({
-	widget = {
-		{
-			slider_row,
-			forced_width = 370,
-			forced_height = 60,
-			widget = wibox.container.margin,
-			margins = 16,
-		},
-		bg = themecolors.bg,
-		shape = gears.shape.rounded_rect,
-		widget = wibox.container.background,
-	},
-	visible = false,
-	ontop = true,
-	shape = gears.shape.rounded_rect,
-	border_width = 2,
-	border_color = themecolors.border,
-	-- Removed the placement function here, will handle it manually on `property::geometry`
-})
-
--- Popup hide logic: always hide after 2s if mouse is not on popup
-local hide_timer = gears.timer({
-	timeout = 2,
-	single_shot = true,
-	callback = function()
-		slider_popup.visible = false
-	end,
-})
-
-slider_popup.widget:connect_signal("mouse::enter", function()
-	hide_timer:stop()
-end)
-slider_popup.widget:connect_signal("mouse::leave", function()
-	hide_timer:again()
-end)
-
-local function set_volume(percent)
-	awful.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ " .. (percent / 100))
-	gears.timer.start_new(0.1, function()
-		update_volume_widget(false)
-		slider_percent.markup = '<span foreground="' .. themecolors.fg .. '">' .. percent .. "%%</span>"
-		return false
-	end)
-end
-
-slider:connect_signal("property::value", function()
-	set_volume(slider.value)
-end)
-
--- The main click handler for the volume widget
-volume_widget:buttons(gears.table.join(awful.button({}, 1, function()
-	awful.spawn.easy_async_with_shell("wpctl get-volume @DEFAULT_AUDIO_SINK@", function(stdout)
-		local volume = stdout:match("(%d%.%d+)")
-		local muted = stdout:find("MUTED")
-		local percent = volume and math.floor(tonumber(volume) * 100) or 0
-		get_device_icon_and_name(function(dev_icon, dev_label)
-			slider.value = percent
-			slider_device.markup = '<span foreground="' .. themecolors.focus_date_fg .. '">' .. dev_label .. "</span>"
-			if muted then
-				slider_icon.markup = '<span foreground="' .. themecolors.header_fg .. '">🔇</span>'
-				slider_percent.markup = '<span foreground="' .. themecolors.header_fg .. '">' .. percent .. "%%</span>"
-			else
-				slider_icon.markup = '<span foreground="' .. themecolors.fg .. '">' .. dev_icon .. "</span>"
-				slider_percent.markup = '<span foreground="' .. themecolors.fg .. '">' .. percent .. "%%</span>"
-			end
-
-			-- Toggle visibility FIRST
-			slider_popup.visible = not slider_popup.visible
-
-			-- Only place if it became visible, and only once its geometry is ready
-			if slider_popup.visible then
-				-- Connect to geometry signal to place the popup only when it has a size
-				local on_geometry_set
-				on_geometry_set = function()
-					awful.placement.next_to(slider_popup, {
-						preferred_positions = { "bottom" },
-						preferred_alignments = { "middle" },
-						geometry = mouse.current_widget_geometry or mouse.coords(),
-						parent = mouse.screen,
-					})
-					-- Disconnect the signal immediately after first successful placement
-					slider_popup:disconnect_signal("property::geometry", on_geometry_set)
-				end
-				slider_popup:connect_signal("property::geometry", on_geometry_set)
-			else
-				-- If it became invisible, stop the hide timer
-				hide_timer:stop()
-			end
-		end)
-	end)
-end)))
-
-return volume_widget
+return volume_capsule
