@@ -271,6 +271,7 @@ alias lt="eza --icons --time-style=long-iso --tree"
 alias la="eza --icons --time-style=long-iso --all"
 alias lla="eza --icons --time-style=long-iso --long --all"
 alias curip='curl --silent --location https://am.i.mullvad.net/json | gojq'
+alias cpufetch='cpufetch --logo-intel-new'
 
 
 
