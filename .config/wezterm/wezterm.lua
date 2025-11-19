@@ -32,7 +32,7 @@ config.default_cursor_style = "SteadyBar"
 -- config.color_scheme = 'OceanicMaterial'
 -- config.color_scheme = 'Nancy (terminal.sexy)'
 -- config.color_scheme = 'Nature Suede (terminal.sexy)'
-config.color_scheme = 'Night Owl (Gogh)'
+config.color_scheme = "Night Owl (Gogh)"
 -- config.color_scheme = 'Nord (Gogh)'
 -- config.color_scheme = 'NvimDark'
 -- config.color_scheme = 'Mashup Colors (terminal.sexy)'
@@ -74,6 +74,22 @@ config.window_close_confirmation = "NeverPrompt"
 
 -- How many lines of scrollback you want to retain per tab
 config.scrollback_lines = 1000000
+
+-----------------------------------------------------------------
+-- Keybindings
+-----------------------------------------------------------------
+config.keys = {
+	{
+		key = "Enter",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.SpawnCommandInNewWindow({
+			-- No cwd specified here means it inherits from current pane
+			args = {}, -- or omit entirely
+		}),
+	},
+}
+
+-----------------------------------------------------------------
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 

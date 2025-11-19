@@ -45,8 +45,8 @@ cmd open ${{
       image/x-xcf) setsid -f gimp $fx >/dev/null 2>&1 ;;
       image/svg+xml) display -- $f ;;
       image/*) setsid -f nomacs $fx 2>/dev/null ;;
-      # audio/*|video/x-ms-asf) mpv --audio-display=no --force-window=no $fx ;; 
-      audio/*|video/x-ms-asf) mpv --force-window=no $fx ;; 
+      audio/*|video/x-ms-asf) mpv --audio-display=no --force-window=no $fx ;;
+      # audio/*|video/x-ms-asf) mpv --force-window=no $fx ;; 
       video/*) setsid -f mpv --quiet $fx >/dev/null 2>&1 ;;
       video/*) setsid -f vlc --quiet $fx >/dev/null 2>&1 ;;
       application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura "$fx" >/dev/null 2>&1 ;;
