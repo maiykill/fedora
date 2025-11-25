@@ -358,7 +358,7 @@ awful.screen.connect_for_each_screen(function(s)
 			filesystem_widget,
 			ram_widget,
 			clock_widget,
-      volume_widget,
+			volume_widget,
 			battery_widget,
 			-- s.mylayoutbox,
 		},
@@ -473,7 +473,7 @@ local globalkeys = gears.table.join(
 	awful.key({ superkey, "Control" }, "]", function()
 		awful.tag.incncol(-1, nil, true)
 	end, { description = "decrease the number of columns", group = "layout" }),
-	awful.key({ superkey }, "space", function()
+	awful.key({ superkey, "Control" }, "space", function()
 		awful.layout.inc(1)
 	end, { description = "select next", group = "layout" }),
 	awful.key({ superkey, "Shift" }, "space", function()
@@ -679,12 +679,13 @@ local clientkeys = gears.table.join(
 	awful.key({ superkey, "Shift" }, "q", function(c)
 		c:kill()
 	end, { description = "close", group = "client" }),
-	awful.key(
-		{ superkey, "Control" },
-		"space",
-		awful.client.floating.toggle,
-		{ description = "toggle floating", group = "client" }
-	),
+	awful.key({ superkey }, "space", function(c)
+		awful.client.floating.toggle(c)
+		if c.floating then
+			awful.placement.centered(c)
+			c:raise()
+		end
+	end, { description = "toggle floating and center", group = "client" }),
 	awful.key({ superkey, "Control" }, "apostrophe", function(c)
 		c:swap(awful.client.getmaster())
 	end, { description = "move to master", group = "client" }),
@@ -852,6 +853,7 @@ awful.rules.rules = {
 	{ rule = { class = "Zathura" }, properties = { maximized = true } },
 	{ rule = { class = "Alacritty" }, properties = { floating = true, maximized = true } },
 	{ rule = { class = "libreoffice" }, properties = { floating = true, maximized = true } },
+
 	{
 		rule_any = {
 			name = { "File Operation Progress", "Copying files", "Confirm" },

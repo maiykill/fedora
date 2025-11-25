@@ -94,6 +94,7 @@ x-scheme-handler/https=chromium-browser.desktop
 text/html=chromium-browser.desktop
 x-scheme-handler/about=chromium-browser.desktop
 x-scheme-handler/unknown=chromium-browser.desktop
+application/octet-stream=geany.desktop
 
 [Added Associations]
 image/jpeg=org.geeqie.Geeqie.desktop;sxiv.desktop;org.nomacs.ImageLounge.desktop;org.xfce.ristretto.desktop;gimp.desktop;
@@ -103,3 +104,4 @@ x-scheme-handler/http=xfce4-web-browser.desktop;
 x-scheme-handler/https=xfce4-web-browser.desktop;
 application/yaml=Helix.desktop;
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;brave-browser.desktop;
+application/octet-stream=geany.desktop;

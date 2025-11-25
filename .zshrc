@@ -76,70 +76,7 @@ precmd() {
     PROMPT="%B%F{green} %f%b %B%F{magenta}(%~)%f ${venv_prompt}%F{green}${git_prompt}%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}"$''"%F{green}%f %F{yellow}%f%b " && print ""
     cmd_start=0
 }
-## Manual prompt ZSH end
-
-# # Prompt by Jake@Linux
-# setopt PROMPT_SUBST
-# precmd () { print "" }
-# function parse_git_dirty {
-#   STATUS="$(git status 2> /dev/null)"
-#   if [[ $? -ne 0 ]]; then printf ""; return; else printf " ["; fi
-#   if echo "${STATUS}" | grep -c "renamed:"         &> /dev/null; then printf " >"; else printf ""; fi
-#   if echo "${STATUS}" | grep -c "branch is ahead:" &> /dev/null; then printf " !"; else printf ""; fi
-#   if echo "${STATUS}" | grep -c "new file::"       &> /dev/null; then printf " +"; else printf ""; fi
-#   if echo "${STATUS}" | grep -c "Untracked files:" &> /dev/null; then printf " ?"; else printf ""; fi
-#   if echo "${STATUS}" | grep -c "modified:"        &> /dev/null; then printf " *"; else printf ""; fi
-#   if echo "${STATUS}" | grep -c "deleted:"         &> /dev/null; then printf " -"; else printf ""; fi
-#   printf " ]"
-# }
-# parse_git_branch() {
-#   git rev-parse --abbrev-ref HEAD 2> /dev/null
-# }
-# prompt_comment() {
-#   DIR="$HOME/.local/share/promptcomments/"
-#   MESSAGE="$(find "$DIR"/*.txt | shuf -n1)"
-#   cat "$MESSAGE"
-# }
-# PYTHON_ICON="[  ] "  # Snake emoji for Python
-# RUST_ICON="\U1F680"    # Rocket emoji for Rust
-# BASH_ICON="[  ] "        # No icon for directories with multiple file types
-# HASKELL_ICON="[  ] "
-# JAVA_ICON="[  ] "
-# DEFAULT_ICON=""
-# # Function to determine directory file types
-# function set_prompt_icon() {
-#   # Get the file extensions in the current directory
-#   extensions=$(find . -maxdepth 1 -type f | sed -n 's/.*\.//p' | sort | uniq)
-#
-#   # Count the number of unique file extensions
-#   count=$(echo "$extensions" | wc -l)
-#
-#   # Check if there is only one type of file in the directory
-#   if [ "$count" -eq 1 ]; then
-#     case "$extensions" in
-#       py)
-#         echo -e "$PYTHON_ICON"
-#         ;;
-#       rs)
-#         echo -e "$RUST_ICON"
-#         ;;
-#       sh)
-#         echo -e "$BASH_ICON"
-#         ;;
-#       hs)
-#         echo -e "$HASKELL_ICON"
-#         ;;
-#       java)
-#         echo -e "$JAVA_ICON"
-#     esac
-#   else
-#     echo -e "$DEFAULT_ICON"
-#   fi
-# }
-# PROMPT='%B%F{003}  %B%F{015}%~%B%F{006} 󰅂%b%F{015} '
-# RPROMPT='%B%F{006}$(set_prompt_icon)$(parse_git_branch)%F{003}$(parse_git_dirty) %B%F{015}%t'
-# # Prompt Jake@Linux end
-
+## Manual prompt ZSH end ▶
 
 
 
@@ -184,7 +121,7 @@ stty stop undef
 # FZF flags for previewing in the side
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --strip-cwd-prefix'
 export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
-
+source <(fzf --zsh)
 
 ###############################################################################################################################################
 ##############################################################################################################################################
@@ -192,12 +129,6 @@ export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --colo
 ## Custom SCRIPTS
 
 # bin folders
-# if [ -d "$HOME/.local/bin" ] ; then
-#     PATH="$HOME/.local/bin:$PATH"
-# fi
-# if [ -d "$HOME/.bin" ] ; then
-#     PATH="$HOME/.bin:$PATH"
-# fi
 [ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 [ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
@@ -212,33 +143,31 @@ export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --colo
 
 # Custom FUNCTIONS
 
-ext ()
-{
-  if [ -f $1 ] ; then
+ext() {
+  if [ -f "$1" ]; then
     case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1   ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *.deb)       ar x $1      ;;
-      *.tar.xz)    tar xf $1    ;;
-      *.tar.zst)   unzstd $1    ;;
-      *)           echo "${1} cannot be extracted via ex()" ;;
+    *.tar.bz2) tar xjf "$1" ;;
+    *.tar.gz) tar xzf "$1" ;;
+    *.bz2) bunzip2 "$1" ;;
+    *.rar) unrar x "$1" ;;
+    *.gz) gunzip "$1" ;;
+    *.tar) tar xf "$1" ;;
+    *.tbz2) tar xjf "$1" ;;
+    *.tgz) tar xzf "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.Z) uncompress "$1" ;;
+    *.7z) 7z x "$1" ;;
+    *.deb) ar x "$1" ;;
+    *.tar.xz) tar xf "$1" ;;
+    *.tar.zst) unzstd "$1" ;;
+    *) echo "${1} cannot be extracted via ex()" ;;
     esac
   else
     echo "${1} is not a valid file"
   fi
 }
 
-dotter ()
-{
+dotter() {
   ln -f ~/.bash_profile ~/Programs/fedora/.bash_profile
   ln -f ~/.bashrc ~/Programs/fedora/.bashrc
   ln -f ~/.vimrc ~/Programs/fedora/.vimrc
@@ -277,10 +206,9 @@ dotter ()
   rsync -a --delete ~/.local/share/fonts/ ~/Programs/fedora/.local/share/fonts/
 }
 
-top5 ()
-  {
-    fd . "$1" -H --exact-depth 1 -0 | xargs -0 du -sh | sort -hr | head -5 
-  }
+top5() {
+  fd . "$1" -H --exact-depth 1 -0 | xargs -0 du -sh | sort -hr | head -5
+}
 
 ###############################################################################################################################################
 

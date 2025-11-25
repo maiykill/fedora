@@ -195,3 +195,4 @@ let &t_SI = "\e[6 q"   " Line (bar) cursor in insert mode
 let &t_EI = "\e[2 q"   " Block cursor in normal and visual modes
 
 
+
