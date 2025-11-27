@@ -1,8 +1,12 @@
 # shellcheck disable=SC2155
+# If not running interactively don't do anything
+[[ $- != *i* ]] && return
+
 # bin folders
 [ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 [ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
+[ -d "$HOME/.local/rust/cargo/bin" ] && PATH="$HOME/.local/rust/cargo/bin:$PATH"
 
 export PATH
 
@@ -25,7 +29,7 @@ fi
 # Avoid duplicates in history
 export HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
-export PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+# export PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # add fzf support
 export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
@@ -72,10 +76,10 @@ exit_statuses() {
     echo -e "${RED}✘ ${RESET}"
   fi
 }
-
 # PS1="${BOLD}${CYAN}\n${YELLOW}  ${RESET}${BOLD}${MAGENTA} \w ${CYAN}${RESET} ${BOLD}"
 PS1="\n${BOLD}${YELLOW}  ${RESET}${BOLD}${MAGENTA} \w ${RESET}\$([ \$? -eq 0 ] && echo -e '${GREEN}🗸${RESET}' || echo -e '${RED}✘ ${RESET}') ${CYAN}${RESET} "
 # Manual prompt Bash End
+
 
 # ALIASES
 # alias update-fc='sudo fc-cache -fv'

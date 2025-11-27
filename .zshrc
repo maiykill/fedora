@@ -70,13 +70,18 @@ precmd() {
     local exit_status=$? git_prompt=$(async_git_info) cmd_time="" duration=0 venv_prompt=""
     (( cmd_start > 0 )) && (( duration = SECONDS - cmd_start )) && (( duration >= 1 )) && cmd_time="%B%F{cyan} $(format_time $duration)%f%b"
     [[ -n "$VIRTUAL_ENV" ]] && venv_prompt="%F{red}(%F{yellow}${VIRTUAL_ENV##*/}%F{red})%f "
-    # # Double line prompt
+    # # Double line prompt Start
     # PROMPT="%F{green}╭─%f %B%F{magenta}[%~]%f ${venv_prompt}%F{green}${git_prompt}%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}"$'\n'"%F{green}╰─%f %F{yellow}%f%b "
-    # Single line prompt
-    PROMPT="%B%F{green} %f%b %B%F{magenta}(%~)%f ${venv_prompt}%F{green}${git_prompt}%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}"$''"%F{green}%f %F{yellow}%f%b " && print ""
+    # # Double line prpmpt End
+    # Single line prompt Start
+    local right_prompt="%B%F{green} %f%b %B%F{magenta}(%~)%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}%f %F{yellow}%f%b"
+    local left_prompt="%B%F{yellow}%f%b %B${venv_prompt}%F{blue}${git_prompt}%f%b %B%F{green} %f%b"
+    PROMPT="${left_prompt} "
+    RPROMPT="${right_prompt}" && print ""
+    # Single line prompt End
     cmd_start=0
 }
-## Manual prompt ZSH end ▶
+## Manual prompt ZSH end  ▶
 
 
 
@@ -132,6 +137,7 @@ source <(fzf --zsh)
 [ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 [ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
+[ -d "$HOME/.local/rust/cargo/bin" ] && PATH="$HOME/.local/rust/cargo/bin:$PATH"
 
 
 ## Zellij

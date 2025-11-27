@@ -149,8 +149,21 @@ cmd ripgrep_jump ${{
         --preview='bat --color=always --highlight-line={2} -- {1}'
 }}
 
-
-
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	count=$(printf '%s\n' $fx | wc -l)
+	printf "%s\n\t" "$fx"
+  printf "\n"
+	if [ $count -eq 1 ]; then
+		printf "Delete this file? [y/N] "
+	else
+		printf "Delete these %d files? [y/N] " "$count"
+	fi
+	read -n1 ans
+	[ $ans = "y" ] && rm -rf -- $fx
+  clear
+}}
 
 
 

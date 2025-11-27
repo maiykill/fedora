@@ -13,3 +13,4 @@ export GEM_PATH=$HOME/.local/ruby/gems
 export GEM_SPEC_CACHE=$HOME/.local/ruby/specs
 export GEM_HOME=$HOME/.local/ruby/gems
 export QT_SCALE_FACTOR=1.25
+export CARGO_HOME="$HOME"/.local/rust/cargo
