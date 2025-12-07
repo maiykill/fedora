@@ -1,16 +1,47 @@
 # Open in full screen
 set window-height 3000
 set window-width 3000
-
-# Notification below
-set notification-bg "#90A959"
-set notification-fg "#151515"
-
 # Clipboard
 set selection-clipboard clipboard
-
 # Font
-set font "FiraSans 17"
+# set font "FiraSans 15"
+set font "Open Sans Bold 14"
+# # Notification below
+# set notification-bg "#90A959"
+# set notification-fg "#151515"
 
+# Theming ##
+# Grubox + lighthause themeing 
+set notification-error-bg       "rgba(40,40,40,1)"   
+set notification-error-fg       "rgba(251,73,52,1)"  
+set notification-warning-bg     "rgba(40,40,40,1)"   
+set notification-warning-fg     "rgba(250,189,47,1)" 
+set notification-bg             "rgba(40,40,40,1)"   
+set notification-fg             "rgba(184,187,38,1)" 
+set completion-bg               "#18191E" 
+set completion-fg               "#44B273" 
+set completion-group-bg         "#18191E" 
+set completion-group-fg         "#ED722E" 
+set completion-highlight-bg     "#FFFF00" 
+set completion-highlight-fg     "#21252D" 
+set index-bg                    "#18191E" 
+set index-fg                    "#44B273" 
+set index-active-bg             "#21252D" 
+set index-active-fg             "#FFFF00" 
+set inputbar-bg                 "#21252D" 
+set inputbar-fg                 "#FFFADE" 
+set statusbar-bg                "#21252D" 
+set statusbar-fg                "#D68EB2" 
+# set highlight-color             "#D68EB2" 
+# set highlight-active-color      "#ff79c6" 
+set default-bg                  "rgba(40,40,40,1)"   
+set default-fg                  "rgba(235,219,178,1)"
+set render-loading              true
+set render-loading-bg           "rgba(40,40,40,1)"   
+set render-loading-fg           "rgba(235,219,178,1)"
+set recolor-lightcolor          "rgba(40,40,40,1)"   
+set recolor-darkcolor           "rgba(235,219,178,1)"
+set recolor                     "true"
+set recolor-keephue             "true"               
 
 
