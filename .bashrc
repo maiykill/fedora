@@ -194,6 +194,7 @@ dotter() {
   ln -f ~/.config/wezterm/wezterm.lua ~/Programs/fedora/.config/wezterm/wezterm.lua
   ln -f ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/Programs/fedora/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
   ln -f ~/.config/zathura/zathurarc ~/Programs/fedora/.config/zathura/zathurarc
+  ln -f ~/.config/qutebrowser/config.py ~/Programs/fedora/.config/qutebrowser/config.py
   rsync -a --delete ~/.config/awesome/ ~/Programs/fedora/.config/awesome/
   rsync -a --delete ~/.local/share/fonts/ ~/Programs/fedora/.local/share/fonts/
 }

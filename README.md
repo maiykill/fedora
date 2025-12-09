@@ -26,3 +26,4 @@
 - browser-extensions
 - awesome
 - dunst
+- qutebrowser
