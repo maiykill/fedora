@@ -29,11 +29,16 @@ fi
 # Avoid duplicates in history
 export HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
-# export PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
+export HISTIGNORE="ls:cd:pwd:exit:clear:history"
 
-# add fzf support
+# Add fzf support --> CTRL-t = fzf select CTRL-r = fzf history ALT-c  = fzf cd
 export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
 eval "$(fzf --bash)"
+# Fzf ctrl + r show no preview
+export FZF_CTRL_R_OPTS="--no-preview --reverse"
+export FZF_ALT_C_OPTS="--preview 'eza --color=always --icons -T {}' --reverse"
+export FZF_CTRL_T_OPTS="--no-preview --reverse"
 
 # add zoxide support
 eval "$(zoxide init --cmd cd bash)"
@@ -63,23 +68,22 @@ export MANROFFOPT="-c"
 
 # Manual prompt Bash start
 RED='\[\033[0;31m\]'
+ORANGE='\[\033[38;5;208m\]'
 GREEN='\[\033[0;32m\]'
 MAGENTA='\[\033[0;35m\]'
 YELLOW='\[\033[0;33m\]'
 CYAN='\[\033[0;36m\]'
 BOLD='\[\033[1m\]'
 RESET='\[\033[0m\]'
-exit_statuses() {
-  if [ $? -eq 0 ]; then
-    echo -e "${GREEN}🗸${RESET}"
-  else
-    echo -e "${RED}✘ ${RESET}"
-  fi
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+parse_git_branch() {
+  git rev-parse --is-inside-work-tree &>/dev/null && echo -n " $(git rev-parse --abbrev-ref HEAD 2>/dev/null)  " || true
 }
-# PS1="${BOLD}${CYAN}\n${YELLOW}  ${RESET}${BOLD}${MAGENTA} \w ${CYAN}${RESET} ${BOLD}"
-PS1="\n${BOLD}${YELLOW}  ${RESET}${BOLD}${MAGENTA} \w ${RESET}\$([ \$? -eq 0 ] && echo -e '${GREEN}🗸${RESET}' || echo -e '${RED}✘ ${RESET}') ${CYAN}${RESET} "
+parse_venv() {
+  [ -n "$VIRTUAL_ENV" ] && echo -n " ($(basename "$VIRTUAL_ENV"))"
+}
+PS1="\n${YELLOW}  ${RESET}${MAGENTA}${BOLD} \w ${RESET}\$([ \$? -eq 0 ] && echo -e '${GREEN}🗸${RESET}' || echo -e '${RED}✘ ${RESET}')${ORANGE}${BOLD}\$(parse_git_branch)\$(parse_venv)${RESET} ${CYAN}${RESET} "
 # Manual prompt Bash End
-
 
 # ALIASES
 # alias update-fc='sudo fc-cache -fv'
@@ -122,7 +126,6 @@ alias p2="pypy3"
 alias ffmpeg="ffmpeg -hide_banner"
 alias ffprobe="ffprobe -hide_banner"
 alias rudo="sudo-rs"
-alias ru="su-rs"
 alias eza="eza --icons --time-style=long-iso"
 alias historys="history 1 | fzf --preview='' --preview-window='hidden'"
 alias ls="ls --color=auto"
@@ -132,6 +135,7 @@ alias la="eza --icons --time-style=long-iso --all"
 alias lla="eza --icons --time-style=long-iso --long --all"
 alias curip='curl --silent --location https://am.i.mullvad.net/json | gojq'
 alias cpufetch='cpufetch --logo-intel-new'
+alias ynoav="yt-dlp -f 'bv*[vcodec!*=av01]+ba'"
 
 # Custom FUNCTIONS
 

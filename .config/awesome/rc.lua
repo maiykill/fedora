@@ -643,7 +643,7 @@ local globalkeys = gears.table.join(
 	end, { description = "librewolf", group = "launcher" }),
 	awful.key({ superkey }, "b", function()
 		awful.spawn(
-			"brave-browser --force-device-scale-factor=1.2 --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer"
+			"brave-browser --tor --force-device-scale-factor=1.2 --enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL --disable-features=UseChromeOSDirectVideoDecoder,UseSkiaRenderer"
 		)
 	end, { description = "brave incognito", group = "launcher" }),
 	awful.key({ superkey, "Shift" }, "w", function()

@@ -17,7 +17,7 @@ local themefonts = {
 
 -- Icons
 local icons = {
-	ram = "󰟜 ",
+	ram = "󰟜",
 }
 
 -- RAM textbox
@@ -50,6 +50,7 @@ local ram_widget = wibox.widget({
 	bg = beautiful.cat_surface0,
 	shape = gears.shape.rounded_rect,
 	widget = wibox.container.background,
+	forced_width = 87, -- Only percentage + icon, adjust as you prefer
 })
 
 -- Helper: read and parse /proc/meminfo

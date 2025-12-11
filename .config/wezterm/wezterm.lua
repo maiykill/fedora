@@ -10,12 +10,22 @@ local config = wezterm.config_builder()
 
 ---- Font ----
 -- config.font_size = 17 -- while using xfce
-config.font_size = 15.25 -- while using awesome
--- config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" })
-config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" })
+
+-- config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" }) ;     config.font_size = 14.5
+-- config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" }) ;  config.font_size = 15.25
+-- config.font = wezterm.font("RecMonoDuotone Nerd Font", { weight = "Regular" })
+-- config.font = wezterm.font("Iosevka Term", { weight = "Bold" }) ; config.font_size = 16
+config.font = wezterm.font("Iosevka Term Extended", { weight = "Regular" }) ; config.font_size = 14.7
+-- config.font = wezterm.font("MartianMono NF", { weight = "Regular" })
+-- config.font = wezterm.font("LiterationMono Nerd Font", { weight = "Regular" })
+
+-- Font thickness
+config.front_end = "WebGpu"
+config.webgpu_power_preference = "HighPerformance"
+
 
 ---- Cursor ----
-config.colors = { cursor_fg = "#ff0000", cursor_bg = "#00ff00" }
+config.colors = { cursor_fg = "#0000ff", cursor_bg = "#00ff00" }
 config.default_cursor_style = "SteadyBar"
 
 ---- Color Scheme ----

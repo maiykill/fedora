@@ -9,6 +9,31 @@ image/*)
 text/*)
   bat --color=always --terminal-width "$2" --style=plain "$1"
   ;;
+# application/pdf)
+#   # PDF preview: display first page as image
+#   pdf_file="$1"
+#   cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/lf-pdf-preview"
+#   mkdir -p "$cache_dir"
+#
+#   # Generate a cache filename based on the PDF file path and modification time
+#   pdf_mtime=$(stat -c %Y "$pdf_file" 2>/dev/null || stat -f %m "$pdf_file" 2>/dev/null)
+#   cache_key=$(echo "$pdf_file$pdf_mtime" | md5sum | cut -d' ' -f1)
+#   preview_image="$cache_dir/${cache_key}.png"
+#
+#   # Convert PDF first page to PNG if not cached
+#   if [ ! -f "$preview_image" ]; then
+#     pdftoppm -png -singlefile -f 1 -l 1 -r 150 "$pdf_file" "${preview_image%.png}" 2>/dev/null
+#   fi
+#
+#   # Display the image preview if conversion was successful
+#   if [ -f "$preview_image" ]; then
+#     chafa -s "$2x$3" --animate off --polite on -t 1 --bg black "$preview_image"
+#   else
+#     # Fallback to text extraction if image conversion fails
+#     pdftotext "$pdf_file" - 2>/dev/null | head -20 | bat --color=always --terminal-width "$2" --style=plain -l txt
+#   fi
+#   exit 1
+#   ;;
 application/javascript | application/json)
   bat --color=always --terminal-width "$2" --style=plain "$1"
   ;;

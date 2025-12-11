@@ -109,7 +109,7 @@ cmd pasteoverride &{{
 
 cmd fzf_jump ${{
     # res="$(fd -H . | fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
-    res="$(fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
+    res="$(fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location" || true)"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             cmd="cd"
@@ -124,7 +124,7 @@ cmd fzf_jump ${{
 
 
 cmd skim_jump ${{
-    res="$(fd --hidden . | sk --reverse --header="Skim to location")"
+    res="$(fd --hidden . | sk --reverse --header="Skim to location" || true)"
     # res="$(sk --reverse --header="Skim to location")"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
@@ -146,7 +146,7 @@ cmd ripgrep_jump ${{
         --bind="change:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\''s/\\/\\\\/g;s/"/\\"/g'\'')\"")' \
         --preview-window='+{2}-/2' \
-        --preview='bat --color=always --highlight-line={2} -- {1}'
+        --preview='bat --color=always --highlight-line={2} -- {1}' || true
 }}
 
 cmd delete ${{

@@ -10,7 +10,7 @@ local themecolors = {
 local themefonts = {
 	text = "Iosevka Term Extended Bold 14",
 }
-local icon_fs = " "
+local icon_fs = ""
 
 -- Capsule styled percentage
 local fs_text = wibox.widget.textbox()
