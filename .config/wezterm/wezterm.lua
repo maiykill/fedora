@@ -10,19 +10,23 @@ local config = wezterm.config_builder()
 
 ---- Font ----
 -- config.font_size = 17 -- while using xfce
+config.font_size = 14.8
 
--- config.font = wezterm.font("FiraCode Nerd Font Ret", { weight = "Regular" }) ;     config.font_size = 14.5
--- config.font = wezterm.font("CodeNewRoman Nerd Font", { weight = "Regular" }) ;  config.font_size = 15.25
--- config.font = wezterm.font("RecMonoDuotone Nerd Font", { weight = "Regular" })
--- config.font = wezterm.font("Iosevka Term", { weight = "Bold" }) ; config.font_size = 16
-config.font = wezterm.font("Iosevka Term Extended", { weight = "Regular" }) ; config.font_size = 14.7
--- config.font = wezterm.font("MartianMono NF", { weight = "Regular" })
--- config.font = wezterm.font("LiterationMono Nerd Font", { weight = "Regular" })
+config.font = wezterm.font_with_fallback({
+  -- 1. BASE: Iosevka Term Extended (Size 14.9)
+  { family = "Iosevka Term Extended", weight = "Regular" },
+  { family = "Iosevka Term", weight = "Bold", scale = 1.07 },
+  { family = "CodeNewRoman Nerd Font", weight = "Regular", scale = 1.02 },
+  { family = "FiraCode Nerd Font Ret", weight = "Regular", scale = 0.97 },
+  { family = "RecMonoDuotone Nerd Font", weight = "Regular", scale = 1.05 },
+  { family = "MartianMono NF", weight = "Regular", scale = 1.03 },
+  { family = "LiterationMono Nerd Font", weight = "Regular", scale = 1.0 },
+  { family = "Symbols Nerd Font", scale = 1.0 },
+})
 
 -- Font thickness
 config.front_end = "WebGpu"
 config.webgpu_power_preference = "HighPerformance"
-
 
 ---- Cursor ----
 config.colors = { cursor_fg = "#0000ff", cursor_bg = "#00ff00" }
@@ -42,13 +46,11 @@ config.default_cursor_style = "SteadyBar"
 -- config.color_scheme = 'OceanicMaterial'
 -- config.color_scheme = 'Nancy (terminal.sexy)'
 -- config.color_scheme = 'Nature Suede (terminal.sexy)'
-config.color_scheme = "Night Owl (Gogh)"
+-- config.color_scheme = "Night Owl (Gogh)"
 -- config.color_scheme = 'Nord (Gogh)'
 -- config.color_scheme = 'NvimDark'
--- config.color_scheme = 'Mashup Colors (terminal.sexy)'
--- config.color_scheme = 'MaterialDesignColors'
--- config.color_scheme = 'MaterialOcean'
--- config.color_scheme = 'Mellifluous'
+-- config.color_scheme = 'MaterialDesignColors' -- lf
+config.color_scheme = 'Mellifluous'
 -- config.color_scheme = 'Mikado (terminal.sexy)'
 -- config.color_scheme = 'Mikazuki (terminal.sexy)'
 -- config.color_scheme = 'Molokai (Gogh)'
@@ -64,6 +66,9 @@ config.color_scheme = "Night Owl (Gogh)"
 -- config.color_scheme = 'flexoki-dark'
 -- config.color_scheme = 'ForestBlue'
 -- config.color_scheme = 'Ef-Cherie'
+-- config.color_scheme = 'Ef-Deuteranopia-Dark'
+-- config.color_scheme = "Ef-Tritanopia-Dark"
+
 -- config.color_scheme = 'Catppuccin Mocha'
 
 -- Fps --

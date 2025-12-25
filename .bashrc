@@ -2,35 +2,30 @@
 # If not running interactively don't do anything
 [[ $- != *i* ]] && return
 
-# bin folders
-[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
-[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
-[ -d "$HOME/.local/rust/cargo/bin" ] && PATH="$HOME/.local/rust/cargo/bin:$PATH"
-
-export PATH
-
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
-# Golang specifics
-export GOPATH=$HOME/.local/go
-
-# Bash but like zsh
+# Bash but like zsh like completions
+[ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 bind 'set colored-stats On'
 bind 'set colored-completion-prefix On'
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
-bind 'set completion-query-items 100'
+bind 'set completion-query-items 50'
 bind 'set show-all-if-ambiguous on'
+bind '"\es": complete'
 bind '"\t": menu-complete'
 bind '"\e[Z": menu-complete-backward'
+bind 'set page-completions off'
+bind 'set menu-complete-display-prefix on'
 
 # Flags for the bash
 # Avoid duplicates in history
-export HISTCONTROL=ignoreboth:erasedups
+export HISTCONTROL=erasedups:ignoreboth
 shopt -s histappend
-export PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
+shopt -s cmdhist
+shopt -s lithist
+export PROMPT_COMMAND="history -n; history -a"
 export HISTIGNORE="ls:cd:pwd:exit:clear:history"
 
 # Add fzf support --> CTRL-t = fzf select CTRL-r = fzf history ALT-c  = fzf cd

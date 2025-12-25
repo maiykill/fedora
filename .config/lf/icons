@@ -740,8 +740,8 @@ Vagrantfile                 00;38;2;21;99;255
 *.esd      00;38;2;180;140;90
 *.deb      00;38;2;215;10;83
 *.rpm      00;38;2;204;0;0
-*.gpg   󰳌  
-
+*.gpg   󰯄   00;38;2;255;215;0
+*.age   󰦝   00;38;2;209;178;0
 
 
 # image formats (extensions from dircolors defaults)

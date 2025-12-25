@@ -461,12 +461,19 @@ local globalkeys = gears.table.join(
 	awful.key({ superkey }, "[", function()
 		awful.tag.incmwfact(-0.05)
 	end, { description = "decrease master width factor", group = "layout" }),
-	awful.key({ superkey, "Shift" }, "[", function()
-		awful.tag.incnmaster(1, nil, true)
-	end, { description = "increase the number of master clients", group = "layout" }),
+	-- Increase/Decrease Client Height
 	awful.key({ superkey, "Shift" }, "]", function()
-		awful.tag.incnmaster(-1, nil, true)
-	end, { description = "decrease the number of master clients", group = "layout" }),
+		awful.client.incwfact(0.05)
+	end, { description = "increase client height factor", group = "layout" }),
+	awful.key({ superkey, "Shift" }, "[", function()
+		awful.client.incwfact(-0.05)
+	end, { description = "decrease client height factor", group = "layout" }),
+	-- awful.key({ superkey, "Shift" }, "[", function()
+	-- 	awful.tag.incnmaster(1, nil, true)
+	-- end, { description = "increase the number of master clients", group = "layout" }),
+	-- awful.key({ superkey, "Shift" }, "]", function()
+	-- 	awful.tag.incnmaster(-1, nil, true)
+	-- end, { description = "decrease the number of master clients", group = "layout" }),
 	awful.key({ superkey, "Control" }, "[", function()
 		awful.tag.incncol(1, nil, true)
 	end, { description = "increase the number of columns", group = "layout" }),

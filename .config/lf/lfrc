@@ -45,7 +45,7 @@ cmd open ${{
       image/x-xcf) setsid -f gimp $fx >/dev/null 2>&1 ;;
       image/svg+xml) display -- $f ;;
       image/*) setsid -f nomacs $fx 2>/dev/null ;;
-      audio/*|video/x-ms-asf) mpv --audio-display=no --force-window=no $fx ;;
+      audio/*|video/x-ms-asf) mpv --no-config --term-osd-bar $fx ;;
       # audio/*|video/x-ms-asf) mpv --force-window=no $fx ;; 
       video/*) setsid -f mpv --quiet $fx >/dev/null 2>&1 ;;
       video/*) setsid -f vlc --quiet $fx >/dev/null 2>&1 ;;
@@ -122,6 +122,20 @@ cmd fzf_jump ${{
 }}
 
 
+cmd fzf_in_home ${{
+    # res="$(fd -H . | fzf --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location")"
+    res="$(fzf --walker-root="$HOME" --style=full --reverse --inline-info --preview='bat -p --color=always {}' --header="Fzf to location" || true)"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+
 
 cmd skim_jump ${{
     res="$(fd --hidden . | sk --reverse --header="Skim to location" || true)"
@@ -171,6 +185,7 @@ cmd delete ${{
 map f
 map e
 map ff :fzf_jump
+map fih : fzf_in_home 
 map fs :skim_jump
 map fr :ripgrep_jump
 map egv $$EDITOR $(fzf --preview='bat --color=always --style=grid {1}')
