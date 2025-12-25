@@ -17,13 +17,14 @@ export PATH
 export GOPATH=$HOME/.local/go
 
 # Bash but like zsh
-if [ -t 1 ]; then
-  bind 'set colored-stats On'
-  bind 'set colored-completion-prefix On'
-  bind 'set show-all-if-ambiguous on'
-  bind 'set completion-ignore-case on'
-  bind 'set completion-query-items 100'
-fi
+bind 'set colored-stats On'
+bind 'set colored-completion-prefix On'
+bind 'set show-all-if-ambiguous on'
+bind 'set completion-ignore-case on'
+bind 'set completion-query-items 100'
+bind 'set show-all-if-ambiguous on'
+bind '"\t": menu-complete'
+bind '"\e[Z": menu-complete-backward'
 
 # Flags for the bash
 # Avoid duplicates in history
