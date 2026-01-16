@@ -7,6 +7,7 @@
 - zshrc
 - bash_profile
 - bashrc
+= aliasrc
 - nvim
 - lf
 - qbittorent
