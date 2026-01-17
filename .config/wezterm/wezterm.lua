@@ -13,15 +13,15 @@ local config = wezterm.config_builder()
 config.font_size = 14.8
 
 config.font = wezterm.font_with_fallback({
-  -- 1. BASE: Iosevka Term Extended (Size 14.9)
-  { family = "Iosevka Term Extended", weight = "Regular" },
-  { family = "Iosevka Term", weight = "Bold", scale = 1.07 },
-  { family = "CodeNewRoman Nerd Font", weight = "Regular", scale = 1.02 },
-  { family = "FiraCode Nerd Font Ret", weight = "Regular", scale = 0.97 },
-  { family = "RecMonoDuotone Nerd Font", weight = "Regular", scale = 1.05 },
-  { family = "MartianMono NF", weight = "Regular", scale = 1.03 },
-  { family = "LiterationMono Nerd Font", weight = "Regular", scale = 1.0 },
-  { family = "Symbols Nerd Font", scale = 1.0 },
+	-- 1. BASE: Iosevka Term Extended (Size 14.9)
+	{ family = "Iosevka Term Extended", weight = "Regular" },
+	{ family = "Iosevka Term", weight = "Bold", scale = 1.07 },
+	{ family = "CodeNewRoman Nerd Font", weight = "Regular", scale = 1.02 },
+	{ family = "FiraCode Nerd Font Ret", weight = "Regular", scale = 0.97 },
+	{ family = "RecMonoDuotone Nerd Font", weight = "Regular", scale = 1.05 },
+	{ family = "MartianMono NF", weight = "Regular", scale = 1.03 },
+	{ family = "LiterationMono Nerd Font", weight = "Regular", scale = 1.0 },
+	{ family = "Symbols Nerd Font", scale = 1.0 },
 })
 
 -- Font thickness
@@ -29,7 +29,12 @@ config.front_end = "WebGpu"
 config.webgpu_power_preference = "HighPerformance"
 
 ---- Cursor ----
-config.colors = { cursor_fg = "#0000ff", cursor_bg = "#00ff00" }
+config.colors = {
+	cursor_fg = "#0000ff",
+	cursor_bg = "#00ff00",
+}
+
+
 config.default_cursor_style = "SteadyBar"
 
 ---- Color Scheme ----
@@ -50,15 +55,10 @@ config.default_cursor_style = "SteadyBar"
 -- config.color_scheme = 'Nord (Gogh)'
 -- config.color_scheme = 'NvimDark'
 -- config.color_scheme = 'MaterialDesignColors' -- lf
-config.color_scheme = 'Mellifluous'
--- config.color_scheme = 'Mikado (terminal.sexy)'
--- config.color_scheme = 'Mikazuki (terminal.sexy)'
--- config.color_scheme = 'Molokai (Gogh)'
+-- config.color_scheme = "Mellifluous"
+config.color_scheme = 'Mikado (terminal.sexy)'
 -- config.color_scheme = 'Mona Lisa (Gogh)'
--- config.color_scheme = 'Moonfly (Gogh)'
 -- config.color_scheme = 'Laserwave (Gogh)'
--- config.color_scheme = 'Londontube (dark) (terminal.sexy)'
--- config.color_scheme = 'lovelace'
 -- config.color_scheme = 'Kanagawa (Gogh)'
 -- config.color_scheme = 'Glacier'
 -- config.color_scheme = 'GruvboxDarkHard'

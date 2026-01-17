@@ -9,6 +9,11 @@ bufferline = "multiple"
 [editor.file-picker]
 hidden = false
 
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
 [keys.normal]
 C-g = [
   ":new",
@@ -17,3 +22,18 @@ C-g = [
   ":redraw",
   ":reload-all",
 ]
+"A-j" = [
+  "extend_to_line_bounds",
+  "delete_selection",
+  "paste_after",
+  "select_mode",
+  "goto_line_start",
+  "normal_mode",
+] # Move line(s) down
+"A-k" = [
+  "extend_to_line_bounds",
+  "delete_selection",
+  "move_line_up",
+  "paste_before",
+  "flip_selections",
+] # Move line(s) up

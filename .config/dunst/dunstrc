@@ -135,4 +135,3 @@ timeout = 0
 # [appname = SomeApp]
 # background = "#222"
 # foreground = "#fff"
-

@@ -667,6 +667,12 @@ local globalkeys = gears.table.join(
 		description = "Play URL in mpv",
 		group = "launcher",
 	}),
+	awful.key({}, "XF86Favorites", function()
+		-- awful.spawn.with_shell("dunstify -r 999 -t 2000 ' ' \"<span font='LCD 65' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\"")
+		awful.spawn.with_shell(
+			"dunstify -r 999 ' ' \"<span font='URW Gothic 75' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\""
+		)
+	end, { description = "show time via dunst", group = "media" }),
 	-- awful.key({ superkey }, "Escape", function()
 	-- 	local s = mouse.screen
 	-- 	s.mywibox.visible = not s.mywibox.visible
@@ -967,6 +973,7 @@ client.connect_signal("property::fullscreen", set_shape)
 awful.spawn.with_shell("dash ~/.config/awesome/autostart.sh")
 awful.spawn.with_shell('xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1')
 awful.spawn.with_shell('xinput set-prop "Elan Touchpad" "libinput Accel Speed" 0.5')
+awful.spawn.with_shell('xinput set-prop "Elan TrackPoint"  "libinput Accel Speed" 0.7')
 awful.spawn.with_shell('xinput set-prop "ELAN Touchscreen" "Device Enabled" 0')
 awful.spawn.with_shell("xset -b")
 awful.spawn.with_shell("dash ~/Programs/shell/capslock_withlock.sh")

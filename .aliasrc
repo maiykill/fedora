@@ -32,6 +32,8 @@ alias vimtw='nvim ~/.config/wezterm/wezterm.lua'
 alias vima='nvim ~/.config/awesome/rc.lua'
 alias vimm='nvim ~/.config/mpv/mpv.conf'
 alias vimv='nvim ~/.vimrc'
+alias vimze="nvim ~/.zshenv"
+alias vimbe="nvim ~/.bash_profile"
 # alias vimq="nvim ~/.config/qtile/config.py"
 alias ymp3='yt-dlp --extract-audio --audio-format mp3'
 alias yopus='yt-dlp --extract-audio --audio-format opus'
@@ -47,11 +49,15 @@ alias ls="ls --color=auto"
 alias ll="eza --icons --time-style=long-iso --long"
 alias lt="eza --icons --time-style=long-iso --tree"
 alias la="eza --icons --time-style=long-iso --all"
-alias lla="eza --icons --time-style=long-iso --long --all"
+# alias lla="eza --icons --time-style=long-iso --long --all"
+alias lla="lla --no-dotfiles --icons"
 alias curip='curl --silent --location https://am.i.mullvad.net/json | gojq'
 alias cpufetch='cpufetch --logo-intel-new'
 alias ynoav="yt-dlp -f 'bv*[vcodec!*=av01]+ba'"
 alias vims="nvim ~/.aliasrc"
+alias vimeh="nvim ~/.config/helix/config.toml"
+alias yimage="yt-dlp --skip-download --write-thumbnail --convert-thumbnails jpg"
+alias diff="diff --color=always"
 
 ###############################################################################################################################################
 ##############################################################################################################################################
@@ -127,3 +133,28 @@ top5() {
   fd . "$1" -H --exact-depth 1 -0 | xargs -0 du -sh | sort -hr | head -5
 }
 
+towav() {
+  ffmpeg -i "$1" -ar 16000 -ac 1 -c:a pcm_s16le "$2"
+}
+
+dicti() {
+  local definition
+  definition=$(
+    curl -s https://api.dictionaryapi.dev/api/v2/entries/en_US/"$1" |
+      jq -r '.[0].meanings[] | "\(.partOfSpeech): \(.definitions[0].definition)\n"'
+  )
+  echo "$definition" | bat --color=always --style=grid -l cpuinfo
+}
+
+hindi() {
+  local search_dir="${1:-/home/mike/Programs/}"
+
+  fzf --ansi --disabled -d : \
+    --bind "start:reload:rg --column --line-number --no-heading --color=always --smart-case --hidden -- '' $search_dir || true" \
+    --bind "change:reload:rg --column --line-number --no-heading --color=always --smart-case --hidden -- {q} $search_dir || true" \
+    --preview 'bat --color=always -H {2} {1}' \
+    --preview-window '+{2}+3/3' \
+    --header "Searching in: $search_dir" \
+    --color 'header:bold:cyan' \
+    --layout=reverse >/dev/null
+}
