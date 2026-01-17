@@ -1,9 +1,16 @@
-## I created this file for setting Environment variables with ZSHELL
 #NOTE: 
 #1. for some reason cursor files in 
 #   ~/.local/share/icons are not recognised unless exported
 #   leading to cursor theme not applying in qt based applications like qbittorrent and qutebrowser.
 
+# bin folders
+[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
+[ -d "$HOME/.local/rust/cargo/bin" ] && PATH="$HOME/.local/rust/cargo/bin:$PATH"
+
+
+# User specific environment and startup programs
 export EDITOR="/usr/bin/nvim"
 export LIBVA_DRIVER_NAME="iHD"
 export TERMINAL='/usr/bin/alacritty'

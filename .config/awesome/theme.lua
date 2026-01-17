@@ -32,10 +32,11 @@ theme.fg_urgent     = xrdb.background
 theme.fg_minimize   = xrdb.background
 
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(0.5)
+theme.border_width  = dpi(0.7)
 theme.border_normal = xrdb.color0
 -- theme.border_focus  = "#7F00FF"
-theme.border_focus  = "#AAFF00"
+-- theme.border_focus  = "#AAFF00"
+theme.border_focus  = "#C70B63"
 theme.border_marked = xrdb.color10
 
 theme.tooltip_fg = theme.fg_normal

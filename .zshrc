@@ -79,8 +79,8 @@ precmd() {
     # PROMPT="%F{green}╭─%f %B%F{magenta}[%~]%f ${venv_prompt}%F{green}${git_prompt}%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}"$'\n'"%F{green}╰─%f %F{yellow}%f%b "
     # # Double line prpmpt End
     # Single line prompt Start
-    local right_prompt="%B%F{green} %f%b %B%F{magenta}(%~)%f %(?.%F{green}🗸.%F{red}✘ %F{red}%?)%f${cmd_time}%f %F{yellow}%f%b"
-    local left_prompt="%B%F{yellow}%f%b %B${venv_prompt}%F{blue}${git_prompt}%f%b %B%F{green} %f%b"
+    local right_prompt="%B%F{green} %f%b %(?.%B%F{green}🗸%b%f.%B%F{red}✘ %?)${cmd_time}%b%f %B%F{blue}${git_prompt}%b%f %B%F{yellow}%f%b"
+    local left_prompt="%B%F{yellow}%f%b %B${venv_prompt}%B%F{magenta}(%~)%f %B%F{green} %f%b"
     PROMPT="${left_prompt} "
     RPROMPT="${right_prompt}" && print ""
     # Single line prompt End
@@ -129,24 +129,22 @@ stty stop undef
 
 
 # FZF flags for previewing in the side
-# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --strip-cwd-prefix'
-export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
 source <(fzf --zsh)
-
-###############################################################################################################################################
-##############################################################################################################################################
-
-## Custom SCRIPTS
-
-# bin folders
-[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
-[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/.local/ruby/gems/bin" ] && PATH="$HOME/.local/ruby/gems/bin:$PATH"
-[ -d "$HOME/.local/rust/cargo/bin" ] && PATH="$HOME/.local/rust/cargo/bin:$PATH"
+# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --strip-cwd-prefix'
+export FZF_DEFAULT_OPTS=" --bind='alt-p:change-preview-window(down|hidden|)' --preview='bat -n -p --color=always {}'"
+export FZF_CTRL_R_OPTS="--no-preview --reverse --header ' [ History Search --> ] ' --color 'header:bold:cyan'"
+export FZF_ALT_C_OPTS="--preview 'eza --color=always --icons -T {}' --reverse --header ' [ Cd to -->] ' --color 'header:bold:cyan'"
+# export FZF_CTRL_T_OPTS=" --no-preview --reverse --header ' [ Get filename --> (C-h for home) ] ' --color 'header:bold:cyan' --bind 'ctrl-h:reload(fd --hidden --search-path $HOME)'"
 
 
 ## Zellij
 # eval "$(zellij setup --generate-auto-start zsh)"
+
+
+###############################################################################################################################################
+##############################################################################################################################################
+
+
 
 
 

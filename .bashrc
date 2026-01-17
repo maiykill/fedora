@@ -14,7 +14,7 @@ bind 'set colored-stats On'
 bind 'set colored-completion-prefix On'
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
-bind 'set completion-query-items 50'
+bind 'set completion-query-items 200'
 bind 'set show-all-if-ambiguous on'
 bind '"\es": complete'
 bind '"\t": menu-complete'
@@ -30,14 +30,15 @@ shopt -s cmdhist
 shopt -s lithist
 export PROMPT_COMMAND="history -n; history -a"
 export HISTIGNORE="ls:cd:pwd:exit:clear:history"
+export HISTSIZE=1000000
 
 # Add fzf support --> CTRL-t = fzf select CTRL-r = fzf history ALT-c  = fzf cd
-export FZF_DEFAULT_OPTS=" --bind='alt-p:toggle-preview' --preview='bat -p --color=always {}'"
+export FZF_DEFAULT_OPTS=" --bind='alt-p:change-preview-window(down|hidden|)' --preview='bat -n -p --color=always {}'"
 eval "$(fzf --bash)"
 # Fzf ctrl + r show no preview
-export FZF_CTRL_R_OPTS="--no-preview --reverse"
-export FZF_ALT_C_OPTS="--preview 'eza --color=always --icons -T {}' --reverse"
-export FZF_CTRL_T_OPTS="--no-preview --reverse"
+export FZF_CTRL_R_OPTS="--no-preview --reverse --header ' [ History Search --> ] ' --color 'header:bold:cyan'"
+export FZF_ALT_C_OPTS="--preview 'eza --color=always --icons -T {}' --reverse --header ' [ Cd to -->] ' --color 'header:bold:cyan'"
+export FZF_CTRL_T_OPTS=" --no-preview --reverse --header ' [ Get filename --> (C-h for home) ] ' --color 'header:bold:cyan' --bind 'ctrl-h:reload(fd --hidden --search-path $HOME)'"
 
 # add zoxide support
 eval "$(zoxide init --cmd cd bash)"
@@ -83,4 +84,3 @@ parse_venv() {
 }
 PS1="\n${YELLOW}  ${RESET}${MAGENTA}${BOLD} \w ${RESET}\$([ \$? -eq 0 ] && echo -e '${GREEN}🗸${RESET}' || echo -e '${RED}✘ ${RESET}')${ORANGE}${BOLD}\$(parse_git_branch)\$(parse_venv)${RESET} ${CYAN}${RESET} "
 # Manual prompt Bash End
-
