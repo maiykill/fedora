@@ -7,7 +7,7 @@ local themefonts = {
 }
 
 local icon_unmuted = "🔊"
-local icon_muted = "󰝛 "
+local icon_muted = "🔇"
 
 local volume_text = wibox.widget.textbox()
 volume_text.font = themefonts.text
