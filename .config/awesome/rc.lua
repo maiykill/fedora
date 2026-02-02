@@ -615,7 +615,7 @@ local globalkeys = gears.table.join(
 	end, { description = "btop in alacritty", group = "launcher" }),
 	awful.key({ superkey, altkey }, "b", function()
 		awful.spawn(
-			"chromium-browser --force-device-scale-factor=1.25 --use-angle=vulkan --enable-zero-copy--enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"
+			"chromium-browser --force-device-scale-factor=1.25 --use-angle=vulkan --enable-zero-copy --enable-gpu-rasterization --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,AcceleratedVideoDecodeLinuxZeroCopyGL"
 		)
 	end, { description = "chromium-browser", group = "launcher" }),
 	awful.key({ superkey, "Shift" }, "p", function()
@@ -670,7 +670,7 @@ local globalkeys = gears.table.join(
 	awful.key({}, "XF86Favorites", function()
 		-- awful.spawn.with_shell("dunstify -r 999 -t 2000 ' ' \"<span font='LCD 65' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\"")
 		awful.spawn.with_shell(
-			"dunstify -r 999 ' ' \"<span font='URW Gothic 75' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\""
+			"dunstify -r 999 -t 10000 \"$(date +'%A of %B %d-%m-%Y')\" \"\n<span font='URW Gothic 75' foreground='#ffffff'>$(date +'%H:%M:%S')</span>\""
 		)
 	end, { description = "show time via dunst", group = "media" }),
 	-- awful.key({ superkey }, "Escape", function()
@@ -866,6 +866,7 @@ awful.rules.rules = {
 	{ rule = { class = "Zathura" }, properties = { maximized = true } },
 	{ rule = { class = "Alacritty" }, properties = { floating = true, maximized = true } },
 	{ rule = { class = "libreoffice" }, properties = { floating = true, maximized = true } },
+	{ rule = { class = "Chromium" }, properties = { tag = "2" } },
 
 	{
 		rule_any = {

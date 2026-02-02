@@ -67,21 +67,50 @@ cmd open ${{
 
 
 cmd extract ${{
-	set -f
-	case $f in
-			*.tar.bz2)   tar xjf $fx     ;;
-			*.tar.gz)    tar xzf $fx     ;;
-			*.bz2)       bunzip2 $fx     ;;
-			*.rar)       unrar e $fx     ;;
-			*.gz)        gunzip $fx      ;;
-			*.tar)       tar xf $fx      ;;
-			*.tbz2)      tar xjf $fx     ;;
-			*.tgz)       tar xzf $fx     ;;
-			*.zip)       unzip $fx       ;;
-			*.Z)         uncompress $fx  ;;
-			*.7z)        7z x $fx        ;;
-			*.tar.xz)    tar xf $fx      ;;
-		esac
+    set -f
+
+    file="$f"
+    base="$(basename "$file")"
+    srcdir="$(dirname "$file")"
+
+    dir="$base"
+    dir="${dir%.tar.gz}"
+    dir="${dir%.tar.bz2}"
+    dir="${dir%.tar.xz}"
+    dir="${dir%.tgz}"
+    dir="${dir%.tbz2}"
+    dir="${dir%.tar}"
+    dir="${dir%.zip}"
+    dir="${dir%.rar}"
+    dir="${dir%.7z}"
+    dir="${dir%.gz}"
+    dir="${dir%.bz2}"
+    dir="${dir%.xz}"
+    dir="${dir%.Z}"
+    dir="${dir%.deb}"
+
+    mkdir -p "$dir" || exit
+    cd "$dir" || exit
+
+    case "$base" in
+        *.tar.bz2) tar xjf "$srcdir/$base" ;;
+        *.tar.gz)  tar xzf "$srcdir/$base" ;;
+        *.tar.xz)  tar xf  "$srcdir/$base" ;;
+        *.tbz2)    tar xjf "$srcdir/$base" ;;
+        *.tgz)     tar xzf "$srcdir/$base" ;;
+        *.tar)     tar xf  "$srcdir/$base" ;;
+        *.bz2)     bunzip2 "$srcdir/$base" ;;
+        *.gz)      gunzip  "$srcdir/$base" ;;
+        *.xz)      unxz    "$srcdir/$base" ;;
+        *.rar)     unrar e "$srcdir/$base" ;;
+        *.zip)     unzip   "$srcdir/$base" ;;
+        *.Z)       uncompress "$srcdir/$base" ;;
+        *.7z)      7z x "$srcdir/$base" ;;
+        *.deb)     ar x "$srcdir/$base" ;;
+        *)         echo "Unsupported archive: $base" ;;
+    esac
+    lf -remote "send $id reload"
+
 }}
 
 
