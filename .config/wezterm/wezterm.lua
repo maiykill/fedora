@@ -13,9 +13,10 @@ local config = wezterm.config_builder()
 config.font_size = 14.8
 
 config.font = wezterm.font_with_fallback({
-	-- 1. BASE: Iosevka Term Extended (Size 14.9)
-	{ family = "Iosevka Term Extended", weight = "Regular" },
-	{ family = "Iosevka Term", weight = "Bold", scale = 1.07 },
+	{ family = "Iosevka SS07 Extended", weight = "Regular", scale = 1.07 },
+	{ family = "Iosevka Extended", weight = "Regular", scale = 1.07 },
+	{ family = "Iosevka Term Extended", weight = "Regular", scale = 1.07 },
+	{ family = "Iosevka", weight = "Regular", scale = 1.12 },
 	{ family = "CodeNewRoman Nerd Font", weight = "Regular", scale = 1.02 },
 	{ family = "FiraCode Nerd Font Ret", weight = "Regular", scale = 0.97 },
 	{ family = "RecMonoDuotone Nerd Font", weight = "Regular", scale = 1.05 },
@@ -33,7 +34,6 @@ config.colors = {
 	cursor_fg = "#0000ff",
 	cursor_bg = "#00ff00",
 }
-
 
 config.default_cursor_style = "SteadyBar"
 
@@ -56,7 +56,7 @@ config.default_cursor_style = "SteadyBar"
 -- config.color_scheme = 'NvimDark'
 -- config.color_scheme = 'MaterialDesignColors' -- lf
 -- config.color_scheme = "Mellifluous"
-config.color_scheme = 'Mikado (terminal.sexy)'
+config.color_scheme = "Mikado (terminal.sexy)"
 -- config.color_scheme = 'Mona Lisa (Gogh)'
 -- config.color_scheme = 'Laserwave (Gogh)'
 -- config.color_scheme = 'Kanagawa (Gogh)'

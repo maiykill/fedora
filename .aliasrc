@@ -158,3 +158,24 @@ hindi() {
     --color 'header:bold:cyan' \
     --layout=reverse >/dev/null
 }
+
+a4topdf() {
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: topdf input1.jpg input2.png [etc...] output.pdf"
+    return 1
+  fi
+
+  for last; do :; done
+  output="$last"
+
+  inputs=""
+  n=$#
+  i=1
+  while [ $i -lt $n ]; do
+    inputs="$inputs \"$1\""
+    shift
+    i=$((i + 1))
+  done
+
+  eval "magick $inputs -resize 2000x -density 300 -units PixelsPerInch -sampling-factor 4:2:0 -strip -quality 75 -interlace JPEG -colorspace sRGB \"$output\""
+}

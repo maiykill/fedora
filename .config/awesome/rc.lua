@@ -670,7 +670,7 @@ local globalkeys = gears.table.join(
 	awful.key({}, "XF86Favorites", function()
 		-- awful.spawn.with_shell("dunstify -r 999 -t 2000 ' ' \"<span font='LCD 65' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\"")
 		awful.spawn.with_shell(
-			"dunstify -r 999 ' ' \"<span font='URW Gothic 75' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\""
+			"dunstify -r 999 \"$(date +'%A of %B %d-%m-%Y')\" \"\n<span font='URW Gothic 75' foreground='#00ff00'>$(date +'%H:%M:%S')</span>\""
 		)
 	end, { description = "show time via dunst", group = "media" }),
 	-- awful.key({ superkey }, "Escape", function()
