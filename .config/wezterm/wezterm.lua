@@ -27,7 +27,8 @@ config.font = wezterm.font_with_fallback({
 
 -- Font thickness
 config.front_end = "WebGpu"
-config.webgpu_power_preference = "HighPerformance"
+config.webgpu_power_preference = "LowPower"
+-- config.webgpu_power_preference = "HighPerformance"
 
 ---- Cursor ----
 config.colors = {
@@ -71,12 +72,12 @@ config.color_scheme = "Mikado (terminal.sexy)"
 
 -- config.color_scheme = 'Catppuccin Mocha'
 
--- Fps --
-config.max_fps = 120
+-- -- Fps --
+-- config.max_fps = 120
 
----- Maximised view since by default the window is small ----
-config.initial_rows = 35
-config.initial_cols = 135
+------- Maximised view since by default the window is small ----
+---config.initial_rows = 35
+---config.initial_cols = 135
 
 ---- resizing the font makes the widow small or bigger annoying!! ----
 config.window_decorations = "RESIZE"
