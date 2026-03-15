@@ -130,69 +130,65 @@ awful.layout.layouts = {
 }
 -- }}}
 
+local volume_timer = nil
 local function show_volume_notification()
-	-- Wait briefly to let the volume take effect
-	gears.timer.start_new(0.1, function()
-		awful.spawn.easy_async_with_shell("wpctl get-volume @DEFAULT_AUDIO_SINK@", function(stdout)
-			local volume = stdout:match("(%d%.%d+)")
-			local muted = stdout:find("MUTED")
-			if volume then
-				local percent = math.floor(tonumber(volume) * 100)
-				local icon, urgency, text
+	-- 1. Kill any pending notification request to prevent "clogging"
+	if volume_timer then
+		volume_timer:stop()
+	end
 
-				if muted then
-					icon = "/usr/share/icons/HighContrast/scalable/status/audio-volume-muted.svg"
-					urgency = "critical"
-					text = percent .. "% (muted)"
-				else
-					icon = "/usr/share/icons/HighContrast/scalable/status/audio-volume-high.svg"
-					urgency = "normal"
-					text = percent .. "%"
-				end
+	volume_timer = gears.timer.start_new(0.05, function()
+		local cmd = [[
+            VAL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+            VOL=$(echo "$VAL" | grep -oP '\d?\.?\d+' | head -n1)
+            
+            PCT=$(awk "BEGIN {print int($VOL * 100)}")
+            
+            ICON="/usr/share/icons/HighContrast/scalable/status/audio-volume-high.svg"
+            URGENCY="normal"
+            TEXT="$PCT%"
 
-				awful.spawn(
-					"dunstify -a Volume"
-						.. " -u "
-						.. urgency
-						.. " -h int:value:"
-						.. percent -- ✨ Progress bar hint here!
-						.. " -i '"
-						.. icon
-						.. "'"
-						.. " -r 9118" -- 🔁 Replace previous volume notification
-						.. " -t 1500"
-						.. " 'Volume' '"
-						.. text
-						.. "'"
-				)
-			end
-		end)
+            if echo "$VAL" | grep -q "MUTED"; then
+                ICON="/usr/share/icons/HighContrast/scalable/status/audio-volume-muted.svg"
+                URGENCY="critical"
+                TEXT="$PCT% (muted)"
+            fi
+
+            dunstify -a Volume -u $URGENCY -h int:value:$PCT -i "$ICON" -r 9118 -t 1000 "Volume" "$TEXT"
+        ]]
+
+		awful.spawn.with_shell(cmd)
 		return false
 	end)
 end
 
+local backlight_timer = nil
 local function show_brightness_notification()
-	awful.spawn.easy_async_with_shell(
-		[[
-        brightnessctl get && brightnessctl max
-        ]],
-		function(stdout)
-			local current, max = stdout:match("(%d+)\n(%d+)")
-			if current and max then
-				local percent = math.floor(tonumber(current) * 100 / tonumber(max) + 0.5)
-				local icon = "/usr/share/icons/HighContrast/scalable/status/weather-clear.svg"
-				awful.spawn(
-					"dunstify -i '"
-						.. icon
-						.. "' -r 9119 -h int:value:"
-						.. percent
-						.. " 'Brightness' '"
-						.. percent
-						.. "%'"
-				)
-			end
-		end
-	)
+	if backlight_timer then
+		backlight_timer:stop()
+	end
+
+	backlight_timer = gears.timer.start_new(0.05, function()
+		local cmd = [[
+            CUR=$(brightnessctl get)
+            MAX=$(brightnessctl max)
+            
+            PCT=$(awk "BEGIN {print int(($CUR / $MAX) * 100 + 0.5)}")
+            
+            ICON="/usr/share/icons/HighContrast/scalable/status/weather-clear.svg"
+            
+            # Use -r 9119 to distinguish from Volume (9118)
+            dunstify -a "Brightness" \
+                     -i "$ICON" \
+                     -r 9119 \
+                     -h int:value:"$PCT" \
+                     -t 1000 \
+                     "Brightness" "$PCT%"
+        ]]
+
+		awful.spawn.with_shell(cmd)
+		return false
+	end)
 end
 
 -- {{{ Menu
