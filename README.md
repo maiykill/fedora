@@ -1,7 +1,7 @@
 # Fedora dot-files
 
 > [!IMPORTANT]
-> Thinkpad L490 on Fedora xfce workstation 40, 41, 42
+> Thinkpad L490 on Fedora xfce workstation 40, 41, 42, 43
 
 - zshenv
 - zshrc
